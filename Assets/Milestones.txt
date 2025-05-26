@@ -1,0 +1,74 @@
+note3D PUZZLE GAME DEVELOPEMNT TIMELINE
+Total Duration: 6–7 Weeks
+
+
+
+Target Platforms: Android & iOS
+Engine: Unity (C#)
+
+
+
+✅ Milestone 1: Core Prototype (with Real Assets)
+Duration: 2 Weeks Cost: $100
+🎯 Goals:
+1. Asset Integration
+o Integrate actual 3D assets for conveyors, machines, and resources provided by Client✅
+o Ensure correct alignment, scaling, and visual consistency from the beginning.✅
+2. Conveyor Placement System o Drag-and-drop placement with real models. o Support rotation (up/down/left/right).✅
+o UI to select and place conveyors from the inventory.✅
+3. Real-Time Resource Flow o Implement resource movement using the actual visual assets.✅
+o Resources move along conveyors from Point A to Point B.✅
+4. Transformation Machine (Basic) o Use real transformation machine model. o Convert resources (e.g., IRON → IRON BAR) and continue the flow.✅
+5. Time-Based Failure Condition o Lose condition only if the time runs out before delivering required items.✅
+6. Basic UI o Play/Pause/Reset buttons.✅
+o Display level number, timer, remaining conveyors.✅
+7. Test Level o Build 1 prototype level using real assets to validate core mechanics.❌
+
+
+
+✅ Milestone 2: Core Gameplay Systems
+Duration: 2–3 Weeks
+Cost: $200
+🎯 Goals:
+1. Multi-Step Transformation o Extend transformation flow (e.g., IRON → IRON BAR → FINAL PRODUCT). o Add more transformation machines.
+2. Resource Management
+o Configure production rates, resource limits.
+o Destroy/loss condition if items don't reach the target in time.
+3. Game Objectives & Logic o Add specific delivery goals per level (e.g., deliver 10 Iron Bars).
+o Track success/failure based on real-time delivery and time.
+4. Level Design o Manually design 5–10 progressively difficult levels.
+o Introduce obstacles, limited conveyor count, and new mechanics.
+5. Save/Load System o Save player progress, stars earned (if implemented).
+o Load saved progress at startup.
+6. (Optional) Star Rating System o Rate level performance (1–3 stars) based on time and accuracy. o Display results at level completion.
+
+
+
+✅ Milestone 3: Polish & UX Enhancements
+Duration: 1 Week
+Cost: $50
+🎯 Goals:
+1. Animations o Conveyor movement, machine operations, transformation visuals.
+o Smooth, appealing animations with mobile optimization.
+2. UI Enhancements
+o Improve the clarity and aesthetics of all buttons, HUD, and level display.
+o Optimize touch responsiveness and layout for mobile.
+3. Sound & Music o Add appropriate SFX for conveyor motion, transformations, and UI.
+o Integrate light industrial background music.
+4. Mobile UX Tuning o Refine touch drag/drop mechanics. o Improve gestures and responsiveness for smaller screens.
+
+
+
+✅ Milestone 4: Finalization & Release Prep
+Duration: 1 Week
+Cost: $60
+🎯 Goals:
+1. Interactive Tutorial o Teach players how to place conveyors, rotate, and complete transformations step-by-step.
+2. Final Level Polish o Refine and finalize all levels (15–20 total).
+o Add challenging layouts and last-stage mechanics.
+3. Optimization o Memory and performance tuning.
+o Ensure smooth performance on target devices.
+4. QA & Bug Fixing
+o Full testing cycle: fix logical, visual, and control-related issues.
+o Validate save/load system works on all levels.
+5. App Store Submission o Prepare store materials (icon, screenshots, metadata). o Submit the build for review on App Store & Google Play.
