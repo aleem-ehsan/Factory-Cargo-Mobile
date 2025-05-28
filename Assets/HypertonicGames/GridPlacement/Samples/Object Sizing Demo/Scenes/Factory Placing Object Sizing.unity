@@ -1605,8 +1605,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0015258789, y: 10.863998}
-  m_SizeDelta: {x: 925.55, y: 207.3}
+  m_AnchoredPosition: {x: 0.0015258789, y: 10.864014}
+  m_SizeDelta: {x: 5163.217, y: 207.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &223806244
 MonoBehaviour:
@@ -1615,7 +1615,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 223806241}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
   m_Name: 
@@ -2212,6 +2212,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284477991}
   m_CullTransparentMesh: 1
+--- !u!1 &293163063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 293163065}
+  - component: {fileID: 293163064}
+  m_Layer: 0
+  m_Name: Mobile Input Handler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &293163064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293163063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 648ea61913d32ac4ea8a02a8c75a7261, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputActions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+--- !u!4 &293163065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293163063}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 813.0442, y: 2332.9275, z: -0.08667932}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &300372955
 GameObject:
   m_ObjectHideFlags: 0
@@ -2303,7 +2348,7 @@ RectTransform:
   m_GameObject: {fileID: 308727887}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.49803, y: 0.49803, z: 0.49803}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 252330091}
@@ -2311,7 +2356,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -169.99158}
+  m_AnchoredPosition: {x: 52, y: -169.99158}
   m_SizeDelta: {x: 458.9921, y: 339.9834}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &308727889
@@ -3500,9 +3545,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridObjectToSpawnPrefab: {fileID: 8477749051450090995, guid: 465b42698aaeee240b2b3ae888adc25b, type: 3}
-  ConveyorType: 0
-  _isButtonInteractable: 1
-  MaxPlaceble: 0
 --- !u!114 &448241549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4212,9 +4254,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridObjectToSpawnPrefab: {fileID: 3473147720325994933, guid: 559378572c27d2b4fbd7b88f94d294a9, type: 3}
-  ConveyorType: 0
-  _isButtonInteractable: 1
-  MaxPlaceble: 0
 --- !u!114 &607441639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5225,15 +5264,15 @@ RectTransform:
   m_GameObject: {fileID: 717412003}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.49798, y: 0.49798, z: 0.49798}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 596782402}
   m_Father: {fileID: 2086438273}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -721.77783, y: -169.99158}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 229.49605, y: -169.99158}
   m_SizeDelta: {x: 458.9921, y: 339.9834}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &717412005
@@ -5458,7 +5497,7 @@ RectTransform:
   m_GameObject: {fileID: 734560200}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.73834, y: 0.73834, z: 0.73834}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 454723146}
@@ -5479,7 +5518,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 734560200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dd6174484389be48a20961388bd059c, type: 3}
+  m_Script: {fileID: 11500000, guid: d3b55df58a3e76440afb4717df1a43ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _gridObjectToSpawnPrefab: {fileID: 670164648180013471, guid: 9be3587dd08da99498f5043a0a494fc1, type: 3}
@@ -6983,7 +7022,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 229.96
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -7024,7 +7063,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1043948232}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
@@ -7537,7 +7576,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -8078,9 +8117,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridObjectToSpawnPrefab: {fileID: 670164648180013471, guid: 46829960203fe66438f19573a0766915, type: 3}
-  ConveyorType: 0
-  _isButtonInteractable: 1
-  MaxPlaceble: 0
 --- !u!114 &1208745974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9606,9 +9642,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridObjectToSpawnPrefab: {fileID: 670164648180013471, guid: 0b2aa8a20bab0534eb7d946acdf242fd, type: 3}
-  ConveyorType: 0
-  _isButtonInteractable: 1
-  MaxPlaceble: 0
 --- !u!114 &1459241634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9868,9 +9901,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridObjectToSpawnPrefab: {fileID: 81709795286401575, guid: 1d5e91407128d1d43b58cfb49fab2184, type: 3}
-  ConveyorType: 0
-  _isButtonInteractable: 1
-  MaxPlaceble: 0
 --- !u!114 &1525134336
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10785,17 +10815,17 @@ RectTransform:
   m_GameObject: {fileID: 1721283047}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.57586, y: 0.57586, z: 0.57586}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 223806242}
   - {fileID: 399520621}
   m_Father: {fileID: 660118902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0050354004, y: -1675.5829}
-  m_SizeDelta: {x: 1920, y: 496.834}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0.0007019, y: 248.42}
+  m_SizeDelta: {x: 1920, y: 496.83398}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1721283049
 MonoBehaviour:
@@ -10938,7 +10968,7 @@ RectTransform:
   m_GameObject: {fileID: 1733531772}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.47668, y: 0.47668, z: 0.47668}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1409288934}
@@ -10946,7 +10976,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -235, y: -188}
+  m_AnchoredPosition: {x: -138.43535, y: -151.985}
   m_SizeDelta: {x: 276.8707, y: 303.97}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1733531774
@@ -11147,7 +11177,7 @@ RectTransform:
   m_GameObject: {fileID: 1757495114}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.73834, y: 0.73834, z: 0.73834}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2099702292}
@@ -11168,7 +11198,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1757495114}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dd6174484389be48a20961388bd059c, type: 3}
+  m_Script: {fileID: 11500000, guid: d3b55df58a3e76440afb4717df1a43ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _gridObjectToSpawnPrefab: {fileID: 670164648180013471, guid: d79ae79d84668a34f965644abab9a693, type: 3}
@@ -11663,9 +11693,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridObjectToSpawnPrefab: {fileID: 670164648180013471, guid: d79ae79d84668a34f965644abab9a693, type: 3}
-  ConveyorType: 0
-  _isButtonInteractable: 1
-  MaxPlaceble: 0
 --- !u!114 &1840509822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13176,10 +13203,10 @@ RectTransform:
   - {fileID: 734560201}
   m_Father: {fileID: 223806242}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 3541.6084, y: -352.06702}
+  m_SizeDelta: {x: 7083.217, y: 704.13403}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2061231151
 MonoBehaviour:
@@ -13199,9 +13226,9 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 70.82
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
+  m_Spacing: 400
+  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
@@ -17763,3 +17790,4 @@ SceneRoots:
   - {fileID: 535133841}
   - {fileID: 926051850}
   - {fileID: 965415428}
+  - {fileID: 293163065}

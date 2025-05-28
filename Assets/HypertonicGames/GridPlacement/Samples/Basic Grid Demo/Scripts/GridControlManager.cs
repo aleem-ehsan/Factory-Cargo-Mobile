@@ -30,6 +30,10 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             Button_Delete.OnDeletePressed += HandleDeleteObjectPressed;
             Button_GridObjectSelectionOption.OnOptionSelected += HandleGridObjectOptionSelected;
             ExampleGridObject.OnObjectSelected += HandleExampleGridObjectSelected;
+
+
+             // My Added Subscribers
+            Conveyor_Button_GridObjectSelectionOption.OnOptionSelected += HandleGridObjectOptionSelected;
         }
 
         private void OnDisable()
@@ -42,6 +46,9 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             Button_Delete.OnDeletePressed -= HandleDeleteObjectPressed;
             Button_GridObjectSelectionOption.OnOptionSelected -= HandleGridObjectOptionSelected;
             ExampleGridObject.OnObjectSelected -= HandleExampleGridObjectSelected;
+
+             // My Added Subscribers
+            Conveyor_Button_GridObjectSelectionOption.OnOptionSelected -= HandleGridObjectOptionSelected;
         }
 
         private void HandleConfirmButtonPressed()

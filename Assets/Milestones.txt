@@ -22,7 +22,7 @@ o Resources move along conveyors from Point A to Point B.✅
 5. Time-Based Failure Condition o Lose condition only if the time runs out before delivering required items.✅
 6. Basic UI o Play/Pause/Reset buttons.✅
 o Display level number, timer, remaining conveyors.✅
-7. Test Level o Build 1 prototype level using real assets to validate core mechanics.❌
+7. Test Level o Build 1 prototype level using real assets to validate core mechanics.✅
 
 
 
@@ -30,17 +30,17 @@ o Display level number, timer, remaining conveyors.✅
 Duration: 2–3 Weeks
 Cost: $200
 🎯 Goals:
-1. Multi-Step Transformation o Extend transformation flow (e.g., IRON → IRON BAR → FINAL PRODUCT). o Add more transformation machines.
-2. Resource Management
-o Configure production rates, resource limits.
-o Destroy/loss condition if items don't reach the target in time.
-3. Game Objectives & Logic o Add specific delivery goals per level (e.g., deliver 10 Iron Bars).
-o Track success/failure based on real-time delivery and time.
-4. Level Design o Manually design 5–10 progressively difficult levels.
-o Introduce obstacles, limited conveyor count, and new mechanics.
-5. Save/Load System o Save player progress, stars earned (if implemented).
-o Load saved progress at startup.
-6. (Optional) Star Rating System o Rate level performance (1–3 stars) based on time and accuracy. o Display results at level completion.
+1. Multi-Step Transformation o Extend transformation flow (e.g., IRON → IRON BAR → FINAL PRODUCT). o Add more transformation machines.❌
+2. Resource Management✅
+o Configure production rates, resource limits.❌
+o Destroy/loss condition if items don't reach the target in time.✅
+3. Game Objectives & Logic o Add specific delivery goals per level (e.g., deliver 10 Iron Bars).✅
+o Track success/failure based on real-time delivery and time.✅
+4. Level Design o Manually design 5–10 progressively difficult levels.❌
+o Introduce obstacles❌, limited conveyor count✅, and new mechanics✅.
+5. Save/Load System o Save player progress, stars earned (if implemented).❌
+o Load saved progress at startup.❌
+6. (Optional) Star Rating System o Rate level performance (1–3 stars) based on time and accuracy. o Display results at level completion.❌
 
 
 

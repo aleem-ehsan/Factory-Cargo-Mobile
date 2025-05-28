@@ -32,6 +32,10 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             Button_CancelPlacement.OnCancelPlacementPressed += HandleCancelPlacementPressed;
             GridControlManager.OnObjectPlacedOnGrid += HandleObjectPlacedOnGrid;
             ExampleGridObject.OnObjectSelected += HandleExampleGridObjectSelected;
+
+
+            // My Added Subscribers
+            Conveyor_Button_GridObjectSelectionOption.OnOptionSelected += HandleGridObjectOptionSelected; 
         }
 
         private void OnDestroy()
@@ -44,7 +48,10 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             Button_ChangeAlignment.OnChangeAlignmentPressed -= HandleChangeAlignmentPressed;
             Button_CancelPlacement.OnCancelPlacementPressed -= HandleCancelPlacementPressed;
             GridControlManager.OnObjectPlacedOnGrid -= HandleObjectPlacedOnGrid;
-            ExampleGridObject.OnObjectSelected -= HandleExampleGridObjectSelected;           
+            ExampleGridObject.OnObjectSelected -= HandleExampleGridObjectSelected;  
+
+             // My Added Subscribers
+            Conveyor_Button_GridObjectSelectionOption.OnOptionSelected -= HandleGridObjectOptionSelected;          
         }
 
         private void HandleGridObjectOptionSelected(GameObject gridObject)

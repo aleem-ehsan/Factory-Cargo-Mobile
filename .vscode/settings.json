@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Cargo Factory.sln"
+    "dotnet.defaultSolution": "Factory-Cargo-Mobile.sln"
 }

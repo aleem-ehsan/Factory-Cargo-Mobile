@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using DG.Tweening;
-using Microsoft.Unity.VisualStudio.Editor;
 using TMPro;
 using UnityEngine;
 
@@ -11,6 +10,11 @@ public enum ResourceType
     WoodPlank,
     StoneBlock
 }
+
+
+
+
+
 
 [System.Serializable]
 public struct RequiredResource
@@ -65,6 +69,16 @@ public class SubmissionTable_Controller : MonoBehaviour
 
         // Initialize required resources if not set in inspector
         InitailizeRequiredItems();
+
+
+
+
+        // check if the Platform is Android or IOS
+        #if UNITY_ANDROID || UNITY_IOS
+            // Initialize the required resources for mobile platforms
+        
+        Debug.Log("Mobile Platform Detected. Initializing required resources for mobile.");
+        #endif
     }
 
     private void InitailizeRequiredItems()
