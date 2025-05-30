@@ -11,6 +11,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         private void Start()
         {
             GetComponent<Button>().onClick.AddListener(() => OnConfirmPlacementPressed?.Invoke());
+            GetComponent<Button>().onClick.AddListener(() => Conveyor_Button_GridObjectSelectionOption.SetAnyButtonPressable(true));
         }
     }
 }

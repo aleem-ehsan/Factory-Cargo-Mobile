@@ -4,11 +4,7 @@ using UnityEngine;
 public class RobotController : MonoBehaviour
 {
 
-    
-    
-
-
-
+    [SerializeField] private Machine ConnectedMachine; // Reference to the Machine script, if needed
 
     [SerializeField] private GameObject myMetal;
 
@@ -26,7 +22,8 @@ public class RobotController : MonoBehaviour
         }
         else{
             Debug.Log("CraeteMetalBar Invoked");
-            Machine.Instance.SpawnMetal();
+            Machine.Instance.SpawnStartingProduct();
+            // ConnectedMachine.SpawnMetal();
             myMetal.SetActive(false);
         }
         

@@ -1,5 +1,18 @@
 using UnityEngine;
 using DG.Tweening;
+
+
+
+
+// Types of Resources a Product can have
+public enum ResourceType
+{
+    MetalBar,
+    TexturedBar,
+    StoneBlock
+}
+
+
 public class MetalBar : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 2f;
@@ -13,6 +26,16 @@ public class MetalBar : MonoBehaviour
 
 
     public ResourceType resourceType;
+
+
+    [Header("Product Shapes")]
+    [Tooltip("All shapes that this Product can have")]
+    [SerializeField] private GameObject StartingShape; 
+    [SerializeField] private GameObject MetalShape; 
+    [SerializeField] private GameObject TextureShape; 
+    [SerializeField] private GameObject StoneShape; 
+
+
 
     private void Awake()
     {
@@ -65,25 +88,36 @@ public class MetalBar : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("MachineExit"))
+        if (other.CompareTag("Machine"))
         {
-            LeaveCurrentConveyor(null);
+            // check if the gameobject has Script "MachineExitController"
+            if (other.TryGetComponent<MachineExitController>(out var machineExitController))
+            {
+                Debug.Log("Metal Bar Triggered with Machine Exit");
+                LeaveCurrentConveyor(null);
+            }else if (other.TryGetComponent<MachineEntryController>(out var machineEntryController2)){
+                Debug.Log("Metal Bar Triggered with Machine Entry");
+                MoveWithConveyor(other.gameObject);
+            }
         }else if(other.CompareTag("Conveyor"))
         {
             if (other.TryGetComponent<ConveyorEntryController>(out var conveyorEntryController))
             {
                 Debug.Log("Metal Bar Triggered with Conveyor Entry");
-                MoveWithConveyor(conveyorEntryController);
+
+                MoveWithConveyor(other.gameObject);
+                conveyorEntryController._conveyor.AddMovingResource(this);  // ! very important to assign resource to the Conveyor
             }else if (other.TryGetComponent<ConveyorExitController>(out var conveyorExitController)){
                 LeaveCurrentConveyor(conveyorExitController);
                 Debug.Log("Metal Bar Triggered with Conveyor Exit");
             }
 
 
-        }else if(other.CompareTag("Converter"))
+        // }else if(other.CompareTag("Converter"))
+        }else if(other.TryGetComponent<ResourceConverter>(out var resourceConverter))
         {
             Debug.Log("Metal Bar Triggered with Converter");
-           ChangeToNextShape();
+           ChangeShape(resourceConverter.outputType);
         }
     }
 
@@ -98,13 +132,13 @@ public class MetalBar : MonoBehaviour
     }
 
 
-    private void MoveWithConveyor(ConveyorEntryController conveyorEntryController)
+    private void MoveWithConveyor(GameObject EntryController)
     {
         Debug.Log("Metal Bar Moving with conveyor");
         rb.isKinematic = true; // Disable physics when on the conveyor
         // Use DoTween to smoothly move and rotate the metal bar to the conveyor's position and orientation
-        Vector3 targetPosition = conveyorEntryController.transform.position;
-        Vector3 conveyorRotation = conveyorEntryController.transform.rotation.eulerAngles;
+        Vector3 targetPosition = EntryController.transform.position;
+        Vector3 conveyorRotation = EntryController.transform.rotation.eulerAngles;
         conveyorRotation.z = 0;
         Quaternion targetRotation = Quaternion.Euler(0, conveyorRotation.y - 90, 0);
 
@@ -120,10 +154,9 @@ public class MetalBar : MonoBehaviour
 
        
 
-        moveDirection =  conveyorEntryController.transform.forward;   
+        moveDirection =  EntryController.transform.forward;   
 
 
-        conveyorEntryController._conveyor.AddMovingResource(this); // Add this metal bar to the conveyor's list of moving resources
     }
 
 
@@ -145,9 +178,10 @@ public class MetalBar : MonoBehaviour
         }
     }
 
-    public void ChangeToNextShape()
+    public void ChangeShape(ResourceType type)
     {
-        // check how many child Objects this GameObject has
+        /*
+         check how many child Objects this GameObject has
         int childCount = transform.childCount;
         if (childCount > 0)
         {
@@ -159,11 +193,38 @@ public class MetalBar : MonoBehaviour
             // Destroy the first child object
             Transform currentShape = transform.GetChild(0);
             Destroy(currentShape.gameObject);
-            
-             
         }
-    }
+        */
+        // check which type of Converter it is, then Change the shape accordingly
 
+        switch (type)
+        {
+            case ResourceType.MetalBar:
+                StartingShape.SetActive(false);
+                MetalShape.SetActive(true);
+                TextureShape.SetActive(false);
+                StoneShape.SetActive(false);
+                break;
+            case ResourceType.TexturedBar:
+                StartingShape.SetActive(false);
+                MetalShape.SetActive(false);
+                TextureShape.SetActive(true);
+                StoneShape.SetActive(false);
+                break;
+            case ResourceType.StoneBlock:
+                StartingShape.SetActive(false);
+                MetalShape.SetActive(false);
+                TextureShape.SetActive(false);
+                StoneShape.SetActive(true);
+                break;
+            default:
+                Debug.LogWarning("Unknown resource type: " + type);
+                break;
+        }
+
+        resourceType = type; // Update the resource type
+
+    }
 
     public void Kill(){
         // Disable the metal bar

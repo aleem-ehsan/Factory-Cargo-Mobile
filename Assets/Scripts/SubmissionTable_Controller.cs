@@ -4,30 +4,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public enum ResourceType
-{
-    MetalBar,
-    WoodPlank,
-    StoneBlock
-}
 
-
-
-
-
-
-[System.Serializable]
-public struct RequiredResource
-{
-    public ResourceType type;
-    public int quantity;
-
-    public RequiredResource(ResourceType type, int quantity)
-    {
-        this.type = type;
-        this.quantity = quantity;
-    }
-}
 
 public class SubmissionTable_Controller : MonoBehaviour
 {
@@ -39,12 +16,12 @@ public class SubmissionTable_Controller : MonoBehaviour
     private Dictionary<ResourceType, GameObject> resourceUIItems = new Dictionary<ResourceType, GameObject>();
 
     [Header("Required Resources")]
-    [SerializeField] private RequiredResource[] requiredResources;
+    public RequiredResource[] requiredResources;
 
     [Header("UI Elements")]
     [Tooltip("Gameobbject for the required resource list item")]
     [SerializeField] private Transform ListContainer;
-    [SerializeField] private GameObject PrefabListItem;
+    [SerializeField] private GameObject PrefabListItem; // * Prefab of the UI list-item 
 
 
 
@@ -58,7 +35,6 @@ public class SubmissionTable_Controller : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -68,7 +44,7 @@ public class SubmissionTable_Controller : MonoBehaviour
 
 
         // Initialize required resources if not set in inspector
-        InitailizeRequiredItems();
+        // InitailizeRequiredItems(); // We will remove this call as LevelManager will set the requirements
 
 
 
@@ -81,25 +57,46 @@ public class SubmissionTable_Controller : MonoBehaviour
         #endif
     }
 
-    private void InitailizeRequiredItems()
-    {
-        if (requiredResources == null || requiredResources.Length == 0)
-        {
-            requiredResources = new RequiredResource[]
-            {
-                new RequiredResource(ResourceType.MetalBar, 2),
-                // new RequiredResource(ResourceType.WoodPlank, 3),
-                // new RequiredResource(ResourceType.StoneBlock, 1)
-            };
 
-            foreach (RequiredResource resource in requiredResources)
-            {
-                GameObject newItem = Instantiate(PrefabListItem, ListContainer);
-                newItem.GetComponentInChildren<TextMeshProUGUI>().text = resource.quantity.ToString();
-                newItem.GetComponentInChildren<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + resource.type.ToString());
-                resourceUIItems[resource.type] = newItem;
-            }
+
+/// <summary>
+/// Initialize the Required Items of this Level
+/// Update the UI
+/// </summary>
+/// <param name="requiredResources"></param>
+    public void InitailizeRequiredItems(RequiredResource[] requiredResources)
+    {
+         this.requiredResources = requiredResources;
+
+        // Clear existing UI items
+        resourceUIItems.Clear();
+        // Clear the ListContainer
+        foreach (Transform child in ListContainer)
+        {
+            Destroy(child.gameObject);
         }
+        // Populate the UI with required resources
+        foreach (RequiredResource resource in requiredResources)
+        {
+            GameObject uiItem = Instantiate(PrefabListItem, ListContainer);
+            TextMeshProUGUI textComponent = uiItem.GetComponentInChildren<TextMeshProUGUI>();
+            SpriteRenderer spriteRenderer = uiItem.GetComponentInChildren<SpriteRenderer>();
+
+            if (textComponent != null)
+                // textComponent.text = $"{resource.type}: {resource.quantity}";
+                textComponent.text = $": {resource.quantity}";
+
+            if (spriteRenderer != null)
+                spriteRenderer.sprite = Resources.Load($"Sprites/{resource.type}", typeof(Sprite)) as Sprite;
+
+            resourceUIItems[resource.type] = uiItem; // Store the UI item for later updates
+        }
+        // Initialize the current placing position
+        CurrentPlacingPosition = PlaceHolder.position;
+        placementCount = 0; // Reset the placement count
+        Debug.Log("Required resources initialized and UI updated.");
+
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -117,18 +114,19 @@ public class SubmissionTable_Controller : MonoBehaviour
             // Check for MetalBar
             if (other.TryGetComponent<MetalBar>(out MetalBar metalBar))
             {
-                if(metalBar.resourceType == ResourceType.MetalBar)
-                {
-                    ProcessResource(ResourceType.MetalBar, metalBar.gameObject);
-                }else if(metalBar.resourceType == ResourceType.WoodPlank)
-                {
-                    ProcessResource(ResourceType.WoodPlank, metalBar.gameObject);   
-                }
-                else if(metalBar.resourceType == ResourceType.StoneBlock)
-                {
-                    ProcessResource(ResourceType.StoneBlock, metalBar.gameObject);   
-                }
+                // if(metalBar.resourceType == ResourceType.MetalBar)
+                // {
+                //     ProcessResource(ResourceType.MetalBar, metalBar.gameObject);
+                // }else if(metalBar.resourceType == ResourceType.TexturedBar)
+                // {
+                //     ProcessResource(ResourceType.TexturedBar, metalBar.gameObject);   
+                // }
+                // else if(metalBar.resourceType == ResourceType.StoneBlock)
+                // {
+                //     ProcessResource(ResourceType.StoneBlock, metalBar.gameObject);   
+                // }
 
+                ProcessResource(metalBar.resourceType, metalBar.gameObject);
             }
             // Check for WoodPlank
            
@@ -137,6 +135,7 @@ public class SubmissionTable_Controller : MonoBehaviour
 
     private void ProcessResource(ResourceType resourceType, GameObject resourceObject)
     {
+        Debug.Log($"Processing resource: {resourceType}");
         // Find and update the required resource
         for (int i = 0; i < requiredResources.Length; i++)
         {
@@ -154,7 +153,7 @@ public class SubmissionTable_Controller : MonoBehaviour
                 PlaceResourceOnTable(resourceObject);
 
                 // Check if all resources are collected
-                CheckLevelCompletion();
+                CheckLevelCompletion(); // TODO: TESTING --- Uncomment this when want to check for level completion
                 break;
             }
         }
@@ -180,10 +179,19 @@ public class SubmissionTable_Controller : MonoBehaviour
         if (resourceObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
             rb.isKinematic = true;
+            rb.useGravity = false;
         }
 
         // Animate placement
-        resourceObject.transform.DOJump(CurrentPlacingPosition, 1f, 1, 0.5f);
+        resourceObject.transform.DOJump(CurrentPlacingPosition, 0.5f, 1, 0.5f);
+         // Set parent and rotate
+        resourceObject.transform.DOLocalRotate(new Vector3(0, 270,0  ), 0.5f);  // * Do a local Rotation because the resourceObject is a child of the Table
+
+
+
+        resourceObject.transform.SetParent(transform);
+
+
         placementCount++;
 
         // Update position for next resource
@@ -195,9 +203,7 @@ public class SubmissionTable_Controller : MonoBehaviour
             CurrentPlacingPosition.y += 0.5f;
         }
 
-        // Set parent and rotate
-        resourceObject.transform.SetParent(transform);
-        resourceObject.transform.DORotate(new Vector3(0, 90, 0), 0.5f);
+       
     }
 
     public void CheckLevelCompletion()
@@ -242,4 +248,16 @@ public class SubmissionTable_Controller : MonoBehaviour
             My_UIManager.Instance.ShowGameLosePanel(); // Show the game win panel
         }
     }
+
+
+    public ResourceType[] GetRequiredResourcesTypenames(){
+
+        ResourceType[] resourceTypes = new ResourceType[requiredResources.Length];
+        for (int i = 0; i < requiredResources.Length; i++)
+        {
+            resourceTypes[i] = requiredResources[i].type;
+        }
+        return resourceTypes;
+    }
+
 }

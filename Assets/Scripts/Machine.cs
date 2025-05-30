@@ -5,10 +5,18 @@ public class Machine : MonoBehaviour
     // TODO: The first Machine in the entire Level should instantiate Metal Bars
 
 
-    [SerializeField] private GameObject metalPrefab;
+    [Header("Products")]
+    [Tooltip("These Prfabs will be initialized from Resources folder")]
+    [SerializeField] private GameObject Product;
+
+
+// ------------------------------------- -------------------------------------
     [SerializeField] private Transform metalSpawnPoint;
 
-    private float nextSpawnTime;
+
+    private MachineEntryController machineEntryController; // Reference to the MachineEntryController script
+
+    public bool isFirstMachine = false; // Flag to check if this is the first machine in the level
 
 
 //   ------------------- Singleton -------------------
@@ -16,29 +24,49 @@ public class Machine : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if(!isFirstMachine) // !: Ensure only one instance of Machine exists
+            return;
+        
+        // Remove singleton enforcement so all Machine instances remain in the scene
+        Instance = this;
+
+        InitializeProducts();
+    }
+
+    private void InitializeProducts()
+    {
+        Product = (GameObject)Resources.Load("Products/Product");
+    }
+
+
+    void Start(){
+        if(isFirstMachine)  // ? if not disabled, Spawned Metal will instantly Trigger Collisions
+            DisableEntry();
+    }
+
+    public void DisableEntry(){
+        machineEntryController = GetComponentInChildren<MachineEntryController>();
+        if (machineEntryController != null)
         {
-            Instance = this;
+        //   destroy the MachineEntryController component to disable it
+            Destroy(machineEntryController.gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            Debug.LogError("MachineEntryController not found on: " + gameObject.name);
         }
     }
 
 
-    private void Start()
-    {
-    }
+    public void SpawnStartingProduct()
+    {   
 
+        if (!isFirstMachine)  // * if it is not the first machine, do not spawn metal
+            return;
 
+        Debug.Log("Spawning Product called");
 
-
-    public void SpawnMetal()
-    {
-        Debug.Log("SpawnMetal called");
-
-        GameObject spawnedMetalBar = Instantiate(metalPrefab, metalSpawnPoint.position, metalSpawnPoint.rotation);
+        GameObject spawnedMetalBar = Instantiate(Product, metalSpawnPoint.position, metalSpawnPoint.rotation);
         spawnedMetalBar.transform.SetParent(metalSpawnPoint);
 
         MetalBar metalBar;
@@ -55,4 +83,8 @@ public class Machine : MonoBehaviour
         }
        
     }
+
+
+
+
 }

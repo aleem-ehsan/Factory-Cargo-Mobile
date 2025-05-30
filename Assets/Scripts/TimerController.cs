@@ -20,10 +20,27 @@ public class TimerController : MonoBehaviour
 
 
 
+    // --------------- Singelton ---------------
+    public static TimerController Instance { get; private set; }
+
+
+    void Awake(){
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        
+    }
+
 
     void Start()
     {
-        StartTimer();
+        // StartTimer();
     }
 
     public void StartTimer()
@@ -96,6 +113,19 @@ public class TimerController : MonoBehaviour
 
     public void StarTimeAgain()
     {
+        StartTimer();
+    }
+
+    public void SetTimeFromSeconds(int seconds)
+    {
+        Debug.Log("Setting timer from seconds: " + seconds);
+
+
+        LevelMinutes = seconds / 60;
+        LevelSeconds = seconds % 60;
+
+        initialTimeInSeconds = seconds;
+        
         StartTimer();
     }
 }

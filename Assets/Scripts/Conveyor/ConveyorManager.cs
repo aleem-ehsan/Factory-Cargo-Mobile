@@ -23,7 +23,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             public int currentCount;
         }
 
-        [SerializeField] private List<ConveyorTypeCount> conveyorCounts = new List<ConveyorTypeCount>();
+        [SerializeField] private List<ConveyorTypeCount> AllConveyorTypeCounts = new List<ConveyorTypeCount>();
 
         // Holds the currently selected Conveyor on the grid. Null if none is selected.
         public Conveyor selectedConveyor = null;
@@ -123,7 +123,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         public void IncreaseConveyor_CurrentCount(ConveyorType conveyorType)
         {
             Debug.Log($"Attempting to decrease count for conveyor type: {conveyorType}");
-            var conveyorCount = conveyorCounts.Find(c => c.conveyorType == conveyorType);
+            var conveyorCount = AllConveyorTypeCounts.Find(c => c.conveyorType == conveyorType);
                 conveyorCount.currentCount++;
             if(conveyorCount.currentCount >= conveyorCount.maxCount)
             {
@@ -136,7 +136,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         public void DecreaseConveyor_CurrentCount(ConveyorType conveyorType){
             // decrement the current count of the lastCreatedConveyorType Conveyor from the conveyorCounts list
-            var conveyorCount = conveyorCounts.Find(c => c.conveyorType == conveyorType);
+            var conveyorCount = AllConveyorTypeCounts.Find(c => c.conveyorType == conveyorType);
             if (conveyorCount != null && conveyorCount.currentCount > 0)
             {
                 conveyorCount.currentCount--;
@@ -149,7 +149,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         }
         public int GetRemainingCount(ConveyorType conveyorType)
         {
-            var conveyorCount = conveyorCounts.Find(c => c.conveyorType == conveyorType);
+            var conveyorCount = AllConveyorTypeCounts.Find(c => c.conveyorType == conveyorType);
             if (conveyorCount == null) return 0;
             return conveyorCount.maxCount - conveyorCount.currentCount;
         }
@@ -166,5 +166,59 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
                 Debug.Log("Selected object is not a Conveyor.");
             }
         }
+
+
+    // Set Conveyor Quantites from the LevelManager
+    public void SetConveyorQuantities(ConveyorStats[] conveyorStats){
+        // * reset the List of Conveyor Count
+        AllConveyorTypeCounts.Clear();
+
+        // conveyorCounts = new List<ConveyorTypeCount>();
+        if (AllConveyorTypeCounts != null)
+            {
+            
+            foreach (var conveyorStat in conveyorStats)
+            {
+                // Add new conveyor type to the list
+                AllConveyorTypeCounts.Add(new ConveyorTypeCount 
+                { 
+                    conveyorType = conveyorStat.conveyorType,
+                    maxCount = conveyorStat.maxCount,
+                    currentCount = 0
+                });
+                Debug.Log($"Added new conveyor type {conveyorStat.conveyorType} with max count {conveyorStat.maxCount}");
+
+
+                // * Create the button in the UI canvas
+                CreateButtonInCanvas(conveyorStat.conveyorType, conveyorStat.maxCount);
+            }
+        }
+    }
+
+
+/// <summary>
+/// Creates a button in the UI canvas using the My_UIManager.
+/// </summary>
+/// <param name="conveyorType"></param>
+/// <param name="quantity"></param>
+    private void CreateButtonInCanvas(ConveyorType conveyorType, int quantity)
+        {
+            // Create a button in the UI canvas for the conveyor type
+            My_UIManager.Instance.CreateGridPlacementButton(conveyorType, quantity);
+        }
+
+
+    public List<ConveyorTypeCount> GetAllConveyorTypeCounts()
+        {
+            return AllConveyorTypeCounts;
+        }
+
+
+
+
+
+
+
+
     }
 }

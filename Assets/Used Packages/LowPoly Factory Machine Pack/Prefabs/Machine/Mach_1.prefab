@@ -757,6 +757,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3944527121292434288}
   - component: {fileID: 6276197240582470603}
+  - component: {fileID: 6259830408118670114}
   m_Layer: 9
   m_Name: Resource Converter
   m_TagString: Converter
@@ -800,6 +801,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1.7461693}
   m_Center: {x: 0, y: 0, z: 0.17127907}
+--- !u!114 &6259830408118670114
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6026235111733080753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52ae15c8bf70b354e88a44bc8af092d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outputType: 0
 --- !u!1 &6313584755771224579
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,8 +986,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8.012323, y: 2.4377759, z: 3.353146}
-  m_Center: {x: -0.13965106, y: 1.2300917, z: 0.051561832}
+  m_Size: {x: 8.012323, y: 2.4377759, z: 3.1409616}
+  m_Center: {x: -0.1396513, y: 1.2300917, z: 0.15765399}
 --- !u!114 &7268101891610052453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -986,9 +1000,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb625d30e51cb2499a5fda1188bda7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  metalPrefab: {fileID: 3350573696017204538, guid: f60c3e076b2bdbe40abcdef7895643a8, type: 3}
+  Product: {fileID: 3350573696017204538, guid: f60c3e076b2bdbe40abcdef7895643a8, type: 3}
   metalSpawnPoint: {fileID: 1539515867789463628}
-  spawnInterval: 2
+  isFirstMachine: 1
 --- !u!1 &8829913090216252830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1002,7 +1016,7 @@ GameObject:
   - component: {fileID: 3888776325149700931}
   m_Layer: 0
   m_Name: MachineExit
-  m_TagString: MachineExit
+  m_TagString: Machine
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

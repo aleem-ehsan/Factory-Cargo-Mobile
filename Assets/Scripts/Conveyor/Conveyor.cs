@@ -2,6 +2,7 @@ using UnityEngine;
 using Hypertonic.GridPlacement.GridObjectComponents;
 using System.Collections.Generic;
 using Hypertonic.GridPlacement.Example.BasicDemo;
+using System;
 
 
 
@@ -21,6 +22,8 @@ public class Conveyor : MonoBehaviour
         // so that when I am InPlacementMode, I can set them to FALL
         [SerializeField]private List<MetalBar> resourcesMovingOnMe = new List<MetalBar>();
 
+
+        private short numberOfCollisionsWithMachine = 0; 
 
 
         private void Awake()
@@ -49,6 +52,11 @@ public class Conveyor : MonoBehaviour
 
             // TODO: make the resourcesMovingOnMe to fall 
             SetMovingResourceToFall();
+
+
+
+            // * Set Other Grid Placement Buttons to False
+                Conveyor_Button_GridObjectSelectionOption.SetAnyButtonPressable(false);
         }
 
         /// <summary>
@@ -110,6 +118,14 @@ public class Conveyor : MonoBehaviour
             // which object it is by checking the name or however else you wish.
             if(other.GetComponent<Machine>() != null)
             {
+                Debug.Log("Conveyor ENTER Triggered with Machine: " + numberOfCollisionsWithMachine);
+                HandleEnteredMachineArea();
+            }
+            else if (other.GetComponent<SubmissionTable_Controller>() != null)
+            {
+                Debug.Log("Conveyor EXIT Triggered with Submission Table");
+                // If the conveyor exits the submission table, we can set the validation to true
+                // as it is no longer colliding with a machine.
                 HandleEnteredMachineArea();
             }
         }
@@ -120,15 +136,45 @@ public class Conveyor : MonoBehaviour
             {
                 HandleExitedMachineArea();
             }
+            else if (other.GetComponent<SubmissionTable_Controller>() != null)
+            {
+                Debug.Log("Conveyor EXIT Triggered with Submission Table");
+                // If the conveyor exits the submission table, we can set the validation to true
+                // as it is no longer colliding with a machine.
+                HandleExitedMachineArea();
+            }
         }
 
         private void HandleEnteredMachineArea()
         {
+            numberOfCollisionsWithMachine++;
             _customValidator.SetValidation(false);
         }
 
         private void HandleExitedMachineArea()
         {
-            _customValidator.SetValidation(true);
+            // Check if still colliding with a Machine, and if so, return
+               // ! : The error is When Conveyor is in Collision with Two machines, at that Time when it exits Collider of 1 Machine, It enables the 
+                                                // ! : CustomValidator, but it should not, as it is still colliding with the other Machine
+                                                // ! : So, we need to check if it is still colliding with a Machine, and if so, return   
+                
+            numberOfCollisionsWithMachine--;
+            if (numberOfCollisionsWithMachine < 0)
+            {
+                numberOfCollisionsWithMachine = 0; // Ensure it doesn't go negative
+            }
+
+            if(!IsStillCollidingWithMachine())
+            {
+                _customValidator.SetValidation(true);
+            }
+
+            Debug.Log("HandleExitedMachineArea Conveyor ENTERED Machine Area: " + numberOfCollisionsWithMachine);
+
         }
+
+    private bool IsStillCollidingWithMachine()
+    {
+        return numberOfCollisionsWithMachine > 0;
     }
+}
