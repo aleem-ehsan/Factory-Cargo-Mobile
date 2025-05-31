@@ -12,9 +12,10 @@ public class My_UIManager : MonoBehaviour
     [SerializeField] private GameObject GamePlayPanel;
 
 
-    [Header("Timer UI")]
+    [Header("Text UI")]
     [Tooltip("Timer text that will be updated continously,  it is here so that the TimerController can access it easily")]
     [SerializeField] public TextMeshProUGUI TimerText;
+    [SerializeField] public TextMeshProUGUI LevelNumberText;
 [Space(10)]
 
     [Header("Grid Coneyor Buttons Container")]
@@ -23,6 +24,9 @@ public class My_UIManager : MonoBehaviour
     [SerializeField] private GameObject ButtonGridPlacementPrefab; // Prefab for the conveyor button grid placement option
 
 
+[Header("Stars Controller")]
+[Tooltip("Controller for the STARS display in the win panel , assign in the Inspector")]
+    [SerializeField] private StarsController starsController; // Reference to the StarsController to manage star display in the win panel 
 
     // ---------------- Singelton ----------------
     public static My_UIManager Instance { get; private set; }
@@ -49,8 +53,8 @@ public class My_UIManager : MonoBehaviour
 
     public void ShowGameWinPanel()
     {
-        // stop the Time.timeScale
-        Time.timeScale = 0;
+        // // stop the Time.timeScale
+        // Time.timeScale = 0;
 
         // Show the game win panel
         gameWinPanel.SetActive(true);
@@ -83,7 +87,7 @@ public class My_UIManager : MonoBehaviour
         
     }
 
-    public void ReplayButtonPressed(){
+    public void RetryButtonPressed(){
         // resume the Time.timeScale
         Time.timeScale = 1;
 
@@ -93,6 +97,43 @@ public class My_UIManager : MonoBehaviour
         PausePanel.SetActive(false);
 
         // Reload the current scene or reset the game state
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public void NextLevelButtonPressed(){
+        // resume the Time.timeScale
+        Time.timeScale = 1;
+
+        // Hide all panels
+        gameWinPanel.SetActive(false);
+        gameLosePanel.SetActive(false);
+        PausePanel.SetActive(false);
+
+        // Reload the current scene And the Next Level will be Played because the LevelProgressManager Saved the Previous Completed Level
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name); 
+    }
+
+    /// <summary>
+    /// Function to Replay the Current Level Being Played
+    /// </summary>
+    public void ReplayButtonPressed(){
+        // resume the Time.timeScale
+        Time.timeScale = 1;
+
+        // Hide all panels
+        gameWinPanel.SetActive(false);
+        gameLosePanel.SetActive(false);
+        PausePanel.SetActive(false);
+
+        // Store the current level number to replay
+        int currentLevel = LevelManager.Instance.levelToLoad;
+        PlayerPrefs.SetInt("ReplayLevel", currentLevel);
+        PlayerPrefs.Save();
+
+        // Reload the current scene
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 
@@ -126,5 +167,35 @@ public class My_UIManager : MonoBehaviour
     }
 
 
+
+    public void UpdateLevelText(int levelNumber){
+        if (LevelNumberText != null)
+        {
+            LevelNumberText.text = "Level: " + levelNumber.ToString();
+        }
+        else
+        {
+            Debug.LogError("LevelNumberText is not assigned in My_UIManager.");
+        }
+    }
+
+    /// <summary>
+    /// Shows the specified number of stars in the win panel
+    /// </summary>
+    /// <param name="numberOfStars">Number of stars to show (0-3)</param>
+    public void ShowStars(short numberOfStars)
+    {
+        if (starsController == null)
+        {
+            Debug.LogError("StarsController is not assigned in My_UIManager!");
+            return;
+        }
+        Debug.Log("My_UIManager: Showing " + numberOfStars + " stars in the win panel.");
+        starsController.Display_YELLOW_Stars(numberOfStars);
+
+        // Save the Gained Stars in the LevelProgressManager with the completed level index
+        int currentLevel = LevelManager.Instance.levelToLoad;
+        LevelProgressManager.Instance.SaveLevelStars(currentLevel, numberOfStars);
+    }
 
 }

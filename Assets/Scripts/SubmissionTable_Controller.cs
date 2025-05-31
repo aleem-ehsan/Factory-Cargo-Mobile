@@ -30,6 +30,12 @@ public class SubmissionTable_Controller : MonoBehaviour
     public static SubmissionTable_Controller Instance { get; private set; }
 
 
+    // -------------- Events ----------------
+
+
+
+
+
     void Awake()
     {
         if (Instance == null)
@@ -202,8 +208,6 @@ public class SubmissionTable_Controller : MonoBehaviour
             CurrentPlacingPosition.z -= 2;
             CurrentPlacingPosition.y += 0.5f;
         }
-
-       
     }
 
     public void CheckLevelCompletion()
@@ -223,32 +227,46 @@ public class SubmissionTable_Controller : MonoBehaviour
             Debug.Log("Level Win! All required resources have been collected!");
             // OnLevelWin?.Invoke(); // Trigger level completion event
             My_UIManager.Instance.ShowGameWinPanel(); // Show the game win panel
-        }
-    }
+            LevelManager.Instance.CurrentLevelCompleted(); // Save the level progress
 
+            // * Stop the Time
+            Time.timeScale = 0;
 
-    public void TimeEnded(){  // this is only checked when the time is up for a Level
-         bool allResourcesCollected = true;
-        foreach (RequiredResource resource in requiredResources)
-        {
-            if (resource.quantity > 0)
-            {
-                allResourcesCollected = false;
-                break;
+        }else{
+            // * Check if the time is up then the level is lost as Resources not collected
+            if(TimerController.Instance.isTimeUp){
+                Debug.Log("Level Lose! Not all required resources have been collected!");
+                My_UIManager.Instance.ShowGameLosePanel(); // Show the game win panel
             }
         }
-
-        if (allResourcesCollected)
-        {
-            Debug.Log("Level Win! All required resources have been collected!");
-            // OnLevelWin?.Invoke(); // Trigger level completion event
-            My_UIManager.Instance.ShowGameWinPanel(); // Show the game win panel
-        }else{
-            Debug.Log("Level Lose! Not all required resources have been collected!");
-            My_UIManager.Instance.ShowGameLosePanel(); // Show the game win panel
-        }
     }
 
+
+// Time Up Function
+/*
+    // public void TimeEnded(){  // this is only checked when the time is up for a Level
+    //      bool allResourcesCollected = true;
+    //     foreach (RequiredResource resource in requiredResources)
+    //     {
+    //         if (resource.quantity > 0)
+    //         {
+    //             allResourcesCollected = false;
+    //             break;
+    //         }
+    //     }
+
+    //     if (allResourcesCollected)
+    //     {
+    //         Debug.Log("Level Win! All required resources have been collected!");
+    //         // OnLevelWin?.Invoke(); // Trigger level completion event
+    //         // My_UIManager.Instance.ShowGameWinPanel(); // Show the game win panel
+    //         Debug.Log("Now invoking OnAllRequirementsCompleted event");
+    //         OnAllRequirementsCompleted?.Invoke(); // Notify that all requirements are completed
+    //     }else{
+           
+    //     }
+    // }
+*/
 
     public ResourceType[] GetRequiredResourcesTypenames(){
 

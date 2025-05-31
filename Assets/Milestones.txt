@@ -38,9 +38,9 @@ o Destroy/loss condition if items don't reach the target in time.✅
 o Track success/failure based on real-time delivery and time.✅
 4. Level Design o Manually design 5–10 progressively difficult levels.❌
 o Introduce obstacles❌, limited conveyor count✅, and new mechanics✅.
-5. Save/Load System o Save player progress, stars earned (if implemented).❌
-o Load saved progress at startup.❌
-6. (Optional) Star Rating System o Rate level performance (1–3 stars) based on time and accuracy. o Display results at level completion.❌
+5. Save/Load System o Save player progress✅, stars earned✅ (if implemented).✅
+o Load saved progress at startup.✅
+6. (Optional) Star Rating System o Rate level performance (1–3 stars) based on time and accuracy. o Display results at level completion.✅
 
 
 
@@ -48,11 +48,11 @@ o Load saved progress at startup.❌
 Duration: 1 Week
 Cost: $50
 🎯 Goals:
-1. Animations o Conveyor movement, machine operations, transformation visuals.
-o Smooth, appealing animations with mobile optimization.
+1. Animations o Conveyor movement, machine operations, transformation visuals.✅
+o Smooth, appealing animations with mobile optimization.✅
 2. UI Enhancements
 o Improve the clarity and aesthetics of all buttons, HUD, and level display.
-o Optimize touch responsiveness and layout for mobile.
+o Optimize touch responsiveness and layout for mobile. ✅
 3. Sound & Music o Add appropriate SFX for conveyor motion, transformations, and UI.
 o Integrate light industrial background music.
 4. Mobile UX Tuning o Refine touch drag/drop mechanics. o Improve gestures and responsiveness for smaller screens.

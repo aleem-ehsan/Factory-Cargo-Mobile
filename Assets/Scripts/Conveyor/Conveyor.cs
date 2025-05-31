@@ -127,6 +127,8 @@ public class Conveyor : MonoBehaviour
                 // If the conveyor exits the submission table, we can set the validation to true
                 // as it is no longer colliding with a machine.
                 HandleEnteredMachineArea();
+            }else if(other.GetComponent<Prop>() != null){
+                HandleEnteredPropArea();
             }
         }
 
@@ -142,15 +144,17 @@ public class Conveyor : MonoBehaviour
                 // If the conveyor exits the submission table, we can set the validation to true
                 // as it is no longer colliding with a machine.
                 HandleExitedMachineArea();
+            }else if(other.GetComponent<Prop>() != null){
+                HandleExitedPropArea();
             }
         }
 
+//   ------ Machine Trigger Handling Functions -----
         private void HandleEnteredMachineArea()
         {
             numberOfCollisionsWithMachine++;
             _customValidator.SetValidation(false);
         }
-
         private void HandleExitedMachineArea()
         {
             // Check if still colliding with a Machine, and if so, return
@@ -172,6 +176,28 @@ public class Conveyor : MonoBehaviour
             Debug.Log("HandleExitedMachineArea Conveyor ENTERED Machine Area: " + numberOfCollisionsWithMachine);
 
         }
+
+
+
+//   ------ Props Trigger Handling Functions -----
+        private void HandleEnteredPropArea(){
+            Debug.Log("Conveyor ENTERED Wall Area");
+            numberOfCollisionsWithMachine++;
+            _customValidator.SetValidation(false);
+        }
+        private void HandleExitedPropArea()
+        {
+            numberOfCollisionsWithMachine--;
+        Debug.Log("Conveyor EXITED Prop Area: " + numberOfCollisionsWithMachine);
+            if(numberOfCollisionsWithMachine <= 0)
+            {
+                numberOfCollisionsWithMachine = 0; // Ensure it doesn't go negative
+                _customValidator.SetValidation(true);
+            }
+
+
+        }
+
 
     private bool IsStillCollidingWithMachine()
     {

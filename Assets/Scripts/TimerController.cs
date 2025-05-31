@@ -19,6 +19,7 @@ public class TimerController : MonoBehaviour
     private float currentTimeInSeconds;
 
 
+    public bool isTimeUp = false;
 
     // --------------- Singelton ---------------
     public static TimerController Instance { get; private set; }
@@ -104,10 +105,15 @@ public class TimerController : MonoBehaviour
     }
 
 
+/// <summary>
+/// Function which has the TimeEnd Event.
+/// </summary>
+/// <returns></returns>
     public IEnumerator EndTimeAfterRemainingTime(){
-        yield return new WaitForSeconds(minutes_Remaining*60 + seconds_Remaining);
+        yield return new WaitForSeconds(minutes_Remaining*60 + seconds_Remaining);  
         // Time is up
-        SubmissionTable_Controller.Instance.TimeEnded();
+        isTimeUp = true;
+        SubmissionTable_Controller.Instance.CheckLevelCompletion();
     }
 
 
@@ -128,4 +134,37 @@ public class TimerController : MonoBehaviour
         
         StartTimer();
     }
+
+
+    public void CheckHowMuchTimeIsUsed()
+    {
+        // Calculate remaining time percentage
+        float remainingTimePercentage = (currentTimeInSeconds / initialTimeInSeconds) * 100f;
+        
+        short stars = 0;
+        
+        // Determine stars based on remaining time percentage
+        if (remainingTimePercentage > 45f)
+        {
+            stars = 3;
+        }
+        else if (remainingTimePercentage > 25f )
+        {
+            stars = 2;
+        }
+        else if (remainingTimePercentage > 5 )
+        {
+            stars = 1;
+        }
+        else{
+            stars = 0; // No stars if less than 5% remaining
+            Debug.Log("No stars earned, less than 5% time remaining.");
+        }
+        // Show stars in UI
+        My_UIManager.Instance.ShowStars(stars);
+    }
+
+
+
+
 }
