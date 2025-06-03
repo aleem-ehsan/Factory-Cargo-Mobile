@@ -29,7 +29,7 @@ public class LevelRequirementsData : MonoBehaviour
             AllowedConveyors = new ConveyorStats[]
             {
                 new ConveyorStats(ConveyorType.Straight, 1), // Example conveyor stats
-                new ConveyorStats(ConveyorType.Short, 2) // Another example
+                new ConveyorStats(ConveyorType.Short, 2), // Another example
             }
         });
 

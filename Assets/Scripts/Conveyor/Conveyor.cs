@@ -9,6 +9,7 @@ using System;
 
 
 
+
 [RequireComponent(typeof(CustomValidator))]
 public class Conveyor : MonoBehaviour
 {
@@ -24,6 +25,10 @@ public class Conveyor : MonoBehaviour
 
 
         private short numberOfCollisionsWithMachine = 0; 
+
+
+    
+
 
 
         private void Awake()
@@ -89,7 +94,7 @@ public class Conveyor : MonoBehaviour
             {
                 if (resource != null)
                 {
-                    resource.Kill();
+                    resource.WasteMySelf();
                 }
             }
             resourcesMovingOnMe.Clear();

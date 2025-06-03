@@ -172,7 +172,7 @@ public class SubmissionTable_Controller : MonoBehaviour
             TextMeshProUGUI quantityText = uiItem.GetComponentInChildren<TextMeshProUGUI>();
             if (quantityText != null)
             {
-                quantityText.text = quantity.ToString();
+                quantityText.text = ": "+ quantity.ToString();
             }
         }
     }

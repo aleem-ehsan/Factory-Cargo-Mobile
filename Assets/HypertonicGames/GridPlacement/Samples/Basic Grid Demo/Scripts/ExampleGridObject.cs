@@ -15,12 +15,18 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            OnObjectSelected?.Invoke(gameObject);
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
             // This handler declaration is needed if the OnPointerUp Handler is implemented.
+
+            OnObjectSelected?.Invoke(gameObject);
+
+
+            // TODO :  for the Conveyor to be confimed at this Placement 
+            // OnConfirmPlacementPressed?.Invoke());
+            // Conveyor_Button_GridObjectSelectionOption.SetAnyButtonPressable(true));
         }
     }
 }

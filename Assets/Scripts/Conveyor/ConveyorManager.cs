@@ -8,7 +8,8 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
     {
         Long,
         Straight,
-        Short
+        Short,
+        Curved
     }
 
     public class ConveyorManager : MonoBehaviour

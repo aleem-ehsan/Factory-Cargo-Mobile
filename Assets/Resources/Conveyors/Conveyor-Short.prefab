@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7225406057788144093}
   - component: {fileID: 3175569352816306982}
   - component: {fileID: 2252866142693386424}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Conveyor-Short
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,13 +177,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1661125139524217490}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.024679406, y: 1.139, z: -1.169}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000058114523}
+  m_LocalPosition: {x: -0.025, y: 1.139, z: -1.927}
   m_LocalScale: {x: 0.89136827, y: 1.255887, z: 1.255887}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8306703737287145216}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &3408041582434398146
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -203,8 +203,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.26747847}
-  m_Center: {x: 0, y: 0, z: -0.6164975}
+  m_Size: {x: 1, y: 1, z: 0.11536051}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7738965879694870310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,7 +274,7 @@ Transform:
   m_GameObject: {fileID: 2351540027534383112}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.00000058114523}
-  m_LocalPosition: {x: -0.012, y: 0.923, z: 1.841}
+  m_LocalPosition: {x: -0.012, y: 0.923, z: 1.805}
   m_LocalScale: {x: 0.89136827, y: 1.255887, z: 0.96703297}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -299,8 +299,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.489968, y: 1.1203839, z: 1.7249491}
-  m_Center: {x: -0.110592484, y: -0.060191903, z: 0.11223811}
+  m_Size: {x: 3.489968, y: 1.0688924, z: 0.1580007}
+  m_Center: {x: -0.11059244, y: 0.2266635, z: 0.11223813}
 --- !u!114 &3826050863924055540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +317,7 @@ MonoBehaviour:
   _conveyor: {fileID: 0}
   ForwardDirection_GameObject: {fileID: 4145005240492287799}
   ForwardDirection: {x: 0, y: 0, z: 0}
+  spline: {fileID: 7305615736674630025}
 --- !u!54 &2552707093479365133
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -366,7 +367,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1183773975608788096, guid: e64bf24f4c0a9504a9f012824f9868c8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.02
+      value: 0.225
       objectReference: {fileID: 0}
     - target: {fileID: 1183773975608788096, guid: e64bf24f4c0a9504a9f012824f9868c8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -415,3 +416,14 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2327334422474997253, guid: e64bf24f4c0a9504a9f012824f9868c8, type: 3}
   m_PrefabInstance: {fileID: 1858401277080623410}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7305615736674630025 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8982601890122129595, guid: e64bf24f4c0a9504a9f012824f9868c8, type: 3}
+  m_PrefabInstance: {fileID: 1858401277080623410}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598e68924c9f6324bbfd049d3bae754c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

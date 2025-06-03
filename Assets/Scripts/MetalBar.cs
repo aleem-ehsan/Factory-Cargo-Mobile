@@ -15,12 +15,6 @@ public enum ResourceType
 
 public class MetalBar : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 2f;
-
-    private Rigidbody rb;
-    [SerializeField] private bool canMoveOnConveyor = true; // Initialize as true since it starts in machine
-
-    [SerializeField] public Vector3 moveDirection = Vector3.right; // Default move direction
 
     private BoxCollider triggerCollider;
 
@@ -36,14 +30,15 @@ public class MetalBar : MonoBehaviour
     [SerializeField] private GameObject StoneShape; 
 
 
+    [SerializeField] private MovementController movementController; // Reference to the movement controller script
 
     private void Awake()
     {
-        // Get or add Rigidbody if it doesn't exist
-        rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true; // Disable physics for the metal bar
+       
 
         triggerCollider = GetComponent<BoxCollider>();
+
+        movementController = GetComponent<MovementController>();
     }
 
     private void Start()
@@ -51,40 +46,22 @@ public class MetalBar : MonoBehaviour
         CalculateTheAmountOfShapes();
     }
 
-    public void MoveTheMetalInMachine()
-    {
-        rb.isKinematic = true; // Disable physics when inside the machine
-        canMoveOnConveyor = true;
-    }
+
 
     private void Update()
     {
-        if (canMoveOnConveyor)
-        {
-            MoveMetalBar();
-        }
+        // if (canMoveOnConveyor)
+        // {
+        //     MoveMetalBar();
+        // }
     }
 
     private void MoveMetalBar(){
        
-            rb.transform.position += moveDirection * moveSpeed * Time.deltaTime;
+            // rb.transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }
 
-    public void LeaveCurrentConveyor( ConveyorExitController conveyorExitController)
-    {
-       
-        if (!canMoveOnConveyor) return; // If already outside, do nothing
-        Debug.Log("Leaving the machine");
 
-        canMoveOnConveyor = false;
-        rb.isKinematic = false; // Enable physics when leaving the machine
-        rb.AddForce(moveDirection + 2 * moveSpeed * Vector3.up, ForceMode.Impulse);
-        // rb.transform.SetParent(null); // Detach the metal bar from the machine
-
-        if(conveyorExitController != null){
-            conveyorExitController._conveyor.RemoveMovingResource(this); // Remove this metal bar from the conveyor's list of moving resources
-        }
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -95,69 +72,128 @@ public class MetalBar : MonoBehaviour
             {
                 Debug.Log("Metal Bar Triggered with Machine Exit");
                 LeaveCurrentConveyor(null);
-            }else if (other.TryGetComponent<MachineEntryController>(out var machineEntryController2)){
-                Debug.Log("Metal Bar Triggered with Machine Entry");
-                MoveWithConveyor(other.gameObject);
+
+                // * Jump a little bit forward in the direction of the machine exit
+                transform.DOJump(transform.position + machineExitController.transform.forward * 2f, 0.4f, 1, 0.5f).SetEase(Ease.Linear); // Jump forward in the direction of the machine exit
+
             }
+
+
+            // *----------------  {"MachineEntryController"} Script is not Used any more / {"ConveyorEntryController"} is used for Machines  ----------------
+            else if (other.TryGetComponent<ConveyorEntryController>(out var conveyorEntryController)){
+                Debug.Log("Metal Bar Triggered with Machine Entry");
+                MoveWithConveyor(conveyorEntryController);
+            }
+            // ?--------------------------------------------
+
         }else if(other.CompareTag("Conveyor"))
         {
+            // *ENTRY CONTROLLER
             if (other.TryGetComponent<ConveyorEntryController>(out var conveyorEntryController))
             {
                 Debug.Log("Metal Bar Triggered with Conveyor Entry");
 
-                MoveWithConveyor(other.gameObject);
-                conveyorEntryController._conveyor.AddMovingResource(this);  // ! very important to assign resource to the Conveyor
-            }else if (other.TryGetComponent<ConveyorExitController>(out var conveyorExitController)){
+
+                if(movementController.isMovingOnConveyor) return; // If already on a conveyor, do nothing
+                    MoveWithConveyor(conveyorEntryController);
+                    conveyorEntryController._conveyor.AddMovingResource(this);  // ! very important to assign resource to the Conveyor
+            }
+            // *EXIT CONTROLLER
+            else if (other.TryGetComponent<ConveyorExitController>(out var conveyorExitController)){
+                
+                // if(!movementController.isMovingOnConveyor) return; // ? If not moving on a conveyor, do nothing otherwise Repel the Metal Bar
                 LeaveCurrentConveyor(conveyorExitController);
-                Debug.Log("Metal Bar Triggered with Conveyor Exit");
+
+                // ! Remove the resource from the conveyor only for the Conveyors , not the Machines because they dont keep Moving Resources in Cache
+                conveyorExitController._conveyor.RemoveMovingResource(this);
+                    Debug.Log("Metal Bar Triggered with Conveyor Exit");
+
+                // * Jump a little bit forward in the direction of the machine exit
+                transform.DOJump(transform.position + conveyorExitController.transform.forward * 2f, 0.1f, 1, 0.5f).SetEase(Ease.Linear); // Jump forward in the direction of the machine exit
+
+                }
+
+            // }else if(other.CompareTag("Converter"))
+            }else if(other.TryGetComponent<ResourceConverter>(out var resourceConverter))
+            {
+                Debug.Log("Metal Bar Triggered with Converter");
+            ChangeShape(resourceConverter.outputType);
+            }
+        }
+
+        void OnCollisionEnter(Collision collision)
+        {
+            if(collision.gameObject.CompareTag("Floor"))
+            {
+                // disable this Script 
+                triggerCollider.enabled = false; // ! so that no more collisions are detected as the metal bar is on the floor
+                Destroy(gameObject, 2f); // Destroy the metal bar after 2 seconds
+            }
+        }
+
+
+
+    /// <summary>
+    /// Handle Movement for Both Machine Conveyors and Simple Conveyors 
+    /// </summary>
+    /// <param name="EntryController"></param>
+        public void MoveWithConveyor(ConveyorEntryController conveyorEntryController)
+        {
+        if (movementController.isMovingOnConveyor) {
+            Debug.Log("Metal Bar is already Moving with Conveyor, do nothing");
+            return;
+            } // If already on a conveyor, do nothing
+        Debug.Log("Moving with Conveyor");
+
+
+    // * Add the Machine's EntryController also the Script of ConveyorEntryController
+            // EntryController.TryGetComponent<ConveyorEntryController>(out var conveyorEntryController);
+            if (conveyorEntryController == null)
+            {
+                Debug.LogError("ConveyorEntryController not found on the EntryController GameObject.");
+                return;
             }
 
-
-        // }else if(other.CompareTag("Converter"))
-        }else if(other.TryGetComponent<ResourceConverter>(out var resourceConverter))
-        {
-            Debug.Log("Metal Bar Triggered with Converter");
-           ChangeShape(resourceConverter.outputType);
-        }
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.CompareTag("Floor"))
-        {
-            // disable this Script 
-            triggerCollider.enabled = false; // ! so that no more collisions are detected as the metal bar is on the floor
-            Destroy(gameObject, 2f); // Destroy the metal bar after 2 seconds
-        }
-    }
-
-
-    private void MoveWithConveyor(GameObject EntryController)
-    {
-        Debug.Log("Metal Bar Moving with conveyor");
-        rb.isKinematic = true; // Disable physics when on the conveyor
+        movementController.AttachToSpline(conveyorEntryController.spline);
+        movementController.isMovingOnConveyor = true;
+        
+/*
         // Use DoTween to smoothly move and rotate the metal bar to the conveyor's position and orientation
-        Vector3 targetPosition = EntryController.transform.position;
-        Vector3 conveyorRotation = EntryController.transform.rotation.eulerAngles;
-        conveyorRotation.z = 0;
-        Quaternion targetRotation = Quaternion.Euler(0, conveyorRotation.y - 90, 0);
+        // Vector3 targetPosition = EntryController.transform.position;
+        // Vector3 conveyorRotation = EntryController.transform.rotation.eulerAngles;
+        // conveyorRotation.z = 0;
+        // Quaternion targetRotation = Quaternion.Euler(0, conveyorRotation.y - 90, 0);
 
         // Animate position and rotation over 0.5 seconds
         transform.DOMove(targetPosition, 0.5f).SetEase(Ease.OutCubic);
         transform.DORotateQuaternion(targetRotation, 0.5f).SetEase(Ease.OutCubic);
         canMoveOnConveyor = true; // Set to true to allow movement on the conveyor
 
+
+*/
+
         // // set rotation of Z axis to 0
         // Vector3 rotation = transform.rotation.eulerAngles;
         // rotation.z = 0;
         // transform.rotation = Quaternion.Euler(rotation);
 
+    }
+    
+
+        public void LeaveCurrentConveyor( ConveyorExitController conveyorExitController)
+    {
        
+        if (!movementController.isMovingOnConveyor) {
+            Debug.Log("Metal Bar is not Moving with Conveyor, do nothing");
+            return;
+            } // If already outside, do nothing
+        Debug.Log("Leaving the machine");
 
-        moveDirection =  EntryController.transform.forward;   
-
+        movementController.DetachFromSpline();  // Detach from the spline if attached
+        movementController.isMovingOnConveyor = false;
 
     }
+
 
 
 
@@ -226,7 +262,7 @@ public class MetalBar : MonoBehaviour
 
     }
 
-    public void Kill(){
+    public void WasteMySelf(){
         // Disable the metal bar
 
         // give a shrink affect using DoTween
@@ -240,8 +276,8 @@ public class MetalBar : MonoBehaviour
 
         // Disable the collider
         triggerCollider.enabled = false; // ! so that no more collisions are detected as the metal bar is on the floor
-        rb.isKinematic = true; // Disable physics when on the conveyor
-        canMoveOnConveyor = false; // Disable movement on the conveyor
+        movementController.DisablePhsyics();
+        movementController.isMovingOnConveyor = false; // Disable movement on the conveyor
         
         // Destroy the metal bar after 2 seconds
         Destroy(gameObject, 2f);

@@ -113,7 +113,7 @@ public class TimerController : MonoBehaviour
         yield return new WaitForSeconds(minutes_Remaining*60 + seconds_Remaining);  
         // Time is up
         isTimeUp = true;
-        SubmissionTable_Controller.Instance.CheckLevelCompletion();
+        // SubmissionTable_Controller.Instance.CheckLevelCompletion(); //TODO: Testing purposes  - To disable the Level from being completed
     }
 
 

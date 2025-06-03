@@ -787,7 +787,7 @@ GameObject:
   - component: {fileID: 6210823211969228057}
   - component: {fileID: 1693588520244865228}
   - component: {fileID: 4230144000341039433}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Resource Converter (1)
   m_TagString: Converter
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
@@ -875,6 +875,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.77
       objectReference: {fileID: 0}
+    - target: {fileID: 2439313873440121872, guid: 8bcbd82c7f4b626428162bdb5268860b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2439313873440121872, guid: 8bcbd82c7f4b626428162bdb5268860b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.56
+      objectReference: {fileID: 0}
     - target: {fileID: 2541128100096819050, guid: 8bcbd82c7f4b626428162bdb5268860b, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -929,7 +937,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5770486196196539319, guid: 8bcbd82c7f4b626428162bdb5268860b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.7
+      value: -4.38
       objectReference: {fileID: 0}
     - target: {fileID: 5770486196196539319, guid: 8bcbd82c7f4b626428162bdb5268860b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -975,6 +983,10 @@ PrefabInstance:
       propertyPath: isFirstMachine
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7268101891610052453, guid: 8bcbd82c7f4b626428162bdb5268860b, type: 3}
+      propertyPath: machineEntryController
+      value: 
+      objectReference: {fileID: 6163027745014520552}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -988,3 +1000,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5770486196196539319, guid: 8bcbd82c7f4b626428162bdb5268860b, type: 3}
   m_PrefabInstance: {fileID: 83323046841084111}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6163027745014520552 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6102233227586925095, guid: 8bcbd82c7f4b626428162bdb5268860b, type: 3}
+  m_PrefabInstance: {fileID: 83323046841084111}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2507fdb07d85c29479b9b84e2c6cad1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

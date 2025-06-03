@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8306703737287145216}
+  - component: {fileID: 2252866142693386424}
   - component: {fileID: 2116007617546747328}
   - component: {fileID: 3112085739182267027}
   - component: {fileID: 2992513457245493868}
   - component: {fileID: 7225406057788144093}
   - component: {fileID: 3175569352816306982}
-  - component: {fileID: 2252866142693386424}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Conveyor-Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,6 +40,33 @@ Transform:
   - {fileID: 3102843178164244575}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &2252866142693386424
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670164648180013471}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &2116007617546747328
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -123,33 +150,6 @@ MonoBehaviour:
   - {fileID: 3408041582434398146}
   conveyorType: 1
   resourcesMovingOnMe: []
---- !u!54 &2252866142693386424
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 670164648180013471}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1661125139524217490
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 3408041582434398146}
   - component: {fileID: 7738965879694870310}
   - component: {fileID: 7462776092516318857}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Exit Point Collider
   m_TagString: Conveyor
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -178,7 +178,7 @@ Transform:
   m_GameObject: {fileID: 1661125139524217490}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.024679406, y: 1.11, z: 3.16}
+  m_LocalPosition: {x: -0.024679406, y: 1.11, z: 3.031}
   m_LocalScale: {x: 0.89136827, y: 1.255887, z: 1.255887}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -203,8 +203,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.26747847}
-  m_Center: {x: 0, y: 0, z: -0.6164975}
+  m_Size: {x: 1, y: 0.84997123, z: 0.07420635}
+  m_Center: {x: 0, y: 0.07501438, z: -0.6164975}
 --- !u!114 &7738965879694870310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 2297757354436526351}
   - component: {fileID: 3826050863924055540}
   - component: {fileID: 2552707093479365133}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Coneyor Entry
   m_TagString: Conveyor
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
@@ -274,7 +274,7 @@ Transform:
   m_GameObject: {fileID: 2351540027534383112}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.005, y: 1.144, z: -3.36}
+  m_LocalPosition: {x: -0.005, y: 1.144, z: -3.34}
   m_LocalScale: {x: 0.89136827, y: 1.255887, z: 1.255887}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -299,8 +299,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.513532, y: 1.1203839, z: 1.2060668}
-  m_Center: {x: -0.110592484, y: -0.060191903, z: 0.37167943}
+  m_Size: {x: 2.513532, y: 0.95231247, z: 0.10403669}
+  m_Center: {x: 0, y: 0.08403563, z: 0}
 --- !u!114 &3826050863924055540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +317,7 @@ MonoBehaviour:
   _conveyor: {fileID: 0}
   ForwardDirection_GameObject: {fileID: 559833935475995308}
   ForwardDirection: {x: 0, y: 0, z: 0}
+  spline: {fileID: 6051610824205670703}
 --- !u!54 &2552707093479365133
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -352,6 +353,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8306703737287145216}
     m_Modifications:
+    - target: {fileID: 682274405, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1312255172713424261, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.95
@@ -400,9 +405,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3783141156085650008, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
+      propertyPath: m_Name
+      value: Conveyor Spline
+      objectReference: {fileID: 0}
+    - target: {fileID: 3783141156085650008, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4329719776507491514, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
       propertyPath: m_Name
       value: Conveyor (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329719776507491514, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5336955692570132325, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6530073487867292522, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8233885467219848597, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -414,6 +443,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5336955692570132325, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
   m_PrefabInstance: {fileID: 5608178983777947081}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6051610824205670703 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2175206638944081126, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
+  m_PrefabInstance: {fileID: 5608178983777947081}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598e68924c9f6324bbfd049d3bae754c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6909172954096330828 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1312255172713424261, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}

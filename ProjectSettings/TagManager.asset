@@ -20,10 +20,10 @@ TagManager:
   - Grid
   - PlacementGrid
   - Resource
-  - Converter
   - 
-  - 
-  - 
+  - Triggers
+  - Conveyor
+  - Prop
   - 
   - 
   - 

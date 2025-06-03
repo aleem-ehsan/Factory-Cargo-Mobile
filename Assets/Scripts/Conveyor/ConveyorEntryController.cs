@@ -1,4 +1,5 @@
 using UnityEngine;
+using Dreamteck.Splines;
 
 public class ConveyorEntryController : MonoBehaviour
 {
@@ -11,53 +12,24 @@ public class ConveyorEntryController : MonoBehaviour
 
    [HideInInspector] public Vector3  ForwardDirection;
 
+    [Header("Spline ")]
+        [SerializeField] public SplineComputer spline; // Reference to the spline component if needed
 
 
     void Awake()
     {
         _conveyor = GetComponentInParent<Conveyor>();
+
+
     }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
         {
-            ForwardDirection = ForwardDirection_GameObject.transform.forward;
+            // ?: TO BE REMOVED
+            // ForwardDirection = ForwardDirection_GameObject.transform.forward;
         }
 
-
-    // void OnTriggerEnter(Collider other)
-    // {
-    //     if (other.CompareTag("MachineExit"))
-    //     {
-    //         if (other.TryGetComponent<MachineExitController>(out var machineExitController))
-    //         {
-    //            Debug.Log("Conveyor ENTRY:    Connected to machine Exit point: " + machineExitController.name);
-    //         }
-
-    //     }
-    //     else if (other.CompareTag("Conveyor"))
-    //     {
-    //         if (other.TryGetComponent<ConveyorExitController>(out var conveyorExitController))
-    //         {
-    //             Debug.Log("Conveyor ENTRY:       Connected to conveyor: " + conveyorExitController.name);
-    //         }
-    //     }
-    // }
-    
-
-    // void OnTriggerExit(Collider other)
-    // {
-    //     if (other.CompareTag("Machine"))
-    //     {
-    //         connectedMachine = null;
-    //         Debug.Log("ENTRY:       Disconnected from machine");
-    //     }
-    //     else if (other.CompareTag("Conveyor"))
-    //     {
-    //         connectedConveyor = null;
-    //         Debug.Log("ENTRY:       Disconnected from conveyor");
-    //     }
-    // }
 
 }

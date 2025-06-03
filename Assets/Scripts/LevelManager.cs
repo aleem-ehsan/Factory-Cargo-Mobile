@@ -58,7 +58,10 @@ using UnityEngine;
                 }
             }
             
-            LoadLastUncompletedLevel();
+            // TODO: Only to Play a specific level 
+            #if !UNITY_EDITOR 
+             LoadLastUncompletedLevel();
+            #endif
             EnableActiveLevel();
         }
 

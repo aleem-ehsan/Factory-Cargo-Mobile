@@ -14,7 +14,7 @@ public class Machine : MonoBehaviour
     [SerializeField] private Transform metalSpawnPoint;
 
 
-    private MachineEntryController machineEntryController; // Reference to the MachineEntryController script
+    [SerializeField] private ConveyorEntryController machineEntryController; // Reference to the MachineEntryController script
 
     public bool isFirstMachine = false; // Flag to check if this is the first machine in the level
 
@@ -24,13 +24,20 @@ public class Machine : MonoBehaviour
 
     private void Awake()
     {
-        if(!isFirstMachine) // !: Ensure only one instance of Machine exists
+        // if(!isFirstMachine) // !: Ensure only one instance of Machine exists
+        //     return;
+
+
+        if(!isFirstMachine){ // !: Ensuring that only 1 Machine can Create Products from START
             return;
+        }
         
         // Remove singleton enforcement so all Machine instances remain in the scene
         Instance = this;
 
         InitializeProducts();
+
+        machineEntryController = GetComponentInChildren<ConveyorEntryController>();
     }
 
     private void InitializeProducts()
@@ -40,12 +47,11 @@ public class Machine : MonoBehaviour
 
 
     void Start(){
-        if(isFirstMachine)  // ? if not disabled, Spawned Metal will instantly Trigger Collisions
-            DisableEntry();
+        // if(isFirstMachine)  // ? if not disabled, Spawned Metal will instantly Trigger Collisions
+        //     DisableEntry();
     }
 
     public void DisableEntry(){
-        machineEntryController = GetComponentInChildren<MachineEntryController>();
         if (machineEntryController != null)
         {
         //   destroy the MachineEntryController component to disable it
@@ -74,16 +80,40 @@ public class Machine : MonoBehaviour
 
         if (metalBar != null)
         {
-            metalBar.moveDirection = transform.right; 
-            metalBar.MoveTheMetalInMachine();
+
+            // 
+
+
+            // metalBar.moveDirection = transform.right; 
+            Debug.Log("Machine Assigning the Spline to the Metal Bar");
+            spawnedMetalBar.transform.localRotation = Quaternion.Euler(0, 90, 0);
+
+            // Tryget the MovementController from the MetalBar
+            MovementController movementController;
+            spawnedMetalBar.TryGetComponent<MovementController>(out movementController);
+
+            if (movementController != null)
+            {
+                movementController.isMovingOnConveyor = false;
+            }
+
+            metalBar.MoveWithConveyor(machineEntryController);
         }
         else
         {
             Debug.LogError("MetalBar component not found on the spawned object.");
         }
-       
     }
 
+
+    public ConveyorEntryController GetMachineEntryController()
+    {
+        if (machineEntryController == null)
+        {
+            Debug.LogError("MachineEntryController is not assigned or found.");
+        }
+        return machineEntryController;
+    }
 
 
 
