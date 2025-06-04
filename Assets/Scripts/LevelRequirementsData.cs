@@ -45,8 +45,8 @@ public class LevelRequirementsData : MonoBehaviour
             // * Amount of Conveyors allowed 
             AllowedConveyors = new ConveyorStats[]
             {
-                new ConveyorStats(ConveyorType.Straight, 1), // Example conveyor stats
-                new ConveyorStats(ConveyorType.Short, 1) // Another example
+                new ConveyorStats(ConveyorType.Straight, 2), // Example conveyor stats
+                new ConveyorStats(ConveyorType.Short, 2) // Another example
             }
         });
 
@@ -55,16 +55,32 @@ public class LevelRequirementsData : MonoBehaviour
         {
             requiredResources = new RequiredResource[]
             {
-                new RequiredResource(ResourceType.MetalBar, 1),
-                new RequiredResource(ResourceType.TexturedBar, 2)
+                new RequiredResource(ResourceType.MetalBar, 4),
             },
             AvailableTimeInSeconds = 40,
 
             // * Amount of Conveyors allowed 
             AllowedConveyors = new ConveyorStats[]
             {
-                new ConveyorStats(ConveyorType.Straight, 2), // Example conveyor stats
-                new ConveyorStats(ConveyorType.Short, 2) // Another example
+                new ConveyorStats(ConveyorType.Curved, 1), // Example conveyor stats
+                new ConveyorStats(ConveyorType.Straight, 1), // Example conveyor stats
+            }
+        });
+
+        // Level 4
+        levels.Add(new LevelData
+        {
+            requiredResources = new RequiredResource[]
+            {
+                new RequiredResource(ResourceType.MetalBar, 4),
+            },
+            AvailableTimeInSeconds = 40,
+
+            // * Amount of Conveyors allowed 
+            AllowedConveyors = new ConveyorStats[]
+            {
+                new ConveyorStats(ConveyorType.Curved, 1), // Example conveyor stats
+                new ConveyorStats(ConveyorType.Straight, 1), // Example conveyor stats
             }
         });
 

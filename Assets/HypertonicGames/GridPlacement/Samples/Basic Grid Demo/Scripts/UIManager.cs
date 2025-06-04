@@ -54,10 +54,13 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             Conveyor_Button_GridObjectSelectionOption.OnOptionSelected -= HandleGridObjectOptionSelected;          
         }
 
+
+        // TODO: FUNCTION TO HIDE THE OBJECT SELECTION UI
         private void HandleGridObjectOptionSelected(GameObject gridObject)
         {
             // _objectSelectionUI.SetActive(false);
-            _gridControls.SetActive(true);
+            // ? To Show Grid Controls:  _gridControls.SetActive(true);
+            _gridControls.SetActive(false); 
         }
 
         private void HandleAddAnObjectButtonPressed()
@@ -92,11 +95,13 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             _gridControls.SetActive(false);
         }
 
+        // TODO: FUNCTION TO SHOW THE GRID CONTROLS UI WHEN A GRID OBJECT IS SELECTED
         private void HandleExampleGridObjectSelected(GameObject gridObject)
         {
             GridManagerAccessor.GridManager.OnGridObjectDeleted += HandleGridObjectDeleted;
 
-            _gridControls.SetActive(true);
+            // ? To Show Grid Controls:  _gridControls.SetActive(true);
+            _gridControls.SetActive(false);
         }
 
         private void HandleGridObjectDeleted()

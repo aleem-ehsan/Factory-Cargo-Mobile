@@ -159,7 +159,9 @@ public class SubmissionTable_Controller : MonoBehaviour
                 PlaceResourceOnTable(resourceObject);
 
                 // Check if all resources are collected
-                CheckLevelCompletion(); // TODO: TESTING --- Uncomment this when want to check for level completion
+                #if !UNITY_EDITOR
+                    CheckLevelCompletion(); // TODO: TESTING --- Uncomment this when want to check for level completion
+                # endif
                 break;
             }
         }

@@ -32,8 +32,16 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             ExampleGridObject.OnObjectSelected += HandleExampleGridObjectSelected;
 
 
-             // My Added Subscribers
+             // * My Added Subscribers
             Conveyor_Button_GridObjectSelectionOption.OnOptionSelected += HandleGridObjectOptionSelected;
+            ExampleGridObject.OnConveyorConfirmed += HandleConfirmButtonPressed;
+            ExampleGridObject.OnConveyorDeleted += HandleDeleteObjectPressed;
+
+
+            // * event when Grid-Conveyor-Button is Released  
+            Conveyor_Button_GridObjectSelectionOption.OnOptionReleased += HandleConfirmButtonPressed;
+            
+
         }
 
         private void OnDisable()
@@ -47,8 +55,14 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             Button_GridObjectSelectionOption.OnOptionSelected -= HandleGridObjectOptionSelected;
             ExampleGridObject.OnObjectSelected -= HandleExampleGridObjectSelected;
 
-             // My Added Subscribers
+             // * My Added Subscribers
             Conveyor_Button_GridObjectSelectionOption.OnOptionSelected -= HandleGridObjectOptionSelected;
+            ExampleGridObject.OnConveyorConfirmed -= HandleConfirmButtonPressed;
+            ExampleGridObject.OnConveyorDeleted -= HandleDeleteObjectPressed;
+
+
+             // * event when Grid-Conveyor-Button is Released  
+            Conveyor_Button_GridObjectSelectionOption.OnOptionReleased -= HandleConfirmButtonPressed;
         }
 
         private void HandleConfirmButtonPressed()

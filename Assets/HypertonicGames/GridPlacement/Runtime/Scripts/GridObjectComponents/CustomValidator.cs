@@ -25,5 +25,13 @@ namespace Hypertonic.GridPlacement.GridObjectComponents
 
             OnValidationChanged?.Invoke(_isValid);
         }    
+        /// <summary>
+        /// For now, it just returns the current state of _isValid
+        /// </summary>
+        /// <returns></returns>
+        public bool IsValidPlacement()
+        {
+            return _isValid;
+        }
     }
 }

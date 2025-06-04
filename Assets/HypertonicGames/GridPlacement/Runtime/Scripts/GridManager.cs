@@ -162,6 +162,9 @@ namespace Hypertonic.GridPlacement
             Setup();
         }
 
+
+
+
         /// <summary>
         /// Setup method required to initialise the grid system
         /// </summary>
@@ -373,7 +376,7 @@ namespace Hypertonic.GridPlacement
             _gridObjectPlacementManager.Setup(this, _gridSettings, gridObjectToPlace);
 
 
-// ! : disabling the Grid from being displayed when entering placement mode  - Grid
+// ! : My Added -- disabling the Grid from being displayed when entering placement mode  - Grid
             if (!_gridDisplayManager.IsDisplaying)
             {
                 DisplayGrid();
@@ -998,7 +1001,7 @@ namespace Hypertonic.GridPlacement
             }
         }
 
-        private void UpdatePlacementIndicator(PlacementValidResponse placementValidResponse)
+        public void UpdatePlacementIndicator(PlacementValidResponse placementValidResponse)
         {
             _gridCellPlacementIndicator.UpdateHighlightGridCell(_gridObjectPlacementManager.GridCellOfSelectedPosition, placementValidResponse);
         }

@@ -14,7 +14,7 @@ using System;
 public class Conveyor : MonoBehaviour
 {
     private CustomValidator _customValidator;
-    private bool isPlaced = false;
+    public bool isPlaced = false;
 
         [SerializeField] private BoxCollider[] TriggerColliders;
         [SerializeField] public ConveyorType conveyorType; // Set this in the inspector for each conveyor prefab
@@ -57,11 +57,6 @@ public class Conveyor : MonoBehaviour
 
             // TODO: make the resourcesMovingOnMe to fall 
             SetMovingResourceToFall();
-
-
-
-            // * Set Other Grid Placement Buttons to False
-                Conveyor_Button_GridObjectSelectionOption.SetAnyButtonPressable(false);
         }
 
         /// <summary>

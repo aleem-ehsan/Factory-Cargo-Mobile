@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-
 namespace Hypertonic.GridPlacement.Example.BasicDemo
 {
     public enum ConveyorType
@@ -31,7 +30,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         public static ConveyorType lastCreatedConveyorType = ConveyorType.Long; // Default value, can be changed as needed
 
-
+        private GameObject lastCreatedConveyor_GameObject; // Reference to the last created conveyor prefab, if needed
 
 // ------------ EVENT  -------------
     
@@ -55,14 +54,18 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         void OnEnable()
         {
             Button_CancelPlacement.OnCancelPlacementPressed += HandleCancelPlacement;
-            Button_Delete.OnDeletePressed += ConveyorDeleted;
             ExampleGridObject.OnObjectSelected += ConveyorIsBeingSelected;
+
+            Button_Delete.OnDeletePressed += ConveyorDeleted;
+            ExampleGridObject.OnConveyorDeleted += ConveyorDeleted;
         }
         void OnDisable()
         {
             Button_CancelPlacement.OnCancelPlacementPressed -= HandleCancelPlacement;
-            Button_Delete.OnDeletePressed -= ConveyorDeleted;
             ExampleGridObject.OnObjectSelected -= ConveyorIsBeingSelected;
+
+            Button_Delete.OnDeletePressed -= ConveyorDeleted;
+            ExampleGridObject.OnConveyorDeleted -= ConveyorDeleted;
 
         }
 
@@ -74,6 +77,8 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
                 DecreaseConveyor_CurrentCount(selectedConveyor.conveyorType);
                 selectedConveyor = null;
                 OnConveyorCanceledOrDeleted?.Invoke(lastCreatedConveyorType); // to update the Count-Text of the Button
+
+                
             }
             else
             {
@@ -215,7 +220,36 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         }
 
 
+    public GameObject GetLastCraetedConveyor(){
+        if(lastCreatedConveyor_GameObject == null)
+        {
+            Debug.LogError("Last created conveyor GameObject is null. Please set it before accessing.");
+            return null;
+        }
+            return lastCreatedConveyor_GameObject;
+    }
 
+
+    /// <summary>
+    /// Called from Conveyor_Button_GridObjectSelectionOption to set the LAST-CREATED-CONVEYOR GameObject. So that it can be used later for DELETION or other operations.
+    /// </summary>
+    /// <param name="conveyorGameObject"></param>
+    public void SetLastCreatedConveyor(GameObject conveyorGameObject)
+        {
+            lastCreatedConveyor_GameObject = conveyorGameObject;
+            Debug.Log($"Last created conveyor set to: {conveyorGameObject.name}");
+
+            // set the Selected Conveyor to this conveyorGameObject
+            if (conveyorGameObject.TryGetComponent<Conveyor>(out Conveyor conveyor))
+            {
+                selectedConveyor = conveyor;
+                Debug.Log($"Selected Conveyor set to: {conveyor.name} of type {conveyor.conveyorType}");
+            }
+            else
+            {
+                Debug.LogError("The provided GameObject does not have a Conveyor component.");
+            }
+        }
 
 
 
