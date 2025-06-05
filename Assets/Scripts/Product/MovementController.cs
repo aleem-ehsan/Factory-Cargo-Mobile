@@ -43,18 +43,24 @@ public class MovementController : MonoBehaviour
         {
             Debug.Log("Attaching to spline: " + spline.name);
 
-
-            splineFollower.SetDistance(0);
-
             splineFollower.spline = spline; // Set the spline for the SplineFollower
-            splineFollower.follow = true; // Enable following the spline
-             
-            //  make the spline follower distance 0
+            splineFollower.follow = false;
+
+            // Project the current position onto the spline to get the correct starting point
+            SplineSample sample = new SplineSample();
+            spline.Project(transform.position, ref sample);
+            
+            // Set the initial position and rotation based on the projected point
+            transform.SetPositionAndRotation(sample.position, sample.rotation);
+            
+            // Set the follower to start at this position
+            splineFollower.SetPercent(sample.percent);
+            
+            // Now enable following
+            splineFollower.follow = true;
 
             // disable Physics
             DisablePhsyics();
-
-            rb.transform.SetParent(spline.transform); // Set the spline as the parent of the metal bar
         }
         else
         {

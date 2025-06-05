@@ -1007,7 +1007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Product: {fileID: 3350573696017204538, guid: f60c3e076b2bdbe40abcdef7895643a8, type: 3}
   metalSpawnPoint: {fileID: 1539515867789463628}
-  machineEntryController: {fileID: 0}
+  machineEntryController: {fileID: 6102233227586925095}
   isFirstMachine: 1
 --- !u!1 &8829913090216252830
 GameObject:

@@ -35,8 +35,22 @@ public class Conveyor : MonoBehaviour
         {
             _customValidator = GetComponent<CustomValidator>();
 
-            Debug.Log("Im Created for 1st time");
-            ConveyorManager.Instance?.IncreaseConveyor_CurrentCount(conveyorType);
+            // Only try to increase conveyor count if ConveyorManager exists
+            if (ConveyorManager.Instance != null)
+            {
+                Debug.Log("Im Created for 1st time");
+                ConveyorManager.Instance.IncreaseConveyor_CurrentCount(conveyorType);
+            }
+            else
+            {
+                Debug.Log("Conveyor created without ConveyorManager - this is a manually placed conveyor");
+                // For manually placed conveyors, we can skip the ConveyorManager functionality
+                isPlaced = true; // Mark as placed since it's manually placed
+                foreach (var trigger in TriggerColliders)
+                {
+                    trigger.enabled = true;
+                }
+            }
         }
 
         private void Start()
@@ -116,7 +130,8 @@ public class Conveyor : MonoBehaviour
             // To avoid adding a "wall" tag to the package, we will check the object
             // we've collided with based on if it has the demo wall component. You could also check 
             // which object it is by checking the name or however else you wish.
-            if(other.GetComponent<Machine>() != null)
+            // if(other.GetComponent<Machine>() != null)
+            if(other.CompareTag("Machine"))
             {
                 Debug.Log("Conveyor ENTER Triggered with Machine: " + numberOfCollisionsWithMachine);
                 HandleEnteredMachineArea();
@@ -127,14 +142,15 @@ public class Conveyor : MonoBehaviour
                 // If the conveyor exits the submission table, we can set the validation to true
                 // as it is no longer colliding with a machine.
                 HandleEnteredMachineArea();
-            }else if(other.GetComponent<Prop>() != null){
+            }
+            else if(other.GetComponent<Prop>() != null){
                 HandleEnteredPropArea();
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.GetComponent<Machine>() != null)
+            if (other.CompareTag("Machine"))
             {
                 HandleExitedMachineArea();
             }
@@ -144,7 +160,8 @@ public class Conveyor : MonoBehaviour
                 // If the conveyor exits the submission table, we can set the validation to true
                 // as it is no longer colliding with a machine.
                 HandleExitedMachineArea();
-            }else if(other.GetComponent<Prop>() != null){
+            }
+            else if(other.GetComponent<Prop>() != null){
                 HandleExitedPropArea();
             }
         }

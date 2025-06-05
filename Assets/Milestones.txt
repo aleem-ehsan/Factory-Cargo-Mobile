@@ -36,7 +36,7 @@ o Configure production rates, resource limits.❌ ⁉️  ( Not Needed)
 o Destroy/loss condition if items don't reach the target in time.✅
 3. Game Objectives & Logic o Add specific delivery goals per level (e.g., deliver 10 Iron Bars).✅
 o Track success/failure based on real-time delivery and time.✅
-4. Level Design o Manually design 5–10 progressively difficult levels.❌
+4. Level Design o Manually design 5–10 progressively difficult levels.✅
 o Introduce obstacles❌, limited conveyor count✅, and new mechanics✅.
 5. Save/Load System o Save player progress✅, stars earned✅ (if implemented).✅
 o Load saved progress at startup.✅

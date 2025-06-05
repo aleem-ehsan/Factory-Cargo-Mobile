@@ -454,15 +454,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1d5cd37d715c15140b34bc33a0d1ba99, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.2302227
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1d5cd37d715c15140b34bc33a0d1ba99, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.00000011920929
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1d5cd37d715c15140b34bc33a0d1ba99, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.034037
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1d5cd37d715c15140b34bc33a0d1ba99, type: 3}
       propertyPath: m_LocalRotation.w
@@ -572,7 +572,7 @@ MonoBehaviour:
   StartingShape: {fileID: 2124967073212924615}
   MetalShape: {fileID: 7909019956736529738}
   TextureShape: {fileID: 1339924843054446519}
-  StoneShape: {fileID: 2751375507431197907}
+  EmmisiveShape: {fileID: 2751375507431197907}
   movementController: {fileID: 0}
 --- !u!54 &7790345981223172524
 Rigidbody:
@@ -746,4 +746,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   splineFollower: {fileID: 0}
   moveSpeed: 2
-  canMoveOnConveyor: 1
+  isMovingOnConveyor: 0

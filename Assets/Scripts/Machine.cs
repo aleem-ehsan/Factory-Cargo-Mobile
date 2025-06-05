@@ -37,7 +37,12 @@ public class Machine : MonoBehaviour
 
         InitializeProducts();
 
-        machineEntryController = GetComponentInChildren<ConveyorEntryController>();
+        // Check if the MachineEntryController is assigned in the inspector
+        if (machineEntryController == null)
+        {
+            // Try to find the MachineEntryController in the children of this GameObject
+            machineEntryController = GetComponentInChildren<ConveyorEntryController>();
+        }
     }
 
     private void InitializeProducts()
@@ -66,28 +71,21 @@ public class Machine : MonoBehaviour
 
     public void SpawnStartingProduct()
     {   
-
         if (!isFirstMachine)  // * if it is not the first machine, do not spawn metal
             return;
 
         Debug.Log("Spawning Product called");
 
+        // Spawn the metal bar directly at the spawn point's position and rotation
         GameObject spawnedMetalBar = Instantiate(Product, metalSpawnPoint.position, metalSpawnPoint.rotation);
-        spawnedMetalBar.transform.SetParent(metalSpawnPoint);
-
+        
         MetalBar metalBar;
         spawnedMetalBar.TryGetComponent<MetalBar>(out metalBar);
 
         if (metalBar != null)
         {
-
-            // 
-
-
-            // metalBar.moveDirection = transform.right; 
             Debug.Log("Machine Assigning the Spline to the Metal Bar");
-            spawnedMetalBar.transform.localRotation = Quaternion.Euler(0, 90, 0);
-
+            
             // Tryget the MovementController from the MetalBar
             MovementController movementController;
             spawnedMetalBar.TryGetComponent<MovementController>(out movementController);
@@ -97,6 +95,7 @@ public class Machine : MonoBehaviour
                 movementController.isMovingOnConveyor = false;
             }
 
+            // Move with conveyor after setting up the initial position
             metalBar.MoveWithConveyor(machineEntryController);
         }
         else

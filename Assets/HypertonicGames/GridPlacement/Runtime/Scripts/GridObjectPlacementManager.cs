@@ -117,11 +117,13 @@ namespace Hypertonic.GridPlacement
 
         private LayerMask _originalObjectLayer;
 
-        private int _gridObjectRotation => Mathf.RoundToInt(ObjectToPlace.transform.localRotation.eulerAngles.y * 10000) / 10000;
+        private int _gridObjectRotation => ObjectToPlace != null ? Mathf.RoundToInt(ObjectToPlace.transform.localRotation.eulerAngles.y * 10000) / 10000 : 0;
 
         private int _gridObjectRotationRelative { 
             get 
             {
+                if (ObjectToPlace == null) return 0;
+                
                 int gridObjectRotation = _gridObjectRotation % 360;
                 int gridObjectsInitRotation = _gridObjectsInitRotation % 360;
 

@@ -59,9 +59,9 @@ using UnityEngine;
             }
             
             // TODO: Only to Play a specific level 
-            #if !UNITY_EDITOR 
+            // #if !UNITY_EDITOR 
              LoadLastUncompletedLevel();
-            #endif
+            // #endif
             EnableActiveLevel();
         }
 

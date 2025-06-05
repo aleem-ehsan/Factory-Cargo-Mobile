@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
@@ -159,9 +160,9 @@ public class SubmissionTable_Controller : MonoBehaviour
                 PlaceResourceOnTable(resourceObject);
 
                 // Check if all resources are collected
-                #if !UNITY_EDITOR
+                // #if !UNITY_EDITOR
                     CheckLevelCompletion(); // TODO: TESTING --- Uncomment this when want to check for level completion
-                # endif
+                // # endif
                 break;
             }
         }
@@ -189,26 +190,28 @@ public class SubmissionTable_Controller : MonoBehaviour
             rb.isKinematic = true;
             rb.useGravity = false;
         }
+        // Set the parent 
+        resourceObject.transform.SetParent(transform);
 
         // Animate placement
-        resourceObject.transform.DOJump(CurrentPlacingPosition, 0.5f, 1, 0.5f);
+        resourceObject.transform.DOJump(PlaceHolder.position, 0.5f, 1, 0.5f);
          // Set parent and rotate
-        resourceObject.transform.DOLocalRotate(new Vector3(0, 270,0  ), 0.5f);  // * Do a local Rotation because the resourceObject is a child of the Table
+        // resourceObject.transform.DOLocalRotate(new Vector3(0, 0,0  ), 0.5f);  // * Do a local Rotation because the resourceObject is a child of the Table
 
+        resourceObject.transform.rotation = Quaternion.Euler(0, 0, 0); // Reset rotation to avoid any unwanted rotations
 
-
-        resourceObject.transform.SetParent(transform);
 
 
         placementCount++;
 
         // Update position for next resource
-        CurrentPlacingPosition.z += 0.5f;
+        // PlaceHolder.position.z += 0.5f;
+        PlaceHolder.localPosition += new Vector3(0.5f, 0, 0); // Move the placeholder position forward
         if (placementCount == 4)
         {
             placementCount = 0;
-            CurrentPlacingPosition.z -= 2;
-            CurrentPlacingPosition.y += 0.5f;
+            PlaceHolder.localPosition -= new Vector3(2f, 0, 0);
+            PlaceHolder.localPosition += new Vector3(0, 0, 1.5f);
         }
     }
 
@@ -232,15 +235,21 @@ public class SubmissionTable_Controller : MonoBehaviour
             LevelManager.Instance.CurrentLevelCompleted(); // Save the level progress
 
             // * Stop the Time
-            Time.timeScale = 0;
-
-        }else{
+            StartCoroutine(StopTime(0.5f));
+        }
+        else{
             // * Check if the time is up then the level is lost as Resources not collected
             if(TimerController.Instance.isTimeUp){
                 Debug.Log("Level Lose! Not all required resources have been collected!");
                 My_UIManager.Instance.ShowGameLosePanel(); // Show the game win panel
             }
         }
+    }
+
+    public IEnumerator StopTime(float seconds){
+        yield return new WaitForSeconds(seconds);
+        Time.timeScale = 0; // Stop the time
+        
     }
 
 

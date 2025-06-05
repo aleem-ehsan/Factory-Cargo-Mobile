@@ -1044,19 +1044,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2116007617546747328, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_Size.x
-      value: 1.5227327
+      value: 1.5227326
+      objectReference: {fileID: 0}
+    - target: {fileID: 2116007617546747328, guid: d79ae79d84668a34f965644abab9a693, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0856445
       objectReference: {fileID: 0}
     - target: {fileID: 2116007617546747328, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_Size.z
-      value: 6.309285
+      value: 6.3092856
       objectReference: {fileID: 0}
     - target: {fileID: 2116007617546747328, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_Center.x
       value: 1.07
       objectReference: {fileID: 0}
     - target: {fileID: 2116007617546747328, guid: d79ae79d84668a34f965644abab9a693, type: 3}
+      propertyPath: m_Center.y
+      value: 0.5749744
+      objectReference: {fileID: 0}
+    - target: {fileID: 2116007617546747328, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_Center.z
-      value: -0.06059425
+      value: -0.060594402
       objectReference: {fileID: 0}
     - target: {fileID: 2992513457245493868, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_Enabled
@@ -1080,11 +1088,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3102843178164244575, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.279
+      value: -2.59
       objectReference: {fileID: 0}
     - target: {fileID: 3102843178164244575, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.219
+      value: 1.22
       objectReference: {fileID: 0}
     - target: {fileID: 3102843178164244575, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1146,6 +1154,10 @@ PrefabInstance:
       propertyPath: spline
       value: 
       objectReference: {fileID: 7674129826970229528}
+    - target: {fileID: 7738965879694870310, guid: d79ae79d84668a34f965644abab9a693, type: 3}
+      propertyPath: OutForce
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7738965879694870310, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1230,8 +1242,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.6778195, y: 0.80396223, z: 1.9142172}
-  m_Center: {x: -0.8240476, y: 0.43413326, z: -2.3735316}
+  m_Size: {x: 3.6778195, y: 1.0806603, z: 1.9142175}
+  m_Center: {x: -0.8240476, y: 0.5724824, z: -2.3735318}
 --- !u!4 &5836280833279729447 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8306703737287145216, guid: d79ae79d84668a34f965644abab9a693, type: 3}

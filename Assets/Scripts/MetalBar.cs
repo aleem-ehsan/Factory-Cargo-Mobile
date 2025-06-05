@@ -9,7 +9,7 @@ public enum ResourceType
 {
     MetalBar,
     TexturedBar,
-    StoneBlock
+    EmmisiveBar
 }
 
 
@@ -27,7 +27,7 @@ public class MetalBar : MonoBehaviour
     [SerializeField] private GameObject StartingShape; 
     [SerializeField] private GameObject MetalShape; 
     [SerializeField] private GameObject TextureShape; 
-    [SerializeField] private GameObject StoneShape; 
+    [SerializeField] private GameObject EmmisiveShape; 
 
 
     [SerializeField] private MovementController movementController; // Reference to the movement controller script
@@ -81,6 +81,10 @@ public class MetalBar : MonoBehaviour
 
             // *----------------  {"MachineEntryController"} Script is not Used any more / {"ConveyorEntryController"} is used for Machines  ----------------
             else if (other.TryGetComponent<ConveyorEntryController>(out var conveyorEntryController)){
+
+                    // kill any DOTween animations that are running on this GameObject
+                DOTween.Kill(gameObject); // Kill any running animations on this GameObject
+
                 Debug.Log("Metal Bar Triggered with Machine Entry");
                 MoveWithConveyor(conveyorEntryController);
             }
@@ -91,6 +95,7 @@ public class MetalBar : MonoBehaviour
             // *ENTRY CONTROLLER
             if (other.TryGetComponent<ConveyorEntryController>(out var conveyorEntryController))
             {
+                DOTween.Kill(gameObject); // Kill any running animations on this GameObject
                 Debug.Log("Metal Bar Triggered with Conveyor Entry");
 
 
@@ -109,7 +114,7 @@ public class MetalBar : MonoBehaviour
                     Debug.Log("Metal Bar Triggered with Conveyor Exit");
 
                 // * Jump a little bit forward in the direction of the machine exit
-                transform.DOJump(transform.position + conveyorExitController.transform.forward * 2f, 0.1f, 1, 0.5f).SetEase(Ease.Linear); // Jump forward in the direction of the machine exit
+                transform.DOJump(transform.position + conveyorExitController.transform.forward * conveyorExitController.OutForce, 0.1f, 1, 0.5f).SetEase(Ease.Linear); // Jump forward in the direction of the machine exit
 
                 }
 
@@ -239,19 +244,19 @@ public class MetalBar : MonoBehaviour
                 StartingShape.SetActive(false);
                 MetalShape.SetActive(true);
                 TextureShape.SetActive(false);
-                StoneShape.SetActive(false);
+                EmmisiveShape.SetActive(false);
                 break;
             case ResourceType.TexturedBar:
                 StartingShape.SetActive(false);
                 MetalShape.SetActive(false);
                 TextureShape.SetActive(true);
-                StoneShape.SetActive(false);
+                EmmisiveShape.SetActive(false);
                 break;
-            case ResourceType.StoneBlock:
+            case ResourceType.EmmisiveBar:
                 StartingShape.SetActive(false);
                 MetalShape.SetActive(false);
                 TextureShape.SetActive(false);
-                StoneShape.SetActive(true);
+                EmmisiveShape.SetActive(true);
                 break;
             default:
                 Debug.LogWarning("Unknown resource type: " + type);
