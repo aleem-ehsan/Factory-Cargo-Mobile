@@ -59,6 +59,28 @@ o Integrate light industrial background music.
 
 
 
+NEW THINGs NEEDED BY CLIENT:	
+\- I think it's better to start down to go up and not up to go down❌
+\- the conveyors have to be always the same length⁉️ and width in all part because in the long term, they have to fit to be juicy, and if possible the iron bar, etc, doesn't jump.❌
+\- it's a good idea the conveyor the jump but in the idea, we have conveyor to go up and down to have puzzle very difficult, i will show you an image ⁉️
+\-
+Maybe you right it's better to jump and no going up and down, on the phone it's going to be difficult, but maybe not a conveyor to jump but like a bump thing ? 
+ANSWER:	{ Its a Very Good approach of using Jumper/Bumper for the material jump }
+
+{ NEW OUT OF SCOPE REQUIREMENT }
+\- And have you an asset of a train in you're Unity ? because, the finish of the level would be you put iron bar in a train and when you finish, you see the train going to the another level and after and after❌, 
+
+\- To be more juicy, and put more iron bar in the game❌, to see lot of things going in the point A after point B etc  
+
+
+
+
+
+
+
+
+
+
 ✅ Milestone 4: Finalization & Release Prep
 Duration: 1 Week
 Cost: $60

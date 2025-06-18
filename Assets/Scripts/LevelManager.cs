@@ -46,7 +46,7 @@ using UnityEngine;
             // Get or add LevelProgressManager
             _levelProgressManager = GetComponent<LevelProgressManager>();
             if (_levelProgressManager == null)
-            {
+        {
                 Debug.Log("Adding LevelProgressManager component");
 
                 // find Object with LevelProgressManager in the scene
@@ -59,9 +59,9 @@ using UnityEngine;
             }
             
             // TODO: Only to Play a specific level 
-            // #if !UNITY_EDITOR 
+            #if !UNITY_EDITOR 
              LoadLastUncompletedLevel();
-            // #endif
+            #endif
             EnableActiveLevel();
         }
 

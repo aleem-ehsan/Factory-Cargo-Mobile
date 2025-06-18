@@ -10,6 +10,9 @@ public class MovementController : MonoBehaviour
     private Rigidbody rb;
     public bool isMovingOnConveyor = false; // Initialize as true since it starts in machine
 
+
+    public bool isJumping = false; // Flag to check if the resource is jumping
+
     void Awake()
     {
         // Ensure the SplineFollower component is attached
@@ -94,6 +97,21 @@ public class MovementController : MonoBehaviour
 
     public void DisablePhsyics(){
         rb.isKinematic = true; // Disable physics when inside the machine
+    }
+
+    public void JumpTheResource(Vector3 JumpDirection){
+
+        if (isJumping)
+            return;
+
+        // This method can be used to make the resource jump or perform an action
+        // For now, we will just log a message
+        Debug.Log("Jumping the resource!");
+            rb.isKinematic = false; // Enable physics for the jump action
+            rb.AddForce(JumpDirection.normalized *moveSpeed * 6.5f , ForceMode.VelocityChange);
+            rb.AddTorque(Vector3.up * 2f, ForceMode.VelocityChange);
+
+        isJumping = true; // Set the jumping flag to true
     }
 
 }

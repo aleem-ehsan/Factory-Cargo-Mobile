@@ -10,6 +10,7 @@ TagManager:
   - Converter
   - Floor
   - Resource
+  - Bumper
   layers:
   - Default
   - TransparentFX

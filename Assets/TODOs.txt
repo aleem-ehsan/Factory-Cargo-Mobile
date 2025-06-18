@@ -1,0 +1,89 @@
+
+
+Time is being Set through LevelManager using LevelData✅
+
+
+
+
+ERRORs:
+Define the Type of Conveyors allowed in the LevelData for each Level.✅
+When 1 Conveyor is Freshly created (not being placed yet) then another Conveyor cannot be created yet.✅
+
+Show Play Next Level✅ and Replay Button✅ on the Win Panel
+Show Retry Button on the Lose Panel✅
+Implement the Splines for the PRODUCT-Movment upon the Conveyor so that the Curved and Slope Conveyors can be utilized accurately✅
+
+
+
+4. Level Design o Manually design 5–10 progressively difficult levels.❌
+
+5. Make the not need to validate using TICK, or ROTATE using ROTATION COntrols and No Need to Delete the Conveyors
+6. only the Drag and Drop and the Conveyor should be Placed where it is Dropped
+
+
+// ------------------------------------------- 
+
+REVIEWE BY CLIENT:
+
+Hello, very good i like it !! I just have 2 choices that must be taken into account in the game, which are :
+
+- Drag and drop conveyors without the need to validate.  ( so how the User will Delete the Conveyor❓, Rotate the Cunveyor ⁉️
+- no need to turn the conveyors⁉️ (mean Rotation of the Conveyors ❓) ,
+
+
+ the levels are made by hand, which allows a level design decided by us, precisely to have this puzzle aspect.
+but the part where he's going to the another machine it's very very good
+
+
+
+// ------------------------------------------- 
+
+REVIEWE BY CLIENT: in MileStone 2
+
+Hello, thanks you for the version of the game, i tried it, and it's really cool, i have 2 choices, there it is :
+\- I think it's better to start down to go up and not up to go down❌
+
+\- the conveyors have to be always the same length⁉️ and width in all part because in the long term, they have to fit to be juicy, and if possible the iron bar, etc, doesn't jump.❌
+
+\- it's a good idea the conveyor the jump but in the idea, we have conveyor to go up and down to have puzzle very difficult, i will show you an image ⁉️
+
+
+Can you see the game : Builderment, if you see the video of the presentation, you see they doing tunnel, like a conveyor going in a hole (but it's only graphic) and the conveyor exit in other side, we can do that in puzzle too and for up and down i will show you
+
+
+Maybe you right it's better to jump and no going up and down, on the phone it's going to be difficult, but maybe not a conveyor to jump but like a bump thing ? 
+ANSWER:	{ Its a Very Good approach of using Jumper/Bumper for the material jump }
+
+
+
+{ NEW OUT OF SCOPE REQUIREMENT }
+And have you an asset of a train in you're Unity ? because, the finish of the level would be you put iron bar in a train and when you finish, you see the train going to the another level and after and after❌, to be more juicy, and put more iron bar in the game❌, to see lot of things going in the point A after point B etc  
+	
+
+like the video of builderment, you have a lot iron bar it's more juicy
+
+
+
+
+ANSWERS:
+Glad to hear your joyful response over the current progress. Things I want to bring your attention:
+1. level starts down and in direction to go up. (will be implemented)
+2. I will make sure that the width of conveyors will be same. Will do the same length as well (different types of conveyors provided in asset will no longer be used)
+3. Very nice approach of using Jumper/Bumper for the material jump, will implement bumper in path.(so we no longer require any high conveyor)
+4. Okay I will increase the bar production rate as well so its more visually appealing for the user (will need to increase number of resources required to pass a level to sync this up with every level)
+
+I like the Idea of train carrying the bars in a train to the next level. Its a bit lengthy task, And I would really appreciate any visuals that you can use to help me understand how exactly you want this train to appear. 
+
+I want you to release the current milestone based on the work completed so far. We can then incorporate the new changes as part of the next milestone.
+This approach really helps me stay organized and ensures I can deliver the best results for each phase. 
+
+
+--------------------------------- TODO -----------------------------
+0. Start Resources Downwards and END Upwards.
+1. Remove the Short-Conveyor for all Levels. ❌
+2. Replace the UP-Conveyor with a BUMPER. ❌
+3. Add a Train moving to the Next Level. ❌
+
+
+
+

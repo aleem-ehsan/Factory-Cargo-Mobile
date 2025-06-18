@@ -16,7 +16,7 @@ public class ConveyorEntryController : MonoBehaviour
         [SerializeField] public SplineComputer spline; // Reference to the spline component if needed
 
 
-    void Awake()
+    protected void Awake()
     {
         _conveyor = GetComponentInParent<Conveyor>();
 

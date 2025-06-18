@@ -90,7 +90,8 @@ public class MetalBar : MonoBehaviour
             }
             // ?--------------------------------------------
 
-        }else if(other.CompareTag("Conveyor"))
+        }
+        else if(other.CompareTag("Conveyor"))
         {
             // *ENTRY CONTROLLER
             if (other.TryGetComponent<ConveyorEntryController>(out var conveyorEntryController))
@@ -99,7 +100,10 @@ public class MetalBar : MonoBehaviour
                 Debug.Log("Metal Bar Triggered with Conveyor Entry");
 
 
-                if(movementController.isMovingOnConveyor) return; // If already on a conveyor, do nothing
+                if(movementController.isMovingOnConveyor) //! If already on a conveyor, do nothing 
+                    return; 
+
+
                     MoveWithConveyor(conveyorEntryController);
                     conveyorEntryController._conveyor.AddMovingResource(this);  // ! very important to assign resource to the Conveyor
             }
@@ -119,11 +123,22 @@ public class MetalBar : MonoBehaviour
                 }
 
             // }else if(other.CompareTag("Converter"))
-            }else if(other.TryGetComponent<ResourceConverter>(out var resourceConverter))
+            }
+            // * CONVERTER
+            else if(other.TryGetComponent<ResourceConverter>(out var resourceConverter))
             {
                 Debug.Log("Metal Bar Triggered with Converter");
             ChangeShape(resourceConverter.outputType);
             }
+            // * BUMPER
+            else if(other.CompareTag("Bumper"))
+            {
+                Debug.Log("Metal Bar Triggered with Bumper");
+                // add force in the forward Direction of the Bumper
+                movementController.JumpTheResource( other.transform.up);
+            }
+            
+            
         }
 
         void OnCollisionEnter(Collision collision)
@@ -134,6 +149,7 @@ public class MetalBar : MonoBehaviour
                 triggerCollider.enabled = false; // ! so that no more collisions are detected as the metal bar is on the floor
                 Destroy(gameObject, 2f); // Destroy the metal bar after 2 seconds
             }
+            movementController.isJumping = false; // Reset the jumping flag when colliding with the floor
         }
 
 

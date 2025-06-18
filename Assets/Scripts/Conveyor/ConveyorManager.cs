@@ -10,6 +10,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         Short,
         Curved,
         Up,
+        Bumper,
     }
 
     public class ConveyorManager : MonoBehaviour

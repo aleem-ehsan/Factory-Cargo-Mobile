@@ -77,6 +77,11 @@ public class Conveyor : MonoBehaviour
         /// New resources moving on me will be added to the list
         /// </summary>
         public void AddMovingResource(MetalBar resource){
+            if(conveyorType == ConveyorType.Bumper)
+            {
+                Debug.Log("Bumper Conveyor does not accept resources moving on it.");
+                return; // Bumper conveyors do not accept resources
+            }
             if (!resourcesMovingOnMe.Contains(resource))
             {
                 resourcesMovingOnMe.Add(resource);
@@ -88,6 +93,11 @@ public class Conveyor : MonoBehaviour
         /// </summary>
         public void RemoveMovingResource(MetalBar resource)
         {
+            if(conveyorType == ConveyorType.Bumper)
+            {
+                Debug.Log("Bumper Conveyor does not accept resources moving on it.");
+                return; // Bumper conveyors do not accept resources
+            }
             if (resourcesMovingOnMe.Contains(resource))
             {
                 resourcesMovingOnMe.Remove(resource);
