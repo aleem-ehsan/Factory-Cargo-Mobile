@@ -48,13 +48,9 @@ public class SubmissionTable_Controller : MonoBehaviour
 
     void Awake()
     {
-        if (Instance == null)
+        if (Instance == null || Instance != this)
         {
             Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
         }
 
             // Get the Robot Submission Table component from the children

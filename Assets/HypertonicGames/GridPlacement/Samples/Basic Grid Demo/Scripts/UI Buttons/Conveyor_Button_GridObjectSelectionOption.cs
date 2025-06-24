@@ -49,7 +49,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         private void Start()
         {
-            // No need for click listener anymore
+           
 
             MaxPlaceble = ConveyorManager.Instance.GetRemainingCount(ConveyorType);
              if (_countText == null)
@@ -65,9 +65,8 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
             SetConveyorIcon();
             InitializeConveyorPrefab();
-
-
             
+            // SetButtonInteractable(false); // Set the initial interactable state of the button
         }
 
 
@@ -86,12 +85,13 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         void OnEnable()
         {
-
+            LevelManager.OnGameplayStarted += SetButtonInteractable; // Subscribe to the event to update count when gameplay starts   
             ConveyorManager.OnConveyorMaxLimitReached += HandleConveyorMaxLimitReached;
             ConveyorManager.OnConveyorCanceledOrDeleted += HandleConveyorDeleted;
         }
         void OnDisable()
         {
+            LevelManager.OnGameplayStarted -= SetButtonInteractable; // Subscribe to the event to update count when gameplay starts   
             ConveyorManager.OnConveyorMaxLimitReached -= HandleConveyorMaxLimitReached;
             ConveyorManager.OnConveyorCanceledOrDeleted -= HandleConveyorDeleted;
 
@@ -111,9 +111,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
             // canPressAnyButton = false;  // ! Not Needed anymore : Disable pressing of anyother Button
             HandleButtonClicked();
-            MaxPlaceble--;
 
-            UpdateCountUI();
 
 
             // * Set the Selected Conveyor in the ConveyorManager
@@ -123,11 +121,20 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
 
         public void OnPointerUp(PointerEventData eventData){
+            // * Check if the MaxPlaceble is 0 , Means no More Conveyor of this type can be placed
+            if(MaxPlaceble == 0) 
+                return;
+
             Debug.Log("Pointer Up on the Button");
             // Check if placement is valid before confirming
-            if (GridManagerAccessor.GridManager.IsObjectPlacementValid().Valid)
+            if (GridManagerAccessor.GridManager.IsObjectPlacementValid().Valid )
             {
+                // * Conveyor is placed successfully
                 OnOptionReleased?.Invoke();
+                MaxPlaceble--;
+                UpdateCountUI();
+
+
             }else{
                 GridManagerAccessor.GridManager.DeleteObject(ConveyorManager.Instance.GetLastCraetedConveyor());
                 ExampleGridObject.HandleConveyorDeleted();
@@ -265,8 +272,16 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 /// <summary>
 /// Fuction to disable this button
 /// </summary>
-        private void DisableThisButton(){
-            _thisButton.interactable = false; // Disable this button
+        // public void DisableThisButton(){
+        //     _thisButton.interactable = false; // Disable this button
+        // }
+
+        public void SetButtonInteractable(bool isInteractable)
+        {
+            Debug.Log($"Setting button interactable state to: {isInteractable}");
+            _isButtonInteractable = isInteractable;
+            _thisButton.interactable = isInteractable; // Set the button interactable state
+            _thisButton.enabled = isInteractable; // Enable or disable the button component itself
         }
 
 

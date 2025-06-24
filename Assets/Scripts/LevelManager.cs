@@ -25,6 +25,7 @@ using UnityEngine;
 
         // -------------------- Events -------------------
         public static event System.Action<int> OnLevelCompleted; // Event to notify when a level is completed
+        public static event System.Action<bool> OnGameplayStarted; // Event to notify when a level is completed
 
         void Awake()
         {
@@ -63,17 +64,41 @@ using UnityEngine;
              LoadLastUncompletedLevel();
             #endif
             EnableActiveLevel();
+
+            // *Hide the loading panel after enabling the active level
+            LoadingPanelController.Instance.HideLoadingPanelDelay(1f); 
+
         }
 
         void Start()
         {
 
             InitializeLevelRequirements(); // Call this after enabling the active level
+            // ! should not initialize in Start because these are InActive due to Loading Panel Display
             InitializeConveyorQuantites();
-            InitializeTimerController(); // Initialize the timer for the active level
+            InitializeTimerController();
+
+        }
+
+        void OnEnable(){
+                TrainController.OnTrainStoppedAtDoor += GamePlayeStarted; // Subscribe to the event when the train stops at the door
+        }
+        void OnDisable(){
+                TrainController.OnTrainStoppedAtDoor -= GamePlayeStarted; // Subscribe to the event when the train stops at the door
         }
 
 
+
+    /// <summary>
+    /// Function to initialize the time and conveyor quantities for the active level.
+    /// This is called when the Train is Stopped instead of the START()
+    /// </summary>
+        public void InitializeTimeandConveyor(){
+            Debug.Log("Initializing time and conveyor quantities for the active level.");
+            InitializeConveyorQuantites();
+            InitializeTimerController(); // Initialize the timer for the active level
+
+        }
 
 
 
@@ -205,6 +230,11 @@ using UnityEngine;
 
             // check in How Much Time the Level is completed.
             TimerController.Instance.CheckHowMuchTimeIsUsed(); // Stop the timer when the level is completed
+        }
+
+
+        public void GamePlayeStarted(){
+            OnGameplayStarted?.Invoke(true); // Notify subscribers that the gameplay has started
         }
 
 

@@ -21,6 +21,9 @@ public class TrainController : MonoBehaviour
 
 
 
+    //--------------------- Events -------------------
+    public static event Action OnTrainStoppedAtDoor; // Event to notify when the train is ready to move
+
     void Awake(){
         // Ensure only one instance of TrainController exists
         if (Instance == null || Instance != this)
@@ -42,6 +45,8 @@ public class TrainController : MonoBehaviour
             splineFollower = GetComponent<SplineFollower>();
         }
 
+        CamsController.Instance.SetGameplayCamActive(false); // * Disable the gameplay camera at the start
+
         // Set the initial speed of the train
         splineFollower.followSpeed = speed;
         BoggySplineFollower.followSpeed = speed;
@@ -52,6 +57,8 @@ public class TrainController : MonoBehaviour
 
     
     public void TrainReadyToMove(){
+        CamsController.Instance.SetGameplayCamActive(false); // * Disable the gameplay camera at the start
+
         StartCoroutine(DelayTrainMovement(1f)); // Start the train movement after a 2-second delay
     }
       private System.Collections.IEnumerator DelayTrainMovement(float delay)
@@ -69,6 +76,9 @@ public class TrainController : MonoBehaviour
              DOTween.To(() => splineFollower.followSpeed, x => splineFollower.followSpeed = x, speed, 1f); // speed to Zero in 1 Second
             DOTween.To(() => BoggySplineFollower.followSpeed, x => BoggySplineFollower.followSpeed = x, speed, 1f);
         }
+
+        // * Show Loading Panel after Delay
+        LoadingPanelController.Instance.ShowLoadingPanelDelay(1.2f); // Show the loading panel 
     }
 
 
@@ -77,12 +87,19 @@ public class TrainController : MonoBehaviour
 
     public void StopTrainAtDoor()
     {
+        CamsController.Instance.SetGameplayCamActive(true); // * Disable the gameplay camera at the start
+
         if (splineFollower != null)
         {
-            DOTween.To(() => splineFollower.followSpeed, x => splineFollower.followSpeed = x, 0f, 1.5f); // speed to Zero in 1.5 Second
-            DOTween.To(() => BoggySplineFollower.followSpeed, x => BoggySplineFollower.followSpeed = x, 0f, 1.5f);
+            DOTween.To(() => splineFollower.followSpeed, x => splineFollower.followSpeed = x, 0f, 1f); // speed to Zero in 1.5 Second
+            DOTween.To(() => BoggySplineFollower.followSpeed, x => BoggySplineFollower.followSpeed = x, 0f, 1f);
             Debug.Log("Train has stopped at the door.");
         }
+
+        // * Show the Gameplay panel and Initialize the Conveyors
+        OnTrainStoppedAtDoor?.Invoke(); // Notify subscribers that the train has stopped at the door
+        // My_UIManager.Instance.SetGamePlayPanel(true); // Show the game win panel when the train stops at the door
+        // LevelManager.Instance.InitializeTimeandConveyor();
     }
 
 

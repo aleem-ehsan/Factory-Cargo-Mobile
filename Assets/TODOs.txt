@@ -79,10 +79,10 @@ This approach really helps me stay organized and ensures I can deliver the best 
 
 
 --------------------------------- TODO -----------------------------
-0. Start Resources Downwards and END Upwards.
-1. Remove the Short-Conveyor for all Levels. ❌
-2. Replace the UP-Conveyor with a BUMPER. ❌
-3. Add a Train moving to the Next Level. ❌
+0. Start Resources Downwards and END Upwards.✅
+1. Remove the Short-Conveyor for all Levels. ✅
+2. Replace the UP-Conveyor with a BUMPER. ✅
+3. Add a Train moving to the Next Level. ✅
 
 
 
@@ -92,16 +92,18 @@ This approach really helps me stay organized and ensures I can deliver the best 
 
 Now When All Items are fetched, Submission_Table Invokes and "TrainController" gets notified and Starts the Train Again. ✅
 
-Then Add a CinemachineCamera for the Train when Moving and Arrived. ❌
+Then Add a CinemachineCamera for the Train when Moving and Arrived. ✅
 
-Activate and De-Activate the Train Camera when the Train is Moving in Level Start and End. ❌
+Activate and De-Activate the Train Camera when the Train is Moving in Level Start and End. ✅
 
 Change the Fonts to Better HyperCasual.❌
 
 Change the Sprites of Stars to better Stars.❌
 
 
+Robot Anim Glitch when picking the Products from the table.❌
 
+Proper alignment of the Products on the Boggy.❌
 
 
 

@@ -27,7 +27,9 @@ public class Conveyor : MonoBehaviour
         private short numberOfCollisionsWithMachine = 0; 
 
 
-    
+    [Header("Manual Conveyor Placement Settings")]
+    [Tooltip("If Convyeor is Placed Manually, this Should be True")]
+    [SerializeField] private bool isManuallyPlaced = false;
 
 
 
@@ -39,7 +41,12 @@ public class Conveyor : MonoBehaviour
             if (ConveyorManager.Instance != null)
             {
                 Debug.Log("Im Created for 1st time");
-                ConveyorManager.Instance.IncreaseConveyor_CurrentCount(conveyorType);
+
+                // ! if a Conveyor is Manually Placed, It should not be added in the ConveyorManager's count
+                if(isManuallyPlaced == false)
+                {
+                    ConveyorManager.Instance.IncreaseConveyor_CurrentCount(conveyorType);
+                }
             }
             else
             {

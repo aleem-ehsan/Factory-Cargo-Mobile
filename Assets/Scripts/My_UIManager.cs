@@ -11,6 +11,9 @@ public class My_UIManager : MonoBehaviour
     [SerializeField] private GameObject PausePanel;
     [SerializeField] private GameObject GamePlayPanel;
 
+    [Tooltip("Grid Object Selection UI, used to select objects in the game, assign in the Inspector")]
+    [SerializeField] private GameObject ObjectSelection;
+
 
     [Header("Text UI")]
     [Tooltip("Timer text that will be updated continously,  it is here so that the TimerController can access it easily")]
@@ -41,12 +44,12 @@ public class My_UIManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
     }
 
 
@@ -138,20 +141,6 @@ public class My_UIManager : MonoBehaviour
     }
 
 
-    // public void CraeteGridPlacementButtonsInUI(){
-    //     // Clear existing buttons in the container
-    //     foreach (Transform child in ConveyorButtonsContainer.transform)
-    //     {
-    //         Destroy(child.gameObject);
-    //     }
-
-    //     // Create new buttons based on the ConveyorManager's conveyor types
-    //     foreach (var conveyorType in ConveyorManager.Instance.GetAllConveyorTypes())
-    //     {
-    //         GameObject button = Instantiate(ButtonGridPlacementPrefab, ConveyorButtonsContainer.transform);
-    //         button.GetComponent<Conveyor_Button_GridObjectSelectionOption>().SetConveyorType(conveyorType);
-    //     }
-    // }
 
 /// <summary>
 /// Creates a button in the UI for grid placement of a specific conveyor type.
@@ -197,5 +186,14 @@ public class My_UIManager : MonoBehaviour
         int currentLevel = LevelManager.Instance.levelToLoad;
         LevelProgressManager.Instance.SaveLevelStars(currentLevel, numberOfStars);
     }
+
+
+    public void SetGamePlayPanel(bool value)
+    {
+        // Hide the gameplay panel
+        GamePlayPanel.SetActive(value);
+        ObjectSelection.SetActive(value);
+    }
+
 
 }
