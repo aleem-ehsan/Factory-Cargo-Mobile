@@ -87,3 +87,35 @@ This approach really helps me stay organized and ensures I can deliver the best 
 
 
 
+
+--------------------------------- TODO -----------------------------
+
+Now When All Items are fetched, Submission_Table Invokes and "TrainController" gets notified and Starts the Train Again. ✅
+
+Then Add a CinemachineCamera for the Train when Moving and Arrived. ❌
+
+Activate and De-Activate the Train Camera when the Train is Moving in Level Start and End. ❌
+
+Change the Fonts to Better HyperCasual.❌
+
+Change the Sprites of Stars to better Stars.❌
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

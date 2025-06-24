@@ -189,6 +189,9 @@ using UnityEngine;
 /// </summary>
         public void CurrentLevelCompleted()
         {
+            My_UIManager.Instance.ShowGameWinPanel(); // Show the game win panel
+
+
             if (_levelProgressManager == null)
             {
                 Debug.LogError("Cannot save level progress: LevelProgressManager is null!");

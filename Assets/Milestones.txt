@@ -50,12 +50,12 @@ Cost: $50
 🎯 Goals:
 1. Animations o Conveyor movement, machine operations, transformation visuals.✅
 o Smooth, appealing animations with mobile optimization.✅
-2. UI Enhancements
+2. UI Enhancements❌
 o Improve the clarity and aesthetics of all buttons, HUD, and level display.
 o Optimize touch responsiveness and layout for mobile. ✅
-3. Sound & Music o Add appropriate SFX for conveyor motion, transformations, and UI.
-o Integrate light industrial background music.
-4. Mobile UX Tuning o Refine touch drag/drop mechanics. o Improve gestures and responsiveness for smaller screens.
+3. Sound & Music o Add appropriate SFX for conveyor motion, transformations, and UI.❌
+o Integrate light industrial background music.❌
+4. Mobile UX Tuning o Refine touch drag/drop mechanics. o Improve gestures and responsiveness for smaller screens.❌
 
 
 

@@ -13,6 +13,8 @@ public class MovementController : MonoBehaviour
 
     public bool isJumping = false; // Flag to check if the resource is jumping
 
+    private Collider LastBumperCollided;
+
     void Awake()
     {
         // Ensure the SplineFollower component is attached
@@ -99,9 +101,9 @@ public class MovementController : MonoBehaviour
         rb.isKinematic = true; // Disable physics when inside the machine
     }
 
-    public void JumpTheResource(Vector3 JumpDirection){
+    public void JumpTheResource(Vector3 JumpDirection , Collider Bumper){
 
-        if (isJumping)
+        if (isJumping && LastBumperCollided == Bumper)
             return;
 
         // This method can be used to make the resource jump or perform an action
@@ -112,6 +114,8 @@ public class MovementController : MonoBehaviour
             rb.AddTorque(Vector3.up * 2f, ForceMode.VelocityChange);
 
         isJumping = true; // Set the jumping flag to true
+
+        LastBumperCollided = Bumper; // Store the last bumper collided with
     }
 
 }

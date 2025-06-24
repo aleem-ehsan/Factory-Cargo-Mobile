@@ -24,6 +24,15 @@ public class SubmissionTable_Controller : MonoBehaviour
     [SerializeField] private Transform ListContainer;
     [SerializeField] private GameObject PrefabListItem; // * Prefab of the UI list-item 
 
+    public bool is_allResourcesCollected { get; private set; } = false; // Flag to check if all resources are collected
+
+    [Space(10)]
+    [Header("UI Elements")]
+    [Tooltip("Gameobbject for the required resource list item")]
+    [SerializeField] private Robot_SubmissionTable robotSubmissionTable; // * Reference to the Robot Submission Table
+
+
+     public List<Transform> ProductsOnTable = new List<Transform>(); // List to keep track of products on the table
 
 
 
@@ -48,12 +57,11 @@ public class SubmissionTable_Controller : MonoBehaviour
             Destroy(gameObject);
         }
 
-
-
-        // Initialize required resources if not set in inspector
-        // InitailizeRequiredItems(); // We will remove this call as LevelManager will set the requirements
-
-
+            // Get the Robot Submission Table component from the children
+        if(robotSubmissionTable == null)
+            robotSubmissionTable = GetComponentInChildren<Robot_SubmissionTable>();
+        
+    
 
 
         // check if the Platform is Android or IOS
@@ -121,18 +129,6 @@ public class SubmissionTable_Controller : MonoBehaviour
             // Check for MetalBar
             if (other.TryGetComponent<MetalBar>(out MetalBar metalBar))
             {
-                // if(metalBar.resourceType == ResourceType.MetalBar)
-                // {
-                //     ProcessResource(ResourceType.MetalBar, metalBar.gameObject);
-                // }else if(metalBar.resourceType == ResourceType.TexturedBar)
-                // {
-                //     ProcessResource(ResourceType.TexturedBar, metalBar.gameObject);   
-                // }
-                // else if(metalBar.resourceType == ResourceType.StoneBlock)
-                // {
-                //     ProcessResource(ResourceType.StoneBlock, metalBar.gameObject);   
-                // }
-
                 ProcessResource(metalBar.resourceType, metalBar.gameObject);
             }
             // Check for WoodPlank
@@ -142,6 +138,11 @@ public class SubmissionTable_Controller : MonoBehaviour
 
     private void ProcessResource(ResourceType resourceType, GameObject resourceObject)
     {
+
+         // ! important --->> Check if Product is Already On the Table
+        if (ProductsOnTable.Contains(resourceObject.transform))
+            return;
+
         Debug.Log($"Processing resource: {resourceType}");
         // Find and update the required resource
         for (int i = 0; i < requiredResources.Length; i++)
@@ -183,25 +184,42 @@ public class SubmissionTable_Controller : MonoBehaviour
 
     private void PlaceResourceOnTable(GameObject resourceObject)
     {
+
+
+
+
         // Disable components
-        resourceObject.GetComponent<BoxCollider>().enabled = false;
+        // resourceObject.GetComponent<BoxCollider>().enabled = false;
         if (resourceObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
             rb.isKinematic = true;
-            rb.useGravity = false;
+            // rb.useGravity = false;
         }
         // Set the parent 
         resourceObject.transform.SetParent(transform);
 
         // Animate placement
         resourceObject.transform.DOJump(PlaceHolder.position, 0.5f, 1, 0.5f);
-         // Set parent and rotate
+        // Set parent and rotate
         // resourceObject.transform.DOLocalRotate(new Vector3(0, 0,0  ), 0.5f);  // * Do a local Rotation because the resourceObject is a child of the Table
 
         resourceObject.transform.rotation = Quaternion.Euler(0, 0, 0); // Reset rotation to avoid any unwanted rotations
 
 
 
+        IncrememntPlaceHolderPosition();
+
+        ProductsOnTable.Add(resourceObject.transform); // Add the resource to the list of products on the table
+        robotSubmissionTable.ProductAdded();
+
+
+    }
+
+/// <summary>
+/// Increment the Placeholder position for the next resource placement on the Table.
+/// </summary>
+    private void IncrememntPlaceHolderPosition()
+    {
         placementCount++;
 
         // Update position for next resource
@@ -215,27 +233,51 @@ public class SubmissionTable_Controller : MonoBehaviour
         }
     }
 
+    // TODO : call it from Robot when Dropping
+
+    public void DecrementPlaceHolderPosition()
+    {
+        if(placementCount < 1)  // * if Placement Count is Smaller than Zero
+            return;
+
+        
+        placementCount--;
+
+        // Update position for next resource
+        PlaceHolder.localPosition -= new Vector3(0.5f, 0, 0); // Move the placeholder position backward
+        if (placementCount < 0)
+        {
+            placementCount = 3;
+            PlaceHolder.localPosition += new Vector3(2f, 0, 0);
+            PlaceHolder.localPosition -= new Vector3(0, 0, 1.5f);
+        }
+    }
+
+
     public void CheckLevelCompletion()
     {
-        bool allResourcesCollected = true;
+        is_allResourcesCollected = true;
         foreach (RequiredResource resource in requiredResources)
         {
             if (resource.quantity > 0)
             {
-                allResourcesCollected = false;
+                is_allResourcesCollected = false;
                 break;
             }
         }
 
-        if (allResourcesCollected)
+        if (is_allResourcesCollected)
         {
             Debug.Log("Level Win! All required resources have been collected!");
             // OnLevelWin?.Invoke(); // Trigger level completion event
-            My_UIManager.Instance.ShowGameWinPanel(); // Show the game win panel
-            LevelManager.Instance.CurrentLevelCompleted(); // Save the level progress
 
-            // * Stop the Time
-            StartCoroutine(StopTime(0.5f));
+            // TODO: Move this to the Robot_SubmissionTable when all the resources Dropped onto the TRAIN
+            // My_UIManager.Instance.ShowGameWinPanel(); // Show the game win panel
+            // LevelManager.Instance.CurrentLevelCompleted(); // Save the level progress
+            
+
+            // // * Stop the Time
+            // StartCoroutine(StopTime(0.5f));
         }
         else{
             // * Check if the time is up then the level is lost as Resources not collected

@@ -21,15 +21,15 @@ public class LevelRequirementsData : MonoBehaviour
         {
             requiredResources = new RequiredResource[]
             {
-                new(ResourceType.MetalBar, 2),
+                new(ResourceType.MetalBar, 10),
             },
-            AvailableTimeInSeconds = 40, 
+            AvailableTimeInSeconds = 140, 
 
             // * Amount of Conveyors allowed 
             AllowedConveyors = new ConveyorStats[]
             {
-                new(ConveyorType.Straight, 1), // Example conveyor stats
-                new(ConveyorType.Short, 2), // Another example
+                new(ConveyorType.Straight, 2), // Example conveyor stats
+                // new(ConveyorType.Short, 2), // Example conveyor stats
             }
         });
 
@@ -38,15 +38,14 @@ public class LevelRequirementsData : MonoBehaviour
         {
             requiredResources = new RequiredResource[]
             {
-                new(ResourceType.TexturedBar, 2)
+                new(ResourceType.TexturedBar, 8)
             },
-            AvailableTimeInSeconds = 40,
+            AvailableTimeInSeconds = 100,
 
             // * Amount of Conveyors allowed 
             AllowedConveyors = new ConveyorStats[]
             {
                 new(ConveyorType.Straight, 2), // Example conveyor stats
-                new(ConveyorType.Short, 2) // Another example
             }
         });
 
@@ -55,15 +54,15 @@ public class LevelRequirementsData : MonoBehaviour
         {
             requiredResources = new RequiredResource[]
             {
-                new(ResourceType.MetalBar, 4),
+                new(ResourceType.MetalBar, 10),
             },
-            AvailableTimeInSeconds = 40,
+            AvailableTimeInSeconds = 50,
 
             // * Amount of Conveyors allowed 
             AllowedConveyors = new ConveyorStats[]
             {
                 new(ConveyorType.Curved, 1), // Example conveyor stats
-                new(ConveyorType.Straight, 1), // Example conveyor stats
+                new(ConveyorType.Straight, 2), // Example conveyor stats
             }
         });
 
@@ -136,7 +135,7 @@ public class LevelRequirementsData : MonoBehaviour
             {
                 new(ConveyorType.Curved, 1), // Example conveyor stats
                 new(ConveyorType.Straight, 1), // Example conveyor stats
-                new(ConveyorType.Short, 4), // Example conveyor stats
+                new(ConveyorType.Bumper, 2), // Example conveyor stats
             }
         });
   

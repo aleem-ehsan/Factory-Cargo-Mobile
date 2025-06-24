@@ -135,7 +135,7 @@ public class MetalBar : MonoBehaviour
             {
                 Debug.Log("Metal Bar Triggered with Bumper");
                 // add force in the forward Direction of the Bumper
-                movementController.JumpTheResource( other.transform.up);
+                movementController.JumpTheResource( other.transform.up , other);
             }
             
             
