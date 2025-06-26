@@ -148,7 +148,10 @@ public class Conveyor : MonoBehaviour
             // we've collided with based on if it has the demo wall component. You could also check 
             // which object it is by checking the name or however else you wish.
             // if(other.GetComponent<Machine>() != null)
-            if(other.CompareTag("Machine"))
+            if(other.GetComponent<Prop>() != null){
+                HandleEnteredPropArea();
+            }
+            else if(other.CompareTag("Machine"))
             {
                 Debug.Log("Conveyor ENTER Triggered with Machine: " + numberOfCollisionsWithMachine);
                 HandleEnteredMachineArea();
@@ -160,14 +163,15 @@ public class Conveyor : MonoBehaviour
                 // as it is no longer colliding with a machine.
                 HandleEnteredMachineArea();
             }
-            else if(other.GetComponent<Prop>() != null){
-                HandleEnteredPropArea();
-            }
+            
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Machine"))
+            if(other.GetComponent<Prop>() != null){
+                HandleExitedPropArea();
+            }
+            else if (other.CompareTag("Machine"))
             {
                 HandleExitedMachineArea();
             }
@@ -177,9 +181,6 @@ public class Conveyor : MonoBehaviour
                 // If the conveyor exits the submission table, we can set the validation to true
                 // as it is no longer colliding with a machine.
                 HandleExitedMachineArea();
-            }
-            else if(other.GetComponent<Prop>() != null){
-                HandleExitedPropArea();
             }
         }
 

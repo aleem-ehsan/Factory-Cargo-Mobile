@@ -37,7 +37,9 @@ public class LevelProgressManager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
 
-        // ResetProgress();// TODO: Testing purposes
+        #if UNITY_EDITOR
+            // ResetProgress();// TODO: Testing purposes
+        #endif
     }
 
     public void SaveLevelProgress(int levelNumber)

@@ -96,15 +96,16 @@ Then Add a CinemachineCamera for the Train when Moving and Arrived. ✅
 
 Activate and De-Activate the Train Camera when the Train is Moving in Level Start and End. ✅
 
-Change the Fonts to Better HyperCasual.❌
+Change the Fonts to Better HyperCasual.✅
 
-Change the Sprites of Stars to better Stars.❌
+Change the Sprites of Stars to better Stars.✅
 
 
-Robot Anim Glitch when picking the Products from the table.❌
+Robot Anim Glitch when picking the Products from the table.✅
 
-Proper alignment of the Products on the Boggy.❌
+Proper alignment of the Products on the Boggy.✅
 
+Add Smoke for Train Engine. ✅
 
 
 

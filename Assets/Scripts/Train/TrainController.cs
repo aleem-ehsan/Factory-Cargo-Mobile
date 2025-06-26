@@ -40,6 +40,8 @@ public class TrainController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // * Play Audio of Train Running
+        AudioManager_Script.Instance.Play(SoundName.TrainRunning); // Play the train running sound
         if (splineFollower == null)
         {
             splineFollower = GetComponent<SplineFollower>();
@@ -67,6 +69,9 @@ public class TrainController : MonoBehaviour
         StartTrainMovement(); // Start the train movement after the delay
     }
 
+/// <summary>
+/// Called when The Level is Completed
+/// </summary>
     public void StartTrainMovement(){
         if (splineFollower != null)
         {
@@ -76,9 +81,13 @@ public class TrainController : MonoBehaviour
              DOTween.To(() => splineFollower.followSpeed, x => splineFollower.followSpeed = x, speed, 1f); // speed to Zero in 1 Second
             DOTween.To(() => BoggySplineFollower.followSpeed, x => BoggySplineFollower.followSpeed = x, speed, 1f);
         }
+         // * Play Audio of Train Running
+        AudioManager_Script.Instance.Play(SoundName.TrainRunning); // Play the train running sound
 
         // * Show Loading Panel after Delay
-        LoadingPanelController.Instance.ShowLoadingPanelDelay(1.2f); // Show the loading panel 
+        LoadingPanelController.Instance.ShowLoadingPanelDelay(1.2f , LoadingState.Win); // Show the loading panel 
+
+        AudioManager_Script.Instance.StopSoundAfterDelay(SoundName.TrainRunning, 1.2f); // Stop the train running sound after 1.2 seconds
     }
 
 
@@ -87,6 +96,9 @@ public class TrainController : MonoBehaviour
 
     public void StopTrainAtDoor()
     {
+        // * Play the Train Whistle Sound
+        AudioManager_Script.Instance.Play(SoundName.TrainWhistle); // Play the train stop sound
+
         CamsController.Instance.SetGameplayCamActive(true); // * Disable the gameplay camera at the start
 
         if (splineFollower != null)
@@ -98,8 +110,7 @@ public class TrainController : MonoBehaviour
 
         // * Show the Gameplay panel and Initialize the Conveyors
         OnTrainStoppedAtDoor?.Invoke(); // Notify subscribers that the train has stopped at the door
-        // My_UIManager.Instance.SetGamePlayPanel(true); // Show the game win panel when the train stops at the door
-        // LevelManager.Instance.InitializeTimeandConveyor();
+        
     }
 
 

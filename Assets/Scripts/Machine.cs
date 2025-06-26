@@ -71,7 +71,9 @@ public class Machine : MonoBehaviour
 
     public void SpawnStartingProduct()
     {   
-        if (!isFirstMachine)  // * if it is not the first machine, do not spawn metal
+        Debug.Log("Spawning Product called when Gameplay is started: " + LevelManager.isGameplayStarted);
+
+        if (!isFirstMachine || !LevelManager.isGameplayStarted)  // * if it is not the first machine, do not spawn metal
             return;
 
         Debug.Log("Spawning Product called");

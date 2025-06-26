@@ -2,6 +2,15 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 
+
+public enum LoadingState
+{
+    Loading,
+    Win,
+    Lose
+}
+
+
 public class LoadingPanelController : MonoBehaviour
 {
     [SerializeField] private GameObject BlueTopImage; // Reference to the loading panel GameObject
@@ -24,7 +33,10 @@ public class LoadingPanelController : MonoBehaviour
     // --------------------- Singleton ---------------
     public static LoadingPanelController Instance { get; private set; }
 
+    [Header("Floating Text")]
     [SerializeField] private Transform LoadingText; // Reference to the loading text transform (if needed)
+    [SerializeField] private Transform WinText; // Reference to the loading text transform (if needed)
+    [SerializeField] private Transform LoseText; // Reference to the loading text transform (if needed)
 
     // Store the tween so we can kill it
     private Tween loadingTextTween;
@@ -46,6 +58,14 @@ public class LoadingPanelController : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject); // Ensure this object persists across scenes
+
+        if(LoadingText == null || 
+           WinText == null || 
+           LoseText == null)
+        {
+            Debug.LogError("LoadingText, WinText or LooseText is not assigned in the Inspector!");
+        }
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -70,6 +90,8 @@ public class LoadingPanelController : MonoBehaviour
         if (LoadingText != null)
         {
             loadingTextOriginalPos = LoadingText.localPosition;
+        }else{
+            Debug.LogError("LoadingText is not assigned in the Inspector!");
         }
 
         Debug.Log($"BlueTopPos = {blueTopOriginalPos}, YellowDownPos = {yellowDownOriginalPos}");
@@ -86,7 +108,7 @@ public class LoadingPanelController : MonoBehaviour
     /// BlueTopImage animates from TOP (above screen) to Center (visible position)
     /// YellowDownImage animates from Bottom (below screen) to Center (visible position)
     /// </summary>
-    public void ShowLoadingPanel()
+    public void ShowLoadingPanel(LoadingState loadingState)
     {
         Debug.Log("Showing loading panel");
         
@@ -110,20 +132,92 @@ public class LoadingPanelController : MonoBehaviour
                 .OnStart(() => YellowDownImage.SetActive(true));
         }
 
-        // Start LoadingText jump animation
-        if (LoadingText != null)
-        {
-            LoadingText.gameObject.SetActive(true);
-            LoadingText.localPosition = loadingTextOriginalPos;
-            loadingTextTween?.Kill();
-            loadingTextTween = LoadingText.DOLocalMoveY(loadingTextOriginalPos.y + 30f, 0.5f)
-                .SetLoops(-1, LoopType.Yoyo)
-                .SetEase(Ease.InOutQuad);
-        }
+        // * Show the LoadingText based on the loading state
+        ShowText(loadingState); // Show the appropriate text based on loading state
+
+        
 
         Debug.Log("Loading panel shown");
- 
     }
+ 
+
+// ----------------------------------- Text Logics -------------------------------------
+
+/// <summary>
+/// Shows the appropriate text based on the loading state
+/// </summary>
+/// <param name="loadingState"></param>
+    private void ShowText(LoadingState loadingState){
+
+        // * Hide all text initially
+        LoadingText.gameObject.SetActive(false);
+        WinText.gameObject.SetActive(false);
+        LoseText.gameObject.SetActive(false);
+
+        // Stop any existing text animation
+        StopLoadingTextAnim();
+
+        switch (loadingState)
+        {
+            case LoadingState.Loading:
+                    LoadingText.gameObject.SetActive(true);
+                    LoadingText.localPosition = loadingTextOriginalPos;
+                    StartTextJumpAnim(LoadingText); // Start animation for LoadingText
+                break;
+            case LoadingState.Win:
+                    WinText.gameObject.SetActive(true);
+                    WinText.localPosition = loadingTextOriginalPos;
+                    StartTextJumpAnim(WinText); // Start animation for WinText
+                break;
+            case LoadingState.Lose:
+                    LoseText.gameObject.SetActive(true);
+                    LoseText.localPosition = loadingTextOriginalPos;
+                    StartTextJumpAnim(LoseText); // Start animation for LoseText
+                break;
+            default:
+                Debug.Log("Unknown loading state: " + loadingState);
+                    LoadingText.gameObject.SetActive(true);
+                    LoadingText.localPosition = loadingTextOriginalPos;
+                    StartTextJumpAnim(LoadingText); // Start animation for LoadingText
+
+                    WinText.gameObject.SetActive(false);
+                    LoseText.gameObject.SetActive(false);
+                    
+                break;
+        }
+    }
+
+    public void StartTextJumpAnim(Transform textTransform){
+        // Start LoadingText jump animation
+                    if (textTransform != null)
+                    {
+                        textTransform.gameObject.SetActive(true);
+                        textTransform.localPosition = loadingTextOriginalPos;
+                        loadingTextTween?.Kill();
+                        loadingTextTween = textTransform.DOLocalMoveY(loadingTextOriginalPos.y + 30f, 0.5f)
+                            .SetLoops(-1, LoopType.Yoyo)
+                            .SetEase(Ease.InOutQuad);
+                    }
+    }
+
+    public void StopLoadingTextAnim()
+    {
+        // Stop LoadingText jump animation
+        if (loadingTextTween != null && loadingTextTween.IsActive())
+        {
+            loadingTextTween.Kill();
+            loadingTextTween = null;
+        }
+
+        // Hide all text
+        LoadingText.gameObject.SetActive(false);
+        WinText.gameObject.SetActive(false);
+        LoseText.gameObject.SetActive(false);
+    }
+
+// ---------------------------------- - --------------------------------------
+
+
 
     /// <summary>
     /// Hides the loading panel with animation
@@ -133,7 +227,7 @@ public class LoadingPanelController : MonoBehaviour
     public void HideLoadingPanel()
     {
         Debug.Log("Hiding loading panel");
-        
+
         if (Blue_RectTransform != null)
         {
             // Move BlueTopImage from original position to above screen
@@ -150,35 +244,37 @@ public class LoadingPanelController : MonoBehaviour
                 .OnComplete(() => YellowDownImage.SetActive(false));
         }
 
-        // Stop LoadingText jump animation
-        if (LoadingText != null)
-        {
-            loadingTextTween?.Kill();
-            LoadingText.localPosition = loadingTextOriginalPos;
-            LoadingText.gameObject.SetActive(false);
-        }
+        HideAllTexts();
+        StopLoadingTextAnim();
 
         Debug.Log("Loading panel hidden");
+    }
+
+    private void HideAllTexts()
+    {
+        WinText.gameObject.SetActive(false);
+        LoadingText.gameObject.SetActive(false);
+        LoseText.gameObject.SetActive(false);
     }
 
     /// <summary>
     /// Shows loading panel for a specified duration then hides it
     /// </summary>
     /// <param name="duration">How long to show the loading panel</param>
-    public void ShowLoadingPanelForDuration(float duration)
+    public void ShowLoadingPanelForDuration(float duration, LoadingState loadingState)
     {
-        ShowLoadingPanel();
+        ShowLoadingPanel(loadingState);
         DOVirtual.DelayedCall(duration, HideLoadingPanel);
     }
 
-    public void ShowLoadingPanelDelay(float delay){
-        StartCoroutine(ShowLoadingPanelCoroutine(delay));
+    public void ShowLoadingPanelDelay(float delay, LoadingState loadingState){
+        StartCoroutine(ShowLoadingPanelCoroutine(delay, loadingState));
     } 
 
-    private IEnumerator ShowLoadingPanelCoroutine(float duration)
+    private IEnumerator ShowLoadingPanelCoroutine(float duration , LoadingState loadingState)
     {
         yield return new WaitForSeconds(duration);
-        ShowLoadingPanel();
+        ShowLoadingPanel(loadingState);
     }
     public void HideLoadingPanelDelay(float delay){
         StartCoroutine(HideLoadingPanelCoroutine(delay));

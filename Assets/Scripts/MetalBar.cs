@@ -254,6 +254,9 @@ public class MetalBar : MonoBehaviour
         */
         // check which type of Converter it is, then Change the shape accordingly
 
+        // * Play conversion sound
+        AudioManager_Script.Instance.Play(SoundName.Conversion);
+
         switch (type)
         {
             case ResourceType.MetalBar:

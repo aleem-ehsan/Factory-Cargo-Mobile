@@ -376,7 +376,8 @@ namespace Hypertonic.GridPlacement
             _gridObjectPlacementManager.Setup(this, _gridSettings, gridObjectToPlace);
 
 
-// ! : My Added -- disabling the Grid from being displayed when entering placement mode  - Grid
+// ! Grid Display : My Added -- disabling the Grid from being displayed when entering placement mode  - Grid
+// ! Move the Ground a Little bit Up in Y Axis so that the Grid Display gets hidden Under the Ground - BEST APPROACH
             if (!_gridDisplayManager.IsDisplaying)
             {
                 DisplayGrid();

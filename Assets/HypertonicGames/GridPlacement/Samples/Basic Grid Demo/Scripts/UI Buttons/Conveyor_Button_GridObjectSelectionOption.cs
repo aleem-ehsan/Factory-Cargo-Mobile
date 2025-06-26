@@ -85,13 +85,11 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         void OnEnable()
         {
-            LevelManager.OnGameplayStarted += SetButtonInteractable; // Subscribe to the event to update count when gameplay starts   
             ConveyorManager.OnConveyorMaxLimitReached += HandleConveyorMaxLimitReached;
             ConveyorManager.OnConveyorCanceledOrDeleted += HandleConveyorDeleted;
         }
         void OnDisable()
         {
-            LevelManager.OnGameplayStarted -= SetButtonInteractable; // Subscribe to the event to update count when gameplay starts   
             ConveyorManager.OnConveyorMaxLimitReached -= HandleConveyorMaxLimitReached;
             ConveyorManager.OnConveyorCanceledOrDeleted -= HandleConveyorDeleted;
 
@@ -269,20 +267,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
        
 
-/// <summary>
-/// Fuction to disable this button
-/// </summary>
-        // public void DisableThisButton(){
-        //     _thisButton.interactable = false; // Disable this button
-        // }
 
-        public void SetButtonInteractable(bool isInteractable)
-        {
-            Debug.Log($"Setting button interactable state to: {isInteractable}");
-            _isButtonInteractable = isInteractable;
-            _thisButton.interactable = isInteractable; // Set the button interactable state
-            _thisButton.enabled = isInteractable; // Enable or disable the button component itself
-        }
 
 
 

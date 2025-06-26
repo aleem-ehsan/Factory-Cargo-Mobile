@@ -27,6 +27,9 @@ using UnityEngine;
         public static event System.Action<int> OnLevelCompleted; // Event to notify when a level is completed
         public static event System.Action<bool> OnGameplayStarted; // Event to notify when a level is completed
 
+
+        public static bool isGameplayStarted = false; // Flag to check if the gameplay has started
+
         void Awake()
         {
             Debug.Log("LevelManager Awake called");
@@ -60,9 +63,9 @@ using UnityEngine;
             }
             
             // TODO: Only to Play a specific level 
-            #if !UNITY_EDITOR 
+            // #if !UNITY_EDITOR 
              LoadLastUncompletedLevel();
-            #endif
+            // #endif
             EnableActiveLevel();
 
             // *Hide the loading panel after enabling the active level
@@ -89,16 +92,7 @@ using UnityEngine;
 
 
 
-    /// <summary>
-    /// Function to initialize the time and conveyor quantities for the active level.
-    /// This is called when the Train is Stopped instead of the START()
-    /// </summary>
-        public void InitializeTimeandConveyor(){
-            Debug.Log("Initializing time and conveyor quantities for the active level.");
-            InitializeConveyorQuantites();
-            InitializeTimerController(); // Initialize the timer for the active level
-
-        }
+    
 
 
 
@@ -155,6 +149,7 @@ using UnityEngine;
         }
 
         public void InitializeConveyorQuantites(){
+            Debug.Log("Initializing conveyor quantities for the active level.");
             // set the Conveyor quantities in the ConveyorManager
             int levelIndex = GetLevelToLoadIndex();
             LevelData levelData = levelRequirementsData.levels[levelIndex];
@@ -192,6 +187,8 @@ using UnityEngine;
         }
 
 
+
+// TODO: make this function Efficient by using a for loop
         public void EnableActiveLevel(){
             for (int i = 0; i < Levels.Count; i++)
                 {
@@ -206,6 +203,18 @@ using UnityEngine;
                 }
             My_UIManager.Instance.UpdateLevelText(levelToLoad); // Update the UI with the current level
         }
+
+        public void DisableCurrentLevel(){
+            int currentLevelIndex = GetLevelToLoadIndex();
+            if (currentLevelIndex >= 0 && currentLevelIndex < Levels.Count)
+            {
+                Levels[currentLevelIndex].SetActive(false); // Disable the current level
+            }
+            else
+            {
+                Debug.LogError($"Cannot disable level: Invalid level index {currentLevelIndex}");
+            }
+        }
         
 
 
@@ -216,6 +225,7 @@ using UnityEngine;
         {
             My_UIManager.Instance.ShowGameWinPanel(); // Show the game win panel
 
+            AudioManager_Script.Instance.Play(SoundName.LevelCompleted); // Play the level completed sound
 
             if (_levelProgressManager == null)
             {
@@ -230,11 +240,31 @@ using UnityEngine;
 
             // check in How Much Time the Level is completed.
             TimerController.Instance.CheckHowMuchTimeIsUsed(); // Stop the timer when the level is completed
+
+            isGameplayStarted = false; // Reset the gameplay started flag
         }
 
 
+/// <summary>
+/// Function to set the gameplay started flag to true.
+/// </summary>
         public void GamePlayeStarted(){
+            isGameplayStarted = true; // Set the gameplay started flag to true
             OnGameplayStarted?.Invoke(true); // Notify subscribers that the gameplay has started
+        }
+
+        public void LevelFailed(){
+            isGameplayStarted = false; // Reset the gameplay started flag
+
+            Debug.Log("Level Lose! Not all required resources have been collected!");
+            AudioManager_Script.Instance.Play(SoundName.LevelFailed); // Play the level failed sound
+            My_UIManager.Instance.ShowGameLosePanel(); // Show the game win panel
+
+             // stop the Time.timeScale
+            // Time.timeScale = 0;
+
+            // * Display the Loading Panel
+            LoadingPanelController.Instance.ShowLoadingPanelDelay(0.5f , LoadingState.Lose); // Show the loading panel for 1 second
         }
 
 

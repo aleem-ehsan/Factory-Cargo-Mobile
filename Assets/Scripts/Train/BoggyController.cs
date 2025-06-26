@@ -9,6 +9,9 @@ public class BoggyController : MonoBehaviour
 
     private Vector3 startingPos; // Starting position of the boggy
 
+    private float productYOffset = 0; // Offset to adjust the product position
+    private float productForwardOffset = 0.1f; // Offset to adjust the product position
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -41,7 +44,7 @@ public class BoggyController : MonoBehaviour
         product.DORotate(new Vector3(0, 90, 0), 0.5f); // Animate rotation using DOTween
         Debug.Log("Product placed in container.");
 
-        productPos.localPosition += Vector3.forward * 0.3f; // Adjust the position slightly to avoid overlap
+        productPos.localPosition += Vector3.forward * 0.8f   +   Vector3.forward * productForwardOffset ; // Adjust the position slightly to avoid overlap
 
         IncrementPlacememntCount(); // Increment the placement count
     }
@@ -60,7 +63,10 @@ public class BoggyController : MonoBehaviour
         PlacememntCount = 0; // Reset the placement count
 
         productPos.localPosition = startingPos; // Reset the position of the product container
-        productPos.position += Vector3.up * 0.3f; // Move the position to the right after 5 placements
+        productYOffset += 0.2f; // Reset the offset for product positioning
+        productPos.position += Vector3.up * productYOffset; // Move the position to the right after 5 placements
+
+        productForwardOffset += 0.2f; // Reset the forward offset for product positioning
     }
 
 }

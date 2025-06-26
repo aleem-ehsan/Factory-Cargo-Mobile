@@ -65,8 +65,7 @@ public class My_UIManager : MonoBehaviour
     }
     public void ShowGameLosePanel()
     {
-         // stop the Time.timeScale
-        Time.timeScale = 0;
+        
 
         // Show the game win panel
         gameLosePanel.SetActive(true);
@@ -123,6 +122,12 @@ public class My_UIManager : MonoBehaviour
     /// Function to Replay the Current Level Being Played
     /// </summary>
     public void ReplayButtonPressed(){
+
+        
+        // * Display the Loading Panel
+        LoadingPanelController.Instance.ShowLoadingPanel(LoadingState.Loading);
+
+        
         // resume the Time.timeScale
         Time.timeScale = 1;
 
@@ -135,6 +140,7 @@ public class My_UIManager : MonoBehaviour
         int currentLevel = LevelManager.Instance.levelToLoad;
         PlayerPrefs.SetInt("ReplayLevel", currentLevel);
         PlayerPrefs.Save();
+
 
         // Reload the current scene
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);

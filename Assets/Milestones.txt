@@ -50,27 +50,27 @@ Cost: $50
 🎯 Goals:
 1. Animations o Conveyor movement, machine operations, transformation visuals.✅
 o Smooth, appealing animations with mobile optimization.✅
-2. UI Enhancements❌
-o Improve the clarity and aesthetics of all buttons, HUD, and level display.
+2. UI Enhancements✅
+o Improve the clarity and aesthetics of all buttons, HUD, and level display. ✅
 o Optimize touch responsiveness and layout for mobile. ✅
-3. Sound & Music o Add appropriate SFX for conveyor motion, transformations, and UI.❌
-o Integrate light industrial background music.❌
-4. Mobile UX Tuning o Refine touch drag/drop mechanics. o Improve gestures and responsiveness for smaller screens.❌
+3. Sound & Music o Add appropriate SFX for conveyor motion, transformations, and UI.✅
+o Integrate light industrial background music.✅
+4. Mobile UX Tuning o Refine touch drag/drop mechanics. o Improve gestures and responsiveness for smaller screens.✅
 
 
 
 NEW THINGs NEEDED BY CLIENT:	
-\- I think it's better to start down to go up and not up to go down❌
-\- the conveyors have to be always the same length⁉️ and width in all part because in the long term, they have to fit to be juicy, and if possible the iron bar, etc, doesn't jump.❌
-\- it's a good idea the conveyor the jump but in the idea, we have conveyor to go up and down to have puzzle very difficult, i will show you an image ⁉️
+\- I think it's better to start down to go up and not up to go down✅
+\- the conveyors have to be always the same length⁉️ and width in all part because in the long term, they have to fit to be juicy, and if possible the iron bar, etc, doesn't jump.✅
+\- it's a good idea the conveyor the jump but in the idea, we have conveyor to go up and down to have puzzle very difficult, i will show you an image ✅
 \-
 Maybe you right it's better to jump and no going up and down, on the phone it's going to be difficult, but maybe not a conveyor to jump but like a bump thing ? 
 ANSWER:	{ Its a Very Good approach of using Jumper/Bumper for the material jump }
 
 { NEW OUT OF SCOPE REQUIREMENT }
-\- And have you an asset of a train in you're Unity ? because, the finish of the level would be you put iron bar in a train and when you finish, you see the train going to the another level and after and after❌, 
+\- And have you an asset of a train in you're Unity ? because, the finish of the level would be you put iron bar in a train and when you finish, you see the train going to the another level and after and after✅, 
 
-\- To be more juicy, and put more iron bar in the game❌, to see lot of things going in the point A after point B etc  
+\- To be more juicy, and put more iron bar in the game✅, to see lot of things going in the point A after point B etc  
 
 
 

@@ -23,7 +23,7 @@ public class LevelRequirementsData : MonoBehaviour
             {
                 new(ResourceType.MetalBar, 10),
             },
-            AvailableTimeInSeconds = 140, 
+            AvailableTimeInSeconds = 70, 
 
             // * Amount of Conveyors allowed 
             AllowedConveyors = new ConveyorStats[]
@@ -40,7 +40,7 @@ public class LevelRequirementsData : MonoBehaviour
             {
                 new(ResourceType.TexturedBar, 8)
             },
-            AvailableTimeInSeconds = 100,
+            AvailableTimeInSeconds = 70,
 
             // * Amount of Conveyors allowed 
             AllowedConveyors = new ConveyorStats[]
@@ -56,7 +56,7 @@ public class LevelRequirementsData : MonoBehaviour
             {
                 new(ResourceType.MetalBar, 10),
             },
-            AvailableTimeInSeconds = 50,
+            AvailableTimeInSeconds = 70,
 
             // * Amount of Conveyors allowed 
             AllowedConveyors = new ConveyorStats[]
@@ -71,9 +71,9 @@ public class LevelRequirementsData : MonoBehaviour
         {
             requiredResources = new RequiredResource[]
             {
-                new(ResourceType.MetalBar, 4),
+                new(ResourceType.MetalBar, 8),
             },
-            AvailableTimeInSeconds = 40,
+            AvailableTimeInSeconds = 50,
 
             // * Amount of Conveyors allowed 
             AllowedConveyors = new ConveyorStats[]
@@ -128,7 +128,7 @@ public class LevelRequirementsData : MonoBehaviour
                 new(ResourceType.MetalBar, 2),
                 new(ResourceType.EmmisiveBar, 4),
             },
-            AvailableTimeInSeconds = 120,
+            AvailableTimeInSeconds = 90,
 
             // * Amount of Conveyors allowed 
             AllowedConveyors = new ConveyorStats[]

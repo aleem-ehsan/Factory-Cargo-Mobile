@@ -135,8 +135,8 @@ public class SubmissionTable_Controller : MonoBehaviour
     private void ProcessResource(ResourceType resourceType, GameObject resourceObject)
     {
 
-         // ! important --->> Check if Product is Already On the Table
-        if (ProductsOnTable.Contains(resourceObject.transform))
+         // ! important --->> Check if Product is Already On the Table     ||     // ! important --->> Check if the Level is Started or not
+        if (ProductsOnTable.Contains(resourceObject.transform) || LevelManager.isGameplayStarted == false)
             return;
 
         Debug.Log($"Processing resource: {resourceType}");
@@ -182,7 +182,8 @@ public class SubmissionTable_Controller : MonoBehaviour
     {
 
 
-
+        // * Play Collection Sound
+        AudioManager_Script.Instance.Play(SoundName.CollectProduct); // Play the collect product sound
 
         // Disable components
         // resourceObject.GetComponent<BoxCollider>().enabled = false;
@@ -278,8 +279,7 @@ public class SubmissionTable_Controller : MonoBehaviour
         else{
             // * Check if the time is up then the level is lost as Resources not collected
             if(TimerController.Instance.isTimeUp){
-                Debug.Log("Level Lose! Not all required resources have been collected!");
-                My_UIManager.Instance.ShowGameLosePanel(); // Show the game win panel
+                LevelManager.Instance.LevelFailed();
             }
         }
     }
