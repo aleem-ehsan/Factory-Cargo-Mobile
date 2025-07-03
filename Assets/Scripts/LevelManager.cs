@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using Hypertonic.GridPlacement.Example.BasicDemo;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-    public class LevelManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
     {
 
         [Header("Test Level to Play")]
@@ -44,6 +45,9 @@ using UnityEngine;
                 Destroy(gameObject);
                 return;
             }
+
+             
+
 
             InitializeLevels();
             
@@ -154,7 +158,7 @@ using UnityEngine;
             int levelIndex = GetLevelToLoadIndex();
             LevelData levelData = levelRequirementsData.levels[levelIndex];
             if (levelData != null) {
-                ConveyorManager.Instance.SetConveyorQuantities(levelData.AllowedConveyors);
+                ConveyorManager.Instance.SetAllConveyorQuantities(levelData.AllowedConveyors);
             } else {
                 Debug.LogError($"Level data not found for level index {levelIndex}");
             }

@@ -177,7 +177,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
 
     // Set Conveyor Quantites from the LevelManager
-    public void SetConveyorQuantities(ConveyorStats[] conveyorStats){
+    public void SetAllConveyorQuantities(ConveyorStats[] conveyorStats){
         // * reset the List of Conveyor Count
         AllConveyorTypeCounts.Clear();
 
@@ -201,6 +201,45 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
                 CreateButtonInCanvas(conveyorStat.conveyorType, conveyorStat.maxCount);
             }
         }
+    }
+
+
+/// <summary>
+/// Adding a new Conveyor Type and its Quantity to the AllConveyorTypeCounts list.
+/// </summary>
+/// <param name="conveyorType"></param>
+/// <param name="quantity"></param>
+    public void AddConveyorTypeAndQuantity(ConveyorStats conveyorStats)
+        {
+            // Check if the conveyor type already exists
+            var existingConveyor = AllConveyorTypeCounts.Find(c => c.conveyorType == conveyorStats.conveyorType);
+
+
+            // TODO :            // ! if the Conveyor Exists, then LOGIC is not Fully implemented 
+            if (existingConveyor != null)  // ! if the Conveyor Exists, then LOGIC is not Fully implemented
+            {
+                Debug.Log($"Conveyor type {conveyorStats.conveyorType} already exists. Updating quantity.");
+                existingConveyor.maxCount += conveyorStats.maxCount; // Increase the max count
+                
+                // ! update the Button's Quantity UI COUNT
+            }
+            else  // * if the Conveyor Type does not exist, then add it to the list
+            {
+                // Add a new conveyor type with the specified quantity
+                AllConveyorTypeCounts.Add(new ConveyorTypeCount 
+                { 
+                    conveyorType = conveyorStats.conveyorType, 
+                    maxCount = conveyorStats.maxCount, 
+                    currentCount = 0 
+                });
+                Debug.Log($"Added new conveyor type {conveyorStats.conveyorType} with max count {conveyorStats.maxCount}");
+
+                
+                // Create a button in the UI canvas for this conveyor type
+                CreateButtonInCanvas(conveyorStats.conveyorType, conveyorStats.maxCount);
+            }
+
+
     }
 
 
@@ -254,7 +293,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         }
 
 
-
+    
 
 
     }

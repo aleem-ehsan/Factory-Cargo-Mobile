@@ -114,11 +114,39 @@ Add Smoke for Train Engine. ✅
 
 
 
+--------------------------------- MILESTONE--4 	  |	 -----------------------------
+
+Interactive Tutorial o Teach players how to place conveyors, rotate, and complete transformations step-by-step.❌
+
+	Instructions:
+		Resources move along with Conveyors, so place them in a way that guides the resources toward the Submission Table.
+
+		Use the available Conveyors and make sure to place them within the marked boundaries. Just drag and drop to place them.
+
+		Start by placing a CURVED Conveyor in front of the Machine to turn the resources in the right direction.
+
+		Next, add a STRAIGHT Conveyor beside the CURVED Conveyor.
+
+		Uh-oh! There’s a blockage in the path.
+		No worries — place a Bumper to launch the resources over the obstacle and onto the Table.
+
+		Awesome job — you did it!
 
 
+TODO:
+	When Player has instruction to Place a specific type of Conveyor. Then Disable other Conveyor Buttons.  ( Or ) 		only to show up a Button when its Needed.
+	
+
+	IMPLEMENTATION ===>>>  
+	Also make the Robot Controller to check if Gameplay is Started or not.  ----->>>>>  If not then dont call the Machine's SPAWN function
+
+	In the Conveyor, Subscribe to the Tutorial Manager's "ConveyorCreated()" Function so that it gets notified when a Conveyor is Placed { no need to accept Type of Conveyor being Created }
 
 
+	________________________________________________________________________________________
+	What if we only create a Specific GridConveyor-Button when its Needed.
 
+	
 
-
-
+	
+	

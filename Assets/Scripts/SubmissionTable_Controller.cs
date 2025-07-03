@@ -279,7 +279,12 @@ public class SubmissionTable_Controller : MonoBehaviour
         else{
             // * Check if the time is up then the level is lost as Resources not collected
             if(TimerController.Instance.isTimeUp){
-                LevelManager.Instance.LevelFailed();
+                if(LevelManager.Instance != null)  // * means The Gameplay is in Actual Levels
+                    LevelManager.Instance.LevelFailed();
+                else{
+                    // * means The Gameplay is in Tutorial & Tutorial is not Completed
+                    TutorialManager.Instance.TutorialFailed();
+                }
             }
         }
     }

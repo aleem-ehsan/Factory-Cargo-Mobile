@@ -170,4 +170,30 @@ public class LevelRequirementsData : MonoBehaviour
         Debug.LogError($"Remaining time not found for level index {levelIndex}");
         return 0;
     }
+
+/// <summary>
+/// Gets the required resources for the tutorial level
+/// </summary>
+/// <returns>Array of required resources for tutorial level</returns>
+public LevelData GetTutorialLevelRequirements()
+{
+    LevelData levelRequiredData = new()
+    {
+            requiredResources = new RequiredResource[]
+            {
+                new(ResourceType.MetalBar, 4),
+            },
+            AvailableTimeInSeconds = 90,
+
+            // * Amount of Conveyors allowed 
+            AllowedConveyors = new ConveyorStats[]
+            {
+                new(ConveyorType.Curved, 1), // Example conveyor stats
+                new(ConveyorType.Straight, 1), // Example conveyor stats
+                new(ConveyorType.Bumper, 2), // Example conveyor stats
+            }
+        };
+    // Tutorial level is typically level 0 or the first level
+    return levelRequiredData;
+}
 } 

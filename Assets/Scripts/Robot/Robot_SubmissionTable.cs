@@ -127,11 +127,14 @@ public class Robot_SubmissionTable : MonoBehaviour
     }
 
 /// <summary>
-/// A Function to implement Logic when Train is Ready to GO..
+/// A Function to implement Logic when Train is Ready to GO..   || Level is Completed || Tutorial is Completed
 /// </summary>
     private void AllItemsLoadedOnTrain(){
         TrainController.Instance.TrainReadyToMove(); // Start the train movement to the next station
-        LevelManager.Instance.CurrentLevelCompleted(); // Save the level progress
+        if(LevelManager.Instance != null)
+            LevelManager.Instance.CurrentLevelCompleted(); // Save the level progress
+        else
+            TutorialManager.Instance.TutorialCompleted(); // Save the level progress
     }
 
 

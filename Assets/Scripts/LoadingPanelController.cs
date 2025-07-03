@@ -42,6 +42,9 @@ public class LoadingPanelController : MonoBehaviour
     private Tween loadingTextTween;
     private Vector3 loadingTextOriginalPos;
 
+
+    public bool isLoadingPanelVisible = false; // Track if the loading panel is currently visible
+
     void Awake()
     {
         Debug.Log("LoadingPanelController Awake called");
@@ -97,6 +100,11 @@ public class LoadingPanelController : MonoBehaviour
         Debug.Log($"BlueTopPos = {blueTopOriginalPos}, YellowDownPos = {yellowDownOriginalPos}");
         Debug.Log($"BlueTopHiddenPos = {blueTopHiddenPos}, YellowDownHiddenPos = {yellowDownHiddenPos}");
         
+
+
+        // ! because LoadingPanel will be displayed at START
+        isLoadingPanelVisible = true; // Initialize the loading panel visibility state
+
         // Initially hide the loading panel after a short delay
         HideLoadingPanelDelay(1f);
     }
@@ -110,6 +118,19 @@ public class LoadingPanelController : MonoBehaviour
     /// </summary>
     public void ShowLoadingPanel(LoadingState loadingState)
     {
+        // * If the panel is already visible, do nothing
+        if(isLoadingPanelVisible)
+        {
+            // * Change the Text to New Loading State
+            ShowText(loadingState); // Show the appropriate text based on loading state
+
+            Debug.Log("Loading panel is already visible, skipping show");
+            return; 
+        }
+
+
+
+        isLoadingPanelVisible = true; // Set the flag to true when showing the panel
         Debug.Log("Showing loading panel");
         
         // * Hide gameplay panel when loading
@@ -226,6 +247,17 @@ public class LoadingPanelController : MonoBehaviour
     /// </summary>
     public void HideLoadingPanel()
     {
+         // * If the panel is already hidden, do nothing
+        if(isLoadingPanelVisible == false)
+        {
+            Debug.Log("Loading panel is already visible, skipping show");
+            return;
+        }
+
+
+        isLoadingPanelVisible = false; // Set the flag to true when showing the panel
+
+
         Debug.Log("Hiding loading panel");
 
         if (Blue_RectTransform != null)

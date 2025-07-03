@@ -13,19 +13,19 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo.GridCoordinates
 
         private void Awake()
         {
-            _gridCoordinates.text = string.Empty;
+            // _gridCoordinates.text = string.Empty;
         }
 
         private void OnEnable()
         {
-            _gridManager.OnObjectPositionUpdated += HandleGridObjectPositionUpdated;
-            _gridManager.OnGridObjectPlaced += HandleGridObjectPlaced;
+            // _gridManager.OnObjectPositionUpdated += HandleGridObjectPositionUpdated;
+            // _gridManager.OnGridObjectPlaced += HandleGridObjectPlaced;
         }
 
         private void OnDisable()
         {
-            _gridManager.OnObjectPositionUpdated -= HandleGridObjectPositionUpdated;
-            _gridManager.OnGridObjectPlaced -= HandleGridObjectPlaced;
+            // _gridManager.OnObjectPositionUpdated -= HandleGridObjectPositionUpdated;
+            // _gridManager.OnGridObjectPlaced -= HandleGridObjectPlaced;
         }
 
         private void HandleGridObjectPositionUpdated(Vector2Int coordinates)

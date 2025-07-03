@@ -111,6 +111,11 @@ public class TrainController : MonoBehaviour
         // * Show the Gameplay panel and Initialize the Conveyors
         OnTrainStoppedAtDoor?.Invoke(); // Notify subscribers that the train has stopped at the door
         
+
+        if(TutorialManager.Instance != null)
+        {
+            TutorialManager.Instance.GameplayStarted(); // Notify the TutorialManager that the current instruction is completed
+        }
     }
 
 

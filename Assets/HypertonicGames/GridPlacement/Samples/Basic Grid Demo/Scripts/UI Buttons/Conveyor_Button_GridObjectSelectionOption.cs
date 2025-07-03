@@ -50,8 +50,9 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         private void Start()
         {
            
-
-            MaxPlaceble = ConveyorManager.Instance.GetRemainingCount(ConveyorType);
+            if(TutorialManager.Instance == null){  // if not in a Tutorial then Get Max Count from the ConveyorManager 
+                MaxPlaceble = ConveyorManager.Instance.GetRemainingCount(ConveyorType);
+            }
              if (_countText == null)
             {
                 Debug.LogError("TextMeshProUGUI component not found in children. Please ensure it is present.");
@@ -132,6 +133,9 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
                 MaxPlaceble--;
                 UpdateCountUI();
 
+                    if(TutorialManager.Instance != null){
+                        TutorialManager.Instance.ConveyorCreated(ConveyorType); // Notify the TutorialManager that a conveyor has been created
+                    }
 
             }else{
                 GridManagerAccessor.GridManager.DeleteObject(ConveyorManager.Instance.GetLastCraetedConveyor());
@@ -232,9 +236,11 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 /// </summary>
         public void SetConveyorTypeAndQuantity( ConveyorType conveyorType, int quantity)
         {
+
+            Debug.Log("Setting Conveyor Type and Quantity: " + conveyorType + ", Quantity: " + quantity);
             ConveyorType = conveyorType;
             MaxPlaceble = quantity;
-
+        
             if (_countText != null)
             {
                 UpdateCountUI(); // Update the count UI with the new quantity

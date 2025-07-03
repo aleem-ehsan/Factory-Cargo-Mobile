@@ -6,6 +6,8 @@ public class LevelProgressManager : MonoBehaviour
 {
     private const string LEVEL_PROGRESS_KEY = "LevelProgress";
     private const string LEVEL_STARS_KEY = "LevelStars_"; // Prefix for storing stars for each level
+    private const string TUTORIAL_COMPLETED_KEY = "TutorialCompleted";
+    private const string FORCE_REPLAY_TUTORIAL_KEY = "ForceReplayTutorial";
 
     // -------------- Singleton Pattern --------------
     private static LevelProgressManager instance;
@@ -39,6 +41,7 @@ public class LevelProgressManager : MonoBehaviour
 
         #if UNITY_EDITOR
             // ResetProgress();// TODO: Testing purposes
+            // ResetTutorialProgress();// TODO: Testing purposes
         #endif
     }
 
@@ -123,5 +126,54 @@ public class LevelProgressManager : MonoBehaviour
         {
             PlayerPrefs.DeleteKey(LEVEL_STARS_KEY + i);
         }
+    }
+
+    public bool IsTutorialCompleted()
+    {
+        return PlayerPrefs.GetInt(TUTORIAL_COMPLETED_KEY, 0) == 1;
+    }
+
+    public void MarkTutorialCompleted()
+    {
+        PlayerPrefs.SetInt(TUTORIAL_COMPLETED_KEY, 1);   // * Setting 1 means Tutorial is completed
+        PlayerPrefs.Save();
+        Debug.Log("Tutorial marked as completed");
+    }
+
+    /// <summary>
+    /// Checks if the tutorial should be force replayed (even if completed)
+    /// </summary>
+    /// <returns>True if tutorial should be replayed, false otherwise</returns>
+    public bool ShouldForceReplayTutorial()
+    {
+        return PlayerPrefs.GetInt(FORCE_REPLAY_TUTORIAL_KEY, 0) == 1;
+    }
+
+    /// <summary>
+    /// Sets the force replay flag to true, allowing tutorial replay even when completed
+    /// </summary>
+    public void SetForceReplayTutorial()
+    {
+        PlayerPrefs.SetInt(FORCE_REPLAY_TUTORIAL_KEY, 1);
+        PlayerPrefs.Save();
+        Debug.Log("Force replay tutorial flag set to true");
+    }
+
+    /// <summary>
+    /// Resets the force replay flag to false
+    /// </summary>
+    public void ResetForceReplayTutorial()
+    {
+        PlayerPrefs.SetInt(FORCE_REPLAY_TUTORIAL_KEY, 0);
+        PlayerPrefs.Save();
+        Debug.Log("Force replay tutorial flag reset to false");
+    }
+
+    public void ResetTutorialProgress()
+    {
+        PlayerPrefs.DeleteKey(TUTORIAL_COMPLETED_KEY);
+        PlayerPrefs.DeleteKey(FORCE_REPLAY_TUTORIAL_KEY);
+        PlayerPrefs.Save();
+        Debug.Log("Tutorial progress reset");
     }
 }

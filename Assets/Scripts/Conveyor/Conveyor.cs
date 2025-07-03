@@ -46,6 +46,10 @@ public class Conveyor : MonoBehaviour
                 if(isManuallyPlaced == false)
                 {
                     ConveyorManager.Instance.IncreaseConveyor_CurrentCount(conveyorType);
+
+
+                   
+                    
                 }
             }
             else
