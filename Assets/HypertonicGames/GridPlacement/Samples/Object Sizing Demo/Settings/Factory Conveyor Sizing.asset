@@ -31,7 +31,7 @@ MonoBehaviour:
   GridCanvasEventCameraName: 
   UsePlaceableMaterial: 1
   UseUnplaceableMaterial: 1
-  ObjectPlaceableMaterial: {fileID: 2100000, guid: 9ee4b508ab48802439d94f058414701d, type: 2}
+  ObjectPlaceableMaterial: {fileID: 2100000, guid: f2703cd43de729d47b4a249e5166a72d, type: 2}
   ObjectUnPlaceableMaterial: {fileID: 2100000, guid: 447137d51a391c74fa67e1a5883f0520, type: 2}
   DefaultAlignment: 0
   InitialPlacementCellIndex: {x: 5, y: 5}

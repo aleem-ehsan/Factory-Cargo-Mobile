@@ -94,7 +94,10 @@ namespace Hypertonic.GridPlacement
         {
             if (_gridSettings.UsePlaceableMaterial)
             {
-                AssignPlaceableMaterials();
+                // TODO: Call the Below function to change materials when object is placeable
+                // AssignPlaceableMaterials();
+                
+                AssignOriginalMaterials();
             }
             else
             {

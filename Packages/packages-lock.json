@@ -87,14 +87,6 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.ide.windsurf": {
-      "version": "file:C:/Users/IT-LINKS/Downloads/Compressed/com.unity.ide.windsurf-master/com.unity.ide.windsurf-master",
-      "depth": 0,
-      "source": "local",
-      "dependencies": {
-        "com.unity.test-framework": "1.1.9"
-      }
-    },
     "com.unity.inputsystem": {
       "version": "1.13.0",
       "depth": 0,

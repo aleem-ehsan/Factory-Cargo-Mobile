@@ -74,7 +74,8 @@ public class MetalBar : MonoBehaviour
                 LeaveCurrentConveyor(null);
 
                 // * Jump a little bit forward in the direction of the machine exit
-                transform.DOJump(transform.position + machineExitController.transform.forward * 2f, 0.4f, 1, 0.5f).SetEase(Ease.Linear); // Jump forward in the direction of the machine exit
+                // transform.DOJump(transform.position + machineExitController.transform.forward * 2f, 0.4f, 1, 0.5f).SetEase(Ease.Linear); // Jump forward in the direction of the machine exit
+                transform.DOMove(transform.position + machineExitController.transform.forward * 1.2f, 0.5f).SetEase(Ease.Linear); // Move forward in the direction of the machine exit
 
             }
 
@@ -118,7 +119,8 @@ public class MetalBar : MonoBehaviour
                     Debug.Log("Metal Bar Triggered with Conveyor Exit");
 
                 // * Jump a little bit forward in the direction of the machine exit
-                transform.DOJump(transform.position + conveyorExitController.transform.forward * conveyorExitController.OutForce, 0.1f, 1, 0.5f).SetEase(Ease.Linear); // Jump forward in the direction of the machine exit
+                // transform.DOJump(transform.position + conveyorExitController.transform.forward * conveyorExitController.OutForce, 0.1f, 1, 0.5f).SetEase(Ease.Linear); // Jump forward in the direction of the machine exit
+                transform.DOMove(transform.position + conveyorExitController.transform.forward * conveyorExitController.OutForce, 0.5f).SetEase(Ease.Linear); // Move forward in the direction of the machine exit
 
                 }
 

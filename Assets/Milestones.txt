@@ -115,3 +115,26 @@ o Validate save/load system works on all levels.✅
 5. App Store Submission o Prepare store materials (icon, screenshots, metadata). o Submit the build for review on App Store & Google Play.❌
 
 
+
+
+
+
+___________________________________________________________________________________________________________________________________
+
+CLIENT REVIEW ON MILESTONE 4:
+
+Hello,
+So I did the tests, and since we're on the polish part, the placement of the conveyors needs to be as clean as possible. The conveyors really need to be perfectly aligned, a bit like magnets, and the important part is that the conveyors must be aligned. You can't put conveyors that are placed on the side and still have objects go up in them. I'll draw you a picture in Paint.
+
+The tutorial part very cool by the way :)
+___________________________________________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+

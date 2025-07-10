@@ -5,7 +5,7 @@ public class ConveyorExitController : MonoBehaviour
 
     public Machine connectedMachine;
     public Conveyor _conveyor;
-    public int OutForce = 2;
+    public float OutForce = 2;
 
 
     void Awake()

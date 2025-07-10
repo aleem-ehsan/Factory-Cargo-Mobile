@@ -134,6 +134,13 @@ public class TutorialManager : MonoBehaviour
                 TutorialTextAnimator.Instance.UnHideTutorialInstructions(); // Show the next text in the tutorial
             }
 
+            //* check if the last conveyor is created, then hide the // tutorial instructions
+            if (CreatedConveyorsCount >= allowedConveyors.Length)
+            {
+                TutorialTextAnimator.Instance.DelayHideTutorialInstructions(2.5f); // Hide the tutorial instructions when all conveyors are created
+                TutorialInstructions_Completed = true; // Set the flag to indicate that tutorial instructions are completed
+            }
+
 
 
         // Disable that Type of Button using ConveyorManager
@@ -208,9 +215,10 @@ public class TutorialManager : MonoBehaviour
 
 
     public void TutorialCompleted(){
-        // * Show the Tutorial Win Panel
-        // * Show the Tutorial Win Panel
+        // * Hide the Instructions
+        TutorialTextAnimator.Instance.HideTutorialInstructions(); // Hide the tutorial instructions
 
+        // * Show the Tutorial Win Panel
          My_UIManager.Instance.ShowGameWinPanel(); // Show the game win panel
 
             AudioManager_Script.Instance.Play(SoundName.LevelCompleted); // Play the level completed sound
@@ -245,8 +253,13 @@ public class TutorialManager : MonoBehaviour
         LevelManager.isGameplayStarted = false; // Reset the gameplay started flag
 
             Debug.Log("Level Lose! Not all required resources have been collected!");
+
+            // * Hide the Instructions
+            TutorialTextAnimator.Instance.HideTutorialInstructions(); // Hide the tutorial instructions
+
             AudioManager_Script.Instance.Play(SoundName.LevelFailed); // Play the level failed sound
             My_UIManager.Instance.ShowGameLosePanel(); // Show the game win panel
+            
 
              // stop the Time.timeScale
             // Time.timeScale = 0;

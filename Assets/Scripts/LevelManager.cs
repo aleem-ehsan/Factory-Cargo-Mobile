@@ -69,6 +69,10 @@ public class LevelManager : MonoBehaviour
             // TODO: Only to Play a specific level 
             // #if !UNITY_EDITOR 
              LoadLastUncompletedLevel();
+
+            // TODO: check if all Levels are completed    
+            // ! wrap it in an if else  ( if All Levels not completed then Load Last Uncompleted Level -- ELSE play a Random Level )
+            // CheckAllLevelsCompleted();
             // #endif
             EnableActiveLevel();
 
@@ -99,7 +103,9 @@ public class LevelManager : MonoBehaviour
     
 
 
-
+    /// <summary>
+    /// Function to Play a REPLAY Level which is completed
+    /// </summary>
         private void LoadLastUncompletedLevel()
         {
             // Check if we're replaying a level
@@ -272,6 +278,29 @@ public class LevelManager : MonoBehaviour
         }
 
 
+/// <summary>
+/// Function to check if all levels are completed.
+/// then Play a Random Level 
+/// </summary>
+        public void CheckAllLevelsCompleted(){
+             
+            if (_levelProgressManager == null)
+            {
+                Debug.LogError("Cannot check all levels completed: LevelProgressManager is null!");
+                return;
+            }
+
+            int highestCompletedLevel = _levelProgressManager.GetHighestCompletedLevel();
+            if (highestCompletedLevel >= Levels.Count)
+            {
+                Debug.Log("All levels completed! Playing a random level.");
+                // Play a random level
+                levelToLoad = Random.Range(1, Levels.Count + 1);
+                PlayerPrefs.SetInt("ReplayLevel", levelToLoad); // Save the replay level
+                PlayerPrefs.Save();
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the scene to play the random level
+            }
+        }
 
 
     } 

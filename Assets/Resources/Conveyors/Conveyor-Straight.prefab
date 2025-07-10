@@ -151,6 +151,7 @@ MonoBehaviour:
   - {fileID: 3408041582434398146}
   conveyorType: 1
   resourcesMovingOnMe: []
+  isManuallyPlaced: 0
 --- !u!1 &1661125139524217490
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,7 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connectedMachine: {fileID: 0}
   _conveyor: {fileID: 0}
-  OutForce: 2
+  OutForce: 1.2
 --- !u!54 &7462776092516318857
 Rigidbody:
   m_ObjectHideFlags: 0

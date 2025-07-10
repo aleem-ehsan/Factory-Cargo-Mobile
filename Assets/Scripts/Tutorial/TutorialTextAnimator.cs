@@ -135,7 +135,7 @@ public class TutorialTextAnimator : MonoBehaviour, IPointerClickHandler
                     //     CreateGridConveyorButton();
                 }
                 else
-                {
+                {   
                     Debug.Log($"No action required for instruction {currentTextIndex +1 }");
                 } 
         }
@@ -163,6 +163,12 @@ public class TutorialTextAnimator : MonoBehaviour, IPointerClickHandler
         }
 
         canvasGroup.alpha = 1f; // Ensure the text is fully visible at the end
+    }
+
+    public void DelayHideTutorialInstructions(float delay)
+    {
+        Debug.Log($"Delaying hiding tutorial instructions for {delay} seconds");
+        Invoke(nameof(HideTutorialInstructions), delay); // Hide the instructions after the specified delay
     }
 
 

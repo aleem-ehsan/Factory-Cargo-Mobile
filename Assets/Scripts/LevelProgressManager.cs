@@ -41,7 +41,7 @@ public class LevelProgressManager : MonoBehaviour
 
         #if UNITY_EDITOR
             // ResetProgress();// TODO: Testing purposes
-            // ResetTutorialProgress();// TODO: Testing purposes
+            // ResetTutorialProgress();// TODO: Testing purposesx
         #endif
     }
 

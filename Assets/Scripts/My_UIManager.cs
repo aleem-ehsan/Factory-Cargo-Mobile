@@ -1,3 +1,4 @@
+using System.Collections;
 using Hypertonic.GridPlacement.Example.BasicDemo;
 using TMPro;
 using UnityEngine;
@@ -31,6 +32,22 @@ public class My_UIManager : MonoBehaviour
 [Tooltip("Controller for the STARS display in the win panel , assign in the Inspector")]
     [SerializeField] private StarsController starsController; // Reference to the StarsController to manage star display in the win panel 
 
+
+
+
+    [Header("Win Panel Buttons")]
+    [Tooltip("Buttons to Next-Level/Retry-level in the win panel, assign in the Inspector")]
+    [SerializeField] private GameObject Win_NextLevelButton;
+    [SerializeField] private GameObject Win_RetryButton;
+
+    [Header("Lose Panel Buttons")]
+    [Tooltip("Button to Retry-level in the Lose panel, assign in the Inspector")]
+    [SerializeField] private GameObject Lose_RetryButton;
+
+
+
+
+
     // ---------------- Singelton ----------------
     public static My_UIManager Instance { get; private set; }
     private void Awake()
@@ -56,21 +73,46 @@ public class My_UIManager : MonoBehaviour
 
     public void ShowGameWinPanel()
     {
+        
         // // stop the Time.timeScale
         // Time.timeScale = 0;
 
         // Show the game win panel
         gameWinPanel.SetActive(true);
-        
+
+        // * Disabling Buttons
+        Win_NextLevelButton.SetActive(false);
+        Win_RetryButton.SetActive(false);
+
+        StartCoroutine( DelayActivateGameObject(new GameObject[] { Win_NextLevelButton, Win_RetryButton }, 2.5f));
     }
     public void ShowGameLosePanel()
     {
-        
-
-        // Show the game win panel
+        // Show the game lose panel
         gameLosePanel.SetActive(true);
-        
+
+        // * Disabling Buttons
+        Lose_RetryButton.SetActive(false);
+
+        StartCoroutine(DelayActivateGameObject(new GameObject[] { Lose_RetryButton }, 1.5f));
+
     }
+    private IEnumerator DelayActivateGameObject(GameObject[] gameObjects, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        foreach (var obj in gameObjects)
+        {
+            obj.SetActive(true);
+        }
+
+    }
+    private IEnumerator DelayDectivateGameObject(GameObject gameObject, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        gameObject.SetActive(false);
+    }
+
+
     public void ShowPausePanel()
     {
          // stop the Time.timeScale
