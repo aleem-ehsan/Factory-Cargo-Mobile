@@ -572,6 +572,104 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5242957480956647515
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4262719131159203165}
+  - component: {fileID: 6579272296303126905}
+  - component: {fileID: 9162030527774393316}
+  - component: {fileID: 5613079957534632815}
+  m_Layer: 13
+  m_Name: CONNECTOR
+  m_TagString: Conveyor
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4262719131159203165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5242957480956647515}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.70710576, z: -0, w: 0.70710784}
+  m_LocalPosition: {x: 4.38, y: 1.045, z: 0.15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5770486196196539319}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &6579272296303126905
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5242957480956647515}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.15123722, y: 0.58380294, z: 0.9668827}
+  m_Center: {x: -0.000000030486973, y: 0.20809853, z: -0.23851389}
+--- !u!54 &9162030527774393316
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5242957480956647515}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &5613079957534632815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5242957480956647515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a233cc84d93c87d4c9cc184ee03233d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentConveyor: {fileID: 0}
+  ConnectedConveyorEntryController: {fileID: 0}
+  isConnected: 0
+  isMachine: 1
 --- !u!1 &5403622296110044025
 GameObject:
   m_ObjectHideFlags: 0
@@ -582,7 +680,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5305750378446398470}
   - component: {fileID: 631822626879634414}
-  - component: {fileID: 6102233227586925095}
+  - component: {fileID: 5580694650191781649}
   m_Layer: 10
   m_Name: MachineEntry
   m_TagString: Machine
@@ -626,7 +724,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.67939186, y: 0.63619673, z: 1.5529809}
   m_Center: {x: 0.30745316, y: -0.18190163, z: 0.08731282}
---- !u!114 &6102233227586925095
+--- !u!114 &5580694650191781649
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -638,11 +736,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2507fdb07d85c29479b9b84e2c6cad1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedMachine: {fileID: 0}
+  connectedMachine: {fileID: 7268101891610052453}
   _conveyor: {fileID: 0}
-  ForwardDirection_GameObject: {fileID: 0}
-  ForwardDirection: {x: 0, y: 0, z: 0}
   spline: {fileID: 3361379775001450482}
+  isMachine: 1
+  connectedConnector: {fileID: 0}
 --- !u!1 &5451896797591043331
 GameObject:
   m_ObjectHideFlags: 0
@@ -970,6 +1068,7 @@ Transform:
   - {fileID: 2439313873440121872}
   - {fileID: 5305750378446398470}
   - {fileID: 1539515867789463628}
+  - {fileID: 4262719131159203165}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7617022490967489282
@@ -1007,7 +1106,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Product: {fileID: 3350573696017204538, guid: f60c3e076b2bdbe40abcdef7895643a8, type: 3}
   metalSpawnPoint: {fileID: 1539515867789463628}
-  machineEntryController: {fileID: 6102233227586925095}
+  machineEntryController: {fileID: 5580694650191781649}
   isFirstMachine: 1
 --- !u!1 &8829913090216252830
 GameObject:
@@ -1036,7 +1135,7 @@ Transform:
   m_GameObject: {fileID: 8829913090216252830}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071063, z: -0, w: 0.7071073}
-  m_LocalPosition: {x: 3.666, y: 1.359, z: 0.564}
+  m_LocalPosition: {x: 4.115, y: 1.359, z: 0.564}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1075,6 +1174,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59cd67a584a445740a213efd7993d6e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connector: {fileID: 5613079957534632815}
+  parentMachine: {fileID: 0}
+  exitForce: 1.2
 --- !u!1001 &3497581609101656852
 PrefabInstance:
   m_ObjectHideFlags: 0

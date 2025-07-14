@@ -148,5 +148,32 @@ TODO:
 
 	
 
+--------------------------------- TODO-- GAP REMOVING BETWEEN CONVEYORS 	  | BETTER APPROACH	 -----------------------------	
 	
+If we add a TRIGGER-BOX game object named Connector. at the End of BOTH (Conveyor and Machine).  Then when :
+
+		A Metal Bar triggred with the EXIT-CONTROLLER, we check that if current Conveyor's CONNECTOR is in TRIGGER with another ENTRY-CONTROLLER 
+				if (CONNECTOR is Connected): 
+								Move the Resources onto the Next EntryController's Conveyor.
+				else:
+					DROP the MetalBar because no way to Go.
+
 	
+
+When Conveyor is in Placement Mode:
+Cache the Connected Entry and Reset the Connection from the EntryController of other CONVEYOR to NULL
+Set the Connected-CONNECTOR of other CONVEYOR to NULL
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2252866142693386424}
   - component: {fileID: 2116007617546747328}
   - component: {fileID: 3112085739182267027}
-  - component: {fileID: 2992513457245493868}
   - component: {fileID: 7225406057788144093}
   - component: {fileID: 3175569352816306982}
   m_Layer: 11
@@ -38,6 +37,7 @@ Transform:
   - {fileID: 6909172954096330828}
   - {fileID: 1767497238423728495}
   - {fileID: 3102843178164244575}
+  - {fileID: 3104644019105102533}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2252866142693386424
@@ -86,8 +86,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.6011903, y: 0.9626683, z: 6.0242906}
-  m_Center: {x: -0.02383042, y: 0.5134863, z: -0.49940318}
+  m_Size: {x: 1.3001394, y: 0.9626683, z: 5.331896}
+  m_Center: {x: 0.0069441567, y: 0.5134863, z: 0.0950204}
 --- !u!114 &3112085739182267027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,21 +105,6 @@ MonoBehaviour:
   _gridHeightGizmoSize: 0.05
   _gridHeightGizmoColor: {r: 0, g: 0, b: 0, a: 1}
   _enableHandles: 0
---- !u!114 &2992513457245493868
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 670164648180013471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b769c1cc34e3a0040bc516c202bac4ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _bounds:
-    m_Center: {x: -0.042077065, y: 0, z: -0.3496263}
-    m_Extent: {x: 0.8022499, y: 0, z: 2.3768742}
 --- !u!114 &7225406057788144093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,6 +137,7 @@ MonoBehaviour:
   conveyorType: 1
   resourcesMovingOnMe: []
   isManuallyPlaced: 0
+  thisConnector: {fileID: 162084630040456285}
 --- !u!1 &1661125139524217490
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +151,7 @@ GameObject:
   - component: {fileID: 7738965879694870310}
   - component: {fileID: 7462776092516318857}
   m_Layer: 10
-  m_Name: Exit Point Collider
+  m_Name: Exit Controller
   m_TagString: Conveyor
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -180,7 +166,7 @@ Transform:
   m_GameObject: {fileID: 1661125139524217490}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.0000035166736, z: -0, w: -1}
-  m_LocalPosition: {x: -0.024983691, y: 1.11, z: 2.2520015}
+  m_LocalPosition: {x: -0.024983691, y: 1.11, z: 2.97}
   m_LocalScale: {x: 0.89136827, y: 1.2558873, z: 1.255887}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -220,8 +206,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectedMachine: {fileID: 0}
-  _conveyor: {fileID: 0}
+  ParentConveyor: {fileID: 0}
   OutForce: 1.2
+  connector: {fileID: 162084630040456285}
 --- !u!54 &7462776092516318857
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -277,7 +264,7 @@ Transform:
   m_GameObject: {fileID: 2351540027534383112}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.0000035166736, z: -0, w: -1}
-  m_LocalPosition: {x: -0.0050054966, y: 1.144001, z: -3.2290006}
+  m_LocalPosition: {x: -0.0050054966, y: 1.144001, z: -2.807}
   m_LocalScale: {x: 0.89136827, y: 1.2558873, z: 1.255887}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -302,8 +289,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.513532, y: 0.9523125, z: 0.64122754}
-  m_Center: {x: -0.00000012766621, y: 0.08403565, z: 0.26859543}
+  m_Size: {x: 1.3239088, y: 0.9523125, z: 0.7327484}
+  m_Center: {x: -0.0000003081157, y: 0.08403565, z: 0.31435585}
 --- !u!114 &3826050863924055540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,9 +305,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connectedMachine: {fileID: 0}
   _conveyor: {fileID: 0}
-  ForwardDirection_GameObject: {fileID: 559833935475995308}
-  ForwardDirection: {x: 0, y: 0, z: 0}
   spline: {fileID: 6051610824205670703}
+  isMachine: 0
+  connectedConnector: {fileID: 0}
 --- !u!54 &2552707093479365133
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -348,6 +335,104 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &2808518024447602724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3104644019105102533}
+  - component: {fileID: 2359653501833101944}
+  - component: {fileID: 5959789190602234150}
+  - component: {fileID: 162084630040456285}
+  m_Layer: 13
+  m_Name: CONNECTOR
+  m_TagString: Conveyor
+  m_Icon: {fileID: 6519382022992737161, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3104644019105102533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808518024447602724}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.84, z: 3.034}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8306703737287145216}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2359653501833101944
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808518024447602724}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.28393131, y: 0.270039, z: 0.8228614}
+  m_Center: {x: 0, y: 0.10514587, z: -0.0832248}
+--- !u!54 &5959789190602234150
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808518024447602724}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &162084630040456285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2808518024447602724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a233cc84d93c87d4c9cc184ee03233d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentConveyor: {fileID: 3175569352816306982}
+  ConnectedConveyorEntryController: {fileID: 0}
+  isConnected: 0
+  isMachine: 0
 --- !u!1001 &5608178983777947081
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -370,7 +455,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1312255172713424261, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.2435533
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1312255172713424261, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -378,7 +463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1312255172713424261, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.49999997
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1312255172713424261, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -441,11 +526,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
---- !u!1 &559833935475995308 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5336955692570132325, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
-  m_PrefabInstance: {fileID: 5608178983777947081}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6051610824205670703 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2175206638944081126, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}

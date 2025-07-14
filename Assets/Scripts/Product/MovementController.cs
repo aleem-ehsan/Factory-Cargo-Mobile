@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using DG.Tweening;
 using Dreamteck.Splines;
 using UnityEngine;
 
@@ -55,14 +58,15 @@ public class MovementController : MonoBehaviour
             SplineSample sample = new SplineSample();
             spline.Project(transform.position, ref sample);
             
-            // Set the initial position and rotation based on the projected point
-            transform.SetPositionAndRotation(sample.position, sample.rotation);
-            
-            // Set the follower to start at this position
-            splineFollower.SetPercent(sample.percent);
-            
-            // Now enable following
+            // Gradually move to the projected position and rotation over 1 second
+            // MoveToSplinePosition(sample.position, sample.rotation, 0.5f);
+
+
+
+            splineFollower.SetPercent(sample.percent); // Set the follower's position on the spline
             splineFollower.follow = true;
+            
+            
 
             // disable Physics
             DisablePhsyics();
@@ -92,7 +96,7 @@ public class MovementController : MonoBehaviour
         // Example: spline.Detach(this);
     }
 
-    private void EnablePhyscis(){
+    public void EnablePhyscis(){
         rb.isKinematic = false; // Enable physics when leaving the machine
     }
 

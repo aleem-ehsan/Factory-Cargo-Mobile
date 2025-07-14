@@ -33,6 +33,11 @@ public class Conveyor : MonoBehaviour
 
 
 
+    [Header("Connector")]
+    [Tooltip("If this conveyor is a connector, it should be true")]
+    [SerializeField] private ConveyorConnector thisConnector;
+
+
         private void Awake()
         {
             _customValidator = GetComponent<CustomValidator>();
@@ -46,10 +51,6 @@ public class Conveyor : MonoBehaviour
                 if(isManuallyPlaced == false)
                 {
                     ConveyorManager.Instance.IncreaseConveyor_CurrentCount(conveyorType);
-
-
-                   
-                    
                 }
             }
             else
@@ -62,27 +63,62 @@ public class Conveyor : MonoBehaviour
                     trigger.enabled = true;
                 }
             }
+
+            if(thisConnector == null)
+            {
+                thisConnector = GetComponentInChildren<ConveyorConnector>();
+            }
         }
 
         private void Start()
         {
             // Subscribe to the placement mode event in Start instead of Awake
         }
-
+/// <summary>
+/// When Conveyor is in Placement Mode, it will not accept any resources moving on it
+/// </summary>
         public void InPlacementMode()
         {
             isPlaced = false;
             Debug.Log("Conveyor In Placement Mode");
+
+            // * Entry/Exit Colliders
             foreach (var trigger in TriggerColliders)
             {
+                // trigger.gameObject.SetActive(false); // Disabling gameobjects enables having Trigger Events
                 trigger.enabled = false;
             }
+
+            //* Disable the Connector
+                thisConnector.gameObject.SetActive(false);
+            
             // Add any visual feedback or behavior changes when not placed
             // For example, you could change the material or disable certain components
 
             // TODO: make the resourcesMovingOnMe to fall 
             SetMovingResourceToFall();
+
+
+            ResetConnectors();
         }
+        
+        /// <summary>
+        /// When the conveyor is placed, it will enable the colliders and set the isPlaced flag to true.
+        /// </summary>
+        public void Placed()
+        {
+            Debug.Log("Conveyor In PLACE NOW");
+            isPlaced = true;
+            foreach (var trigger in TriggerColliders)
+            {
+                // trigger.gameObject.SetActive(true); // Enabling gameobjects enables having Trigger Events
+                trigger.enabled = true;
+            }
+
+                thisConnector.gameObject.SetActive(true);
+
+        }
+
 
         /// <summary>
         /// New resources moving on me will be added to the list
@@ -93,9 +129,14 @@ public class Conveyor : MonoBehaviour
                 Debug.Log("Bumper Conveyor does not accept resources moving on it.");
                 return; // Bumper conveyors do not accept resources
             }
-            if (!resourcesMovingOnMe.Contains(resource))
+            if (resourcesMovingOnMe.Contains(resource) == false)
             {
                 resourcesMovingOnMe.Add(resource);
+                Debug.Log($"Added metal bar to conveyor {name}. Total resources: {resourcesMovingOnMe.Count}");
+            }
+            else
+            {
+                Debug.Log($"Metal bar already exists in conveyor {name}. Total resources: {resourcesMovingOnMe.Count}");
             }
         }
 
@@ -112,6 +153,11 @@ public class Conveyor : MonoBehaviour
             if (resourcesMovingOnMe.Contains(resource))
             {
                 resourcesMovingOnMe.Remove(resource);
+                Debug.Log($"Removed metal bar from conveyor {name}. Total resources: {resourcesMovingOnMe.Count}");
+            }
+            else
+            {
+                Debug.Log($"Metal bar not found in conveyor {name} when trying to remove. Total resources: {resourcesMovingOnMe.Count}");
             }
         }
 
@@ -120,6 +166,7 @@ public class Conveyor : MonoBehaviour
         /// </summary>
         public void SetMovingResourceToFall()  
         {
+            Debug.Log("Wasting the Resources Moving on Me");
             foreach (var resource in resourcesMovingOnMe)
             {
                 if (resource != null)
@@ -128,16 +175,6 @@ public class Conveyor : MonoBehaviour
                 }
             }
             resourcesMovingOnMe.Clear();
-        }
-
-        public void Placed()
-        {
-            Debug.Log("Conveyor In PLACE NOW");
-            isPlaced = true;
-            foreach (var trigger in TriggerColliders)
-            {
-                trigger.enabled = true;
-            }
         }
 
         /// <summary>
@@ -241,5 +278,37 @@ public class Conveyor : MonoBehaviour
     private bool IsStillCollidingWithMachine()
     {
         return numberOfCollisionsWithMachine > 0;
+    }
+
+
+    private void ResetConnectors(){
+        // Reset the connector state
+        if (thisConnector != null)
+        {
+            thisConnector.DisconnectEntry();
+        }
+        else
+        {
+            Debug.Log("No ConveyorConnector found to reset.");
+        }
+        
+        // Also disconnect any other connectors that might be connected to this conveyor's entry controllers
+        DisconnectOtherConnectorsFromThisConveyor();
+    }
+    
+    private void DisconnectOtherConnectorsFromThisConveyor()
+    {
+        // Find all entry controllers on this conveyor
+        ConveyorEntryController[] entryControllers = GetComponentsInChildren<ConveyorEntryController>();
+        
+        foreach (var entryController in entryControllers)
+        {
+            if (entryController.connectedConnector != null)
+            {
+                Debug.Log($"Disconnecting other connector from entry: {entryController.name}");
+                // Tell the other connector to disconnect from this entry
+                entryController.connectedConnector.DisconnectEntry();
+            }
+        }
     }
 }

@@ -65,15 +65,17 @@ public class LevelManager : MonoBehaviour
                     return;
                 }
             }
-            
-            // TODO: Only to Play a specific level 
-            // #if !UNITY_EDITOR 
-             LoadLastUncompletedLevel();
+
+
 
             // TODO: check if all Levels are completed    
+            #if !UNITY_EDITOR 
+             LoadLastUncompletedLevel();
+            #endif
             // ! wrap it in an if else  ( if All Levels not completed then Load Last Uncompleted Level -- ELSE play a Random Level )
             // CheckAllLevelsCompleted();
-            // #endif
+
+            // TODO: Only to Play a specific level 
             EnableActiveLevel();
 
             // *Hide the loading panel after enabling the active level

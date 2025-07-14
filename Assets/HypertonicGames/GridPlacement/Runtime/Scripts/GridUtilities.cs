@@ -569,6 +569,9 @@ namespace Hypertonic.GridPlacement
 
                     for (int i = 0; i < colliders.Length; i++)
                     {
+                        //  !: New Added Logic to Ignore Colliders of Trigger Type
+                        if (colliders[i].isTrigger) continue; // Skip trigger colliders
+
                         tranformBoundsDataAbsolute.Add(colliders[i].bounds.min);
                         tranformBoundsDataAbsolute.Add(colliders[i].bounds.max);
 

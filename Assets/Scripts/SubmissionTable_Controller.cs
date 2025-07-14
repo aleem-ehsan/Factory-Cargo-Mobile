@@ -125,18 +125,18 @@ public class SubmissionTable_Controller : MonoBehaviour
             // Check for MetalBar
             if (other.TryGetComponent<MetalBar>(out MetalBar metalBar))
             {
-                ProcessResource(metalBar.resourceType, metalBar.gameObject);
+                ProcessResource(metalBar.resourceType, metalBar);
             }
             // Check for WoodPlank
            
         }
     }
 
-    private void ProcessResource(ResourceType resourceType, GameObject resourceObject)
+    private void ProcessResource(ResourceType resourceType, MetalBar metalBar)
     {
-
+        GameObject resourceObject = metalBar.gameObject;
          // ! important --->> Check if Product is Already On the Table     ||     // ! important --->> Check if the Level is Started or not
-        if (ProductsOnTable.Contains(resourceObject.transform) || LevelManager.isGameplayStarted == false)
+        if (ProductsOnTable.Contains(metalBar.gameObject.transform) || LevelManager.isGameplayStarted == false)
             return;
 
         Debug.Log($"Processing resource: {resourceType}");
@@ -154,7 +154,7 @@ public class SubmissionTable_Controller : MonoBehaviour
                 UpdateUI(resourceType, updatedResource.quantity);
 
                 // Place the resource
-                PlaceResourceOnTable(resourceObject);
+                PlaceResourceOnTable(metalBar);
 
                 // Check if all resources are collected
                 // #if !UNITY_EDITOR
@@ -178,20 +178,17 @@ public class SubmissionTable_Controller : MonoBehaviour
     }
 
 
-    private void PlaceResourceOnTable(GameObject resourceObject)
+    private void PlaceResourceOnTable(MetalBar metalBar)
     {
-
+        GameObject resourceObject = metalBar.gameObject; // Get the resource object from the collider
 
         // * Play Collection Sound
         AudioManager_Script.Instance.Play(SoundName.CollectProduct); // Play the collect product sound
 
-        // Disable components
-        // resourceObject.GetComponent<BoxCollider>().enabled = false;
-        if (resourceObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
-        {
-            rb.isKinematic = true;
-            // rb.useGravity = false;
-        }
+        // * Disable the physics of the metal bar to prevent it from falling
+        metalBar.movementController.DisablePhsyics();
+
+
         // Set the parent 
         resourceObject.transform.SetParent(transform);
 

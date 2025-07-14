@@ -98,7 +98,7 @@ public class Machine : MonoBehaviour
             }
 
             // Move with conveyor after setting up the initial position
-            metalBar.MoveWithConveyor(machineEntryController);
+            metalBar.MoveOnConveyor(machineEntryController);
         }
         else
         {
