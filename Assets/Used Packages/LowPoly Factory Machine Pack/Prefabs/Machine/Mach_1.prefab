@@ -683,7 +683,7 @@ GameObject:
   - component: {fileID: 5580694650191781649}
   m_Layer: 10
   m_Name: MachineEntry
-  m_TagString: Machine
+  m_TagString: Conveyor
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1065,8 +1065,8 @@ Transform:
   - {fileID: 1338013398434281894}
   - {fileID: 7019041098854029509}
   - {fileID: 2503991298691770001}
-  - {fileID: 2439313873440121872}
   - {fileID: 5305750378446398470}
+  - {fileID: 2439313873440121872}
   - {fileID: 1539515867789463628}
   - {fileID: 4262719131159203165}
   m_Father: {fileID: 0}
@@ -1118,10 +1118,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2439313873440121872}
   - component: {fileID: 1228452704585557283}
-  - component: {fileID: 3888776325149700931}
+  - component: {fileID: 2839008705691033296}
   m_Layer: 10
   m_Name: MachineExit
-  m_TagString: Machine
+  m_TagString: Conveyor
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1135,7 +1135,7 @@ Transform:
   m_GameObject: {fileID: 8829913090216252830}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071063, z: -0, w: 0.7071073}
-  m_LocalPosition: {x: 4.115, y: 1.359, z: 0.564}
+  m_LocalPosition: {x: 3.913, y: 1.359, z: 0.564}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1162,7 +1162,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.3209723, y: 0.63619673, z: 0.08234091}
   m_Center: {x: 0.37658963, y: -0.18190163, z: -0.20334972}
---- !u!114 &3888776325149700931
+--- !u!114 &2839008705691033296
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1171,12 +1171,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 8829913090216252830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59cd67a584a445740a213efd7993d6e8, type: 3}
+  m_Script: {fileID: 11500000, guid: 142d242381ba47d4a9c478bd31827ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ParentConveyor: {fileID: 0}
+  OutForce: 1.2
   connector: {fileID: 5613079957534632815}
-  parentMachine: {fileID: 0}
-  exitForce: 1.2
+  isMachine: 1
 --- !u!1001 &3497581609101656852
 PrefabInstance:
   m_ObjectHideFlags: 0

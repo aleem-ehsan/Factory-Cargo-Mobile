@@ -56,17 +56,6 @@ public class Machine : MonoBehaviour
         //     DisableEntry();
     }
 
-    public void DisableEntry(){
-        if (machineEntryController != null)
-        {
-        //   destroy the MachineEntryController component to disable it
-            Destroy(machineEntryController.gameObject);
-        }
-        else
-        {
-            Debug.LogError("MachineEntryController not found on: " + gameObject.name);
-        }
-    }
 
 
     public void SpawnStartingProduct()

@@ -91,7 +91,7 @@ namespace Hypertonic.GridPlacement
 
         public Vector3 SnapAlignmentOffset { get; private set; } = new Vector3();
 
-        public ObjectAlignment ObjectAlignment { get; private set; } = ObjectAlignment.CENTER;
+        public ObjectAlignment ObjectAlignment { get; private set; } = ObjectAlignment.BOTTOM_LEFT;
 
         [HideInInspector]
         public Vector3 SelectedWorldPosition;

@@ -88,7 +88,7 @@ public class MovementController : MonoBehaviour
         splineFollower.spline = null; // Clear the spline reference
         splineFollower.follow = false; // Disable following the spline
 
-        EnablePhyscis(); // Enable physics when detaching from the spline
+        // EnablePhyscis(); // Enable physics when detaching from the spline
         rb.transform.SetParent(null); // Detach the metal bar from the machine
 
 
@@ -97,11 +97,18 @@ public class MovementController : MonoBehaviour
     }
 
     public void EnablePhyscis(){
+        var metalBar = GetComponent<MetalBar>();
+        if (metalBar != null && metalBar.lockPhysics)
+        {
+            Debug.Log("Physics enable blocked by lockPhysics flag.");
+            return;
+        }
         rb.isKinematic = false; // Enable physics when leaving the machine
     }
 
 
     public void DisablePhsyics(){
+        Debug.Log("Disabling physics for the resource.");
         rb.isKinematic = true; // Disable physics when inside the machine
     }
 

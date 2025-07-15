@@ -167,7 +167,7 @@ public class Conveyor : MonoBehaviour
         public void SetMovingResourceToFall()  
         {
             Debug.Log("Wasting the Resources Moving on Me");
-            foreach (var resource in resourcesMovingOnMe)
+            foreach (var resource in resourcesMovingOnMe.ToArray()) // ! iterate over a copy to avoid runtime Errors
             {
                 if (resource != null)
                 {
@@ -309,6 +309,21 @@ public class Conveyor : MonoBehaviour
                 // Tell the other connector to disconnect from this entry
                 entryController.connectedConnector.DisconnectEntry();
             }
+        }
+    }
+
+    /// <summary>
+    /// Re-enables all colliders and connectors for this conveyor. Call after level reload.
+    /// </summary>
+    public void ResetCollidersAndConnectors()
+    {
+        foreach (var trigger in TriggerColliders)
+        {
+            trigger.enabled = true;
+        }
+        if (thisConnector != null)
+        {
+            thisConnector.gameObject.SetActive(true);
         }
     }
 }

@@ -89,7 +89,7 @@ namespace Hypertonic.GridPlacement
 
         [Header("Placement Settings")]
         [Tooltip("This sets the initial alignment of an object being added to the grid")]
-        public ObjectAlignment DefaultAlignment = ObjectAlignment.UPPER_LEFT;
+        public ObjectAlignment DefaultAlignment = ObjectAlignment.BOTTOM_LEFT;
 
         [Tooltip("This sets the default grid cell all new objects will be placed at when EnterPlacementMode is called. This is overwritten by the optional placement settings.")]
         public Vector2Int InitialPlacementCellIndex = Vector2Int.zero;

@@ -86,8 +86,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.3001394, y: 0.9626683, z: 5.331896}
-  m_Center: {x: 0.0069441567, y: 0.5134863, z: 0.0950204}
+  m_Size: {x: 1.3001394, y: 1.0825939, z: 5.331896}
+  m_Center: {x: 0.0069441567, y: 0.45352516, z: 0.0950204}
 --- !u!114 &3112085739182267027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,10 +205,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142d242381ba47d4a9c478bd31827ec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectedMachine: {fileID: 0}
   ParentConveyor: {fileID: 0}
   OutForce: 1.2
   connector: {fileID: 162084630040456285}
+  isMachine: 0
 --- !u!54 &7462776092516318857
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -22,7 +22,16 @@ public class ConveyorEntryController : MonoBehaviour
     {
         _conveyor = GetComponentInParent<Conveyor>();
 
-
+        // Ensure a Rigidbody is present and set up for trigger events
+        var rb = GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
+        rb.isKinematic = true;
+        rb.detectCollisions = true;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        rb.useGravity = false;
     }
 
 

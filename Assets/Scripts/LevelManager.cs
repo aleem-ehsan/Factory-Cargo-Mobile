@@ -68,14 +68,18 @@ public class LevelManager : MonoBehaviour
 
 
 
-            // TODO: check if all Levels are completed    
-            #if !UNITY_EDITOR 
-             LoadLastUncompletedLevel();
-            #endif
             // ! wrap it in an if else  ( if All Levels not completed then Load Last Uncompleted Level -- ELSE play a Random Level )
-            // CheckAllLevelsCompleted();
 
-            // TODO: Only to Play a specific level 
+            // TODO: check if all Levels are completed    
+           if(CheckAllLevelsCompleted()){
+             PlayRandomeLevel();
+           }else{
+             LoadLastUncompletedLevel();
+           }
+            // // TODO: Only to Play a specific level 
+            // // #if !UNITY_EDITOR 
+            //  LoadLastUncompletedLevel();
+            // // #endif
             EnableActiveLevel();
 
             // *Hide the loading panel after enabling the active level
@@ -202,18 +206,30 @@ public class LevelManager : MonoBehaviour
 
 // TODO: make this function Efficient by using a for loop
         public void EnableActiveLevel(){
-            for (int i = 0; i < Levels.Count; i++)
-                {
-                    if (i == GetLevelToLoadIndex())
-                    {
-                        Levels[i].SetActive(true);
-                    }
-                    else
-                    {
-                        Levels[i].SetActive(false);
-                    }
-                }
+
+            // disable all Levels
+            foreach (var level in Levels)
+            {
+                level.SetActive(false); // Disable all levels first
+            }
+            
+            Levels[GetLevelToLoadIndex()].SetActive(true); // Enable the active level based on levelToLoad
+
+            
+
+
             My_UIManager.Instance.UpdateLevelText(levelToLoad); // Update the UI with the current level
+
+            // --- Ensure all conveyors in the active level have their colliders and connectors reset ---
+            int activeLevelIndex = GetLevelToLoadIndex();
+            if (activeLevelIndex >= 0 && activeLevelIndex < Levels.Count)
+            {
+                var conveyors = Levels[activeLevelIndex].GetComponentsInChildren<Conveyor>(true);
+                foreach (var conveyor in conveyors)
+                {
+                    conveyor.ResetCollidersAndConnectors();
+                }
+            }
         }
 
         public void DisableCurrentLevel(){
@@ -284,25 +300,30 @@ public class LevelManager : MonoBehaviour
 /// Function to check if all levels are completed.
 /// then Play a Random Level 
 /// </summary>
-        public void CheckAllLevelsCompleted(){
+        public bool CheckAllLevelsCompleted(){
              
             if (_levelProgressManager == null)
             {
                 Debug.LogError("Cannot check all levels completed: LevelProgressManager is null!");
-                return;
+                return false;
             }
 
             int highestCompletedLevel = _levelProgressManager.GetHighestCompletedLevel();
             if (highestCompletedLevel >= Levels.Count)
             {
-                Debug.Log("All levels completed! Playing a random level.");
-                // Play a random level
-                levelToLoad = Random.Range(1, Levels.Count + 1);
-                PlayerPrefs.SetInt("ReplayLevel", levelToLoad); // Save the replay level
-                PlayerPrefs.Save();
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload the scene to play the random level
+                return true; // All levels are completed
             }
+            return false; // Not all levels are completed
         }
+
+        private void PlayRandomeLevel()
+        {
+            Debug.Log("All levels completed. Playing a random level.");
+            int randomLevelIndex = Random.Range(0, Levels.Count);
+            levelToLoad = randomLevelIndex + 1; // Convert to one-based index
+            LoadLastUncompletedLevel(); // Load the random level
+            EnableActiveLevel(); // Enable the active level
+        } 
 
 
     } 

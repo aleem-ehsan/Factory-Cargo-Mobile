@@ -527,7 +527,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 250289fac75eaea4f92003f5cdb3b42f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.12
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 250289fac75eaea4f92003f5cdb3b42f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -616,7 +616,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2116007617546747328, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_Size.y
-      value: 0.9213184
+      value: 1.188513
       objectReference: {fileID: 0}
     - target: {fileID: 2116007617546747328, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_Size.z
@@ -628,7 +628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2116007617546747328, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_Center.y
-      value: 0.49281138
+      value: 0.3592149
       objectReference: {fileID: 0}
     - target: {fileID: 2116007617546747328, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_Center.z
@@ -738,6 +738,10 @@ PrefabInstance:
       propertyPath: _conveyor
       value: 
       objectReference: {fileID: 6494559421521664737}
+    - target: {fileID: 5959789190602234150, guid: d79ae79d84668a34f965644abab9a693, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8197114413020559731, guid: d79ae79d84668a34f965644abab9a693, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -837,5 +841,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.8517189, y: 0.979178, z: 1.347293}
-  m_Center: {x: 1.4720628, y: 0.49977806, z: 1.5728385}
+  m_Size: {x: 2.1228683, y: 1.2196527, z: 1.347293}
+  m_Center: {x: 1.6076375, y: 0.379541, z: 1.5728385}

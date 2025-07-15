@@ -858,7 +858,7 @@ MonoBehaviour:
   connectedMachine: {fileID: 0}
   _conveyor: {fileID: 8681763660336203561}
   spline: {fileID: 6453159503289229637}
-  isMachine: 0
+  isMachine: 1
   connectedConnector: {fileID: 0}
   animator: {fileID: 7759280758142969710}
 --- !u!114 &8681763660336203561 stripped

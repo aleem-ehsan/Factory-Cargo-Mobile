@@ -135,9 +135,13 @@ public class SubmissionTable_Controller : MonoBehaviour
     private void ProcessResource(ResourceType resourceType, MetalBar metalBar)
     {
         GameObject resourceObject = metalBar.gameObject;
-         // ! important --->> Check if Product is Already On the Table     ||     // ! important --->> Check if the Level is Started or not
+         // ! important --->> Check if Product is Already On the Table     ||     // ! important --->> Check if the Level is Started or not so that no Accepting Resource when Level Failed due to Time Over
         if (ProductsOnTable.Contains(metalBar.gameObject.transform) || LevelManager.isGameplayStarted == false)
             return;
+
+        // * Disable the physics of the metal bar to prevent it from falling
+        metalBar.lockPhysics = true;
+        metalBar.movementController.DisablePhsyics(); // Disable physics to prevent falling through the table
 
         Debug.Log($"Processing resource: {resourceType}");
         // Find and update the required resource
@@ -154,13 +158,16 @@ public class SubmissionTable_Controller : MonoBehaviour
                 UpdateUI(resourceType, updatedResource.quantity);
 
                 // Place the resource
-                PlaceResourceOnTable(metalBar);
+                PlaceResourceOnTable(metalBar.gameObject);
 
                 // Check if all resources are collected
                 // #if !UNITY_EDITOR
                     CheckLevelCompletion(); // TODO: TESTING --- Uncomment this when want to check for level completion
                 // # endif
                 break;
+            }else{
+                // * If the Resource is not required means all resource of this type are already completed 
+                metalBar.DelayWasteMySelf(); 
             }
         }
     }
@@ -178,15 +185,12 @@ public class SubmissionTable_Controller : MonoBehaviour
     }
 
 
-    private void PlaceResourceOnTable(MetalBar metalBar)
+    private void PlaceResourceOnTable(GameObject resourceObject)
     {
-        GameObject resourceObject = metalBar.gameObject; // Get the resource object from the collider
 
         // * Play Collection Sound
         AudioManager_Script.Instance.Play(SoundName.CollectProduct); // Play the collect product sound
 
-        // * Disable the physics of the metal bar to prevent it from falling
-        metalBar.movementController.DisablePhsyics();
 
 
         // Set the parent 

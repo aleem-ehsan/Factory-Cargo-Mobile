@@ -18,6 +18,9 @@ public class MetalBar : MonoBehaviour
 
     private BoxCollider triggerCollider;
 
+    public Conveyor currentConveyor; // Track the current conveyor this MetalBar is on
+    public bool lockPhysics = false; // Prevent physics from being enabled if true
+
 
     public ResourceType resourceType;
 
@@ -65,6 +68,8 @@ public class MetalBar : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+
+        /*
         if (other.CompareTag("Machine"))
         {
             // check if the gameobject has Script "MachineExitController"
@@ -95,24 +100,34 @@ public class MetalBar : MonoBehaviour
             // ?--------------------------------------------
 
         }
-        else if(other.CompareTag("Conveyor"))
+        */
+
+        // * Only using CONVEYOR ENTRY and EXIT
+        if(other.CompareTag("Conveyor"))
         {
 
                 // TODO: this Conveyor ENTRY logic is managed through the CONVEYOR-CONNECTOR 
-            // *ENTRY CONTROLLER  -- No Need to detect by MetalBar as OnExit from previous will decide to enter MetalBar on Next based on Connector
-            // if (other.TryGetComponent<ConveyorEntryController>(out var conveyorEntryController))
-            // {
-            //     DOTween.Kill(gameObject); // Kill any running animations on this GameObject
-            //     Debug.Log("Metal Bar Triggered with Conveyor Entry");
+            // *ENTRY CONTROLLER  -- No Need to detect by MetalBar ENTRY as OnExit from previous will decide to enter MetalBar on Next based on Connector
+            // ! only detecting entry when a MetalBar is jumped by the Bumper
+            if (other.TryGetComponent<ConveyorEntryController>(out var conveyorEntryController))
+            {
+                // *Check if the MetalBar is jumping, if not, do nothing
+                if(movementController.isJumping == false )
+                    return; 
+
+                    
+                DOTween.Kill(gameObject); // Kill any running animations on this GameObject
+                Debug.Log("Metal Bar Triggered with Conveyor Entry");
 
 
             //     // if(movementController.isMovingOnConveyor) //! If already on a conveyor, do nothing 
             //     //     return; 
 
 
-            //         // MoveOnConveyor(conveyorEntryController);
+                    MoveOnConveyor(conveyorEntryController);
+                    movementController.isJumping = false; // Reset the jumping flag when entering a conveyor
             //         // conveyorEntryController._conveyor.AddMovingResource(this);  // ! very important to assign resource to the Conveyor
-            // }
+            }
 
             // TODO: this Conveyor EXIT logic is managed through the CONVEYOR-EXITController 
             // *EXIT CONTROLLER
@@ -189,14 +204,25 @@ public class MetalBar : MonoBehaviour
                 return;
             }
 
+        // Remove from previous conveyor if present
+        if (currentConveyor != null)
+        {
+            currentConveyor.RemoveMovingResource(this);
+            }
+
         movementController.AttachToSpline(conveyorEntryController.spline);
         movementController.isMovingOnConveyor = true;
         
-        // ! Only add to conveyor's resources list if it's not a machine
-        if (conveyorEntryController._conveyor != null && !conveyorEntryController.isMachine)
+        // Only add to conveyor's resources list if it's not a machine
+        if ( !conveyorEntryController.isMachine)
         {
             conveyorEntryController._conveyor.AddMovingResource(this);
+            currentConveyor = conveyorEntryController._conveyor; // Update reference
             Debug.Log($"Added metal bar to conveyor: {conveyorEntryController._conveyor.name}");
+        }
+        else
+        {
+            currentConveyor = null; // Not on a conveyor
         }
     }
     
@@ -209,6 +235,13 @@ public class MetalBar : MonoBehaviour
             return;
             } // If already outside, do nothing
         Debug.Log("Leaving the machine");
+
+        // Remove from current conveyor if present
+        if (currentConveyor != null)
+        {
+            currentConveyor.RemoveMovingResource(this);
+            currentConveyor = null;
+        }
 
         movementController.DetachFromSpline();  // Detach from the spline if attached
         movementController.isMovingOnConveyor = false;
@@ -288,6 +321,13 @@ public class MetalBar : MonoBehaviour
 
     public void WasteMySelf(){
         // Disable the metal bar
+
+        // Remove from current conveyor if present
+        if (currentConveyor != null)
+        {
+            currentConveyor.RemoveMovingResource(this);
+            currentConveyor = null;
+        }
 
         // give a shrink affect using DoTween
 
