@@ -34,10 +34,36 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         private GameObject lastCreatedConveyor_GameObject; // Reference to the last created conveyor prefab, if needed
 
-// ------------ EVENT  -------------
+
+        /// <summary>
+        /// New Chain of Conveyors Logics
+        /// </summary>
+
+        public Vector2Int NextGridCellIndex = new(0, 0);
+        public Vector3 NextValidPos = Vector3.zero; // This will be the next valid position for the conveyor to be placed on the grid
+
+
+        private int TotalPlacedConveyorsCount = 0;
+
+
+        // Additional Offset for different Conveyor Types
+    public Dictionary<ConveyorType, Vector3> ConveyorTypeOffests = new Dictionary<ConveyorType, Vector3>
+        {
+            { ConveyorType.Long, new Vector3(0, 0, 0) },
+            { ConveyorType.Straight, new Vector3(0.5f, 0, 1.0f) },
+            { ConveyorType.Short, new Vector3(0, 0, 0) },
+            { ConveyorType.Curved, new Vector3(1.9f, 0, 0f) },
+            { ConveyorType.Up, new Vector3(0, 0, 0) },
+            { ConveyorType.Bumper, new Vector3(-0.2f, 0, 0) }
+        };
+
     
+// ------------ EVENT  -------------
     public static event System.Action<ConveyorType> OnConveyorMaxLimitReached;
     public static event System.Action<ConveyorType> OnConveyorCanceledOrDeleted;
+
+
+
 
         private void Awake()
         {
@@ -86,6 +112,9 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             {
                 Debug.LogError("No conveyor is currently selected to delete.");
             }
+
+            // Decrease the Total Placed Conveyors Count
+            ConveyorManager.Instance.DecreaseTotalPlacedConveyorsCount();
         }
 
         private void HandleCancelPlacement()
@@ -250,8 +279,9 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 /// <param name="quantity"></param>
     private void CreateButtonInCanvas(ConveyorType conveyorType, int quantity)
         {
+           Vector3 offset =  ConveyorTypeOffests[conveyorType];
             // Create a button in the UI canvas for the conveyor type
-            My_UIManager.Instance.CreateGridPlacementButton(conveyorType, quantity);
+            My_UIManager.Instance.CreateGridPlacementButton(conveyorType, quantity , offset);
         }
 
 
@@ -293,7 +323,54 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         }
 
 
-    
+    // Update the Next Grid Cell Index
+    public void UpdateNextGridCellIndex(Conveyor conveyor)
+    {
+        Vector3 validPos = conveyor.nextConveyorGridCellPosition.position;
+
+        NextValidPos = validPos; // Update the NextValidPos to the position of the next conveyor grid cell
+
+
+        // get Grid Cell index from the position of the ValidPos position 
+        var gridManager = Hypertonic.GridPlacement.GridManagerAccessor.GridManager;
+        var gridSettings = gridManager.GridSettings;
+        float gridRotation = gridManager.RuntimeGridRotation;
+        Vector3 gridPosition = gridManager.RuntimeGridPosition;
+        
+        NextGridCellIndex = Hypertonic.GridPlacement.PlacementGrid.GetCellIndexFromWorldPosition(validPos, gridSettings, gridRotation, gridPosition);
+
+        Debug.Log($"Next conveyor grid cell index from {conveyor.name}: {NextGridCellIndex}");
+    }
+
+
+
+    public Vector2Int GetNextValidCellPosForConveyor(){
+        if(NextGridCellIndex == null)
+        {
+            Debug.LogError("NextGridCellIndex is null. Please update it before accessing.");
+            return Vector2Int.zero;
+        }
+        return NextGridCellIndex;
+    }
+    public Vector3 GetNextValidCellPosWorldPos(){
+        return NextValidPos;
+    }
+
+
+    public void IncreaseTotalPlacedConveyorsCount()
+    {
+        TotalPlacedConveyorsCount++;
+    }
+    public void DecreaseTotalPlacedConveyorsCount()
+    {
+        if(TotalPlacedConveyorsCount > 0)
+        TotalPlacedConveyorsCount--;
+    }
+
+    public int GetTotalPlacedConveyorsCount()
+    {
+        return TotalPlacedConveyorsCount;
+    }
 
 
     }

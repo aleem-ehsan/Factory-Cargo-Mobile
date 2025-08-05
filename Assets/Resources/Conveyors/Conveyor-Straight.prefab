@@ -38,6 +38,7 @@ Transform:
   - {fileID: 1767497238423728495}
   - {fileID: 3102843178164244575}
   - {fileID: 3104644019105102533}
+  - {fileID: 1905125114504788412}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &2252866142693386424
@@ -138,6 +139,8 @@ MonoBehaviour:
   resourcesMovingOnMe: []
   isManuallyPlaced: 0
   thisConnector: {fileID: 162084630040456285}
+  nextConveyorGridCellPosition: {fileID: 1905125114504788412}
+  thisEntryController: {fileID: 3826050863924055540}
 --- !u!1 &1661125139524217490
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +436,59 @@ MonoBehaviour:
   ConnectedConveyorEntryController: {fileID: 0}
   isConnected: 0
   isMachine: 0
+--- !u!1 &8464216245352166193
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1905125114504788412}
+  - component: {fileID: 2965326617603784140}
+  m_Layer: 0
+  m_Name: 'CONVEYOR - NEXT POS '
+  m_TagString: Untagged
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1905125114504788412
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464216245352166193}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.41, z: 5.08}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8306703737287145216}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2965326617603784140
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464216245352166193}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5608178983777947081
 PrefabInstance:
   m_ObjectHideFlags: 0

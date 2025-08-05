@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using Hypertonic.GridPlacement.Models;
+using Hypertonic.GridPlacement.Enums;
 namespace Hypertonic.GridPlacement.Example.BasicDemo
 {
     [RequireComponent(typeof(Button))]
@@ -33,6 +35,15 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
 
         [SerializeField] private Button _thisButton;
+
+        private bool is1stConveyorPlaced = false;
+
+
+
+
+
+
+        public Vector3 Offset = Vector3.zero; // Offset to apply to the conveyor object when placing it on the grid
 
         
         // --------------- events ------------
@@ -100,6 +111,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         public void OnPointerDown(PointerEventData eventData)
         {
+
             Debug.Log("Pointer Down on the Button");
 
             if(_isButtonInteractable == false)  // ? if this is NOT Interactable or if another Button is pressed
@@ -107,10 +119,42 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
                 Debug.Log("Button is not interactable. Returning.");
                 return; // Exit if the button is not interactable
             }
+            
 
-            // canPressAnyButton = false;  // ! Not Needed anymore : Disable pressing of anyother Button
-            HandleButtonClicked();
 
+
+            // if(ConveyorManager.Instance.GetTotalPlacedConveyorsCount() == 0){ // * if it is 1st Conveyor
+            if(true){ // * TO Make Dragging Every Time for each Conveyor
+                Debug.Log("Placing 1st Conveyor");
+                is1stConveyorPlaced = true;
+                HandleButtonClicked();
+            }
+            else{// * if it is 2nd or more Conveyor
+                Debug.Log("Placing 2nd or more Conveyor");
+
+                is1stConveyorPlaced = false;
+
+                GameObject objectToPlace = Instantiate(_gridObjectToSpawnPrefab, GridManagerAccessor.GridManager.GetGridPosition(), new Quaternion());
+            
+
+                //* Use the GridManager to Place the Conveyor manually at the NextValidCellPos From the ConveyorManager
+                // Vector2Int validCellPos = ConveyorManager.Instance.GetNextValidCellPosForConveyor();
+                Vector3 validCellPos = ConveyorManager.Instance.GetNextValidCellPosWorldPos();
+                PlacementSettings   placementSettings = new(validCellPos + Offset); // Create a PlacementSettings object with the valid cell position
+                GridManagerAccessor.GridManager.EnterPlacementMode(objectToPlace , placementSettings); // Enter placement mode with the specified prefab and placement settings
+
+                // Set alignment so the object starts at the grid cell index
+                GridManagerAccessor.GridManager.ChangeAlignment(ObjectAlignment.UPPER_MIDDLE);
+
+
+                //  exit placement mode
+                GridManagerAccessor.GridManager.ConfirmPlacement();
+
+
+ // * Set the last created conveyor reference in ConveyorManager
+            ConveyorManager.Instance.SetLastCreatedConveyor(objectToPlace);
+                return;
+            }
 
 
             // * Set the Selected Conveyor in the ConveyorManager
@@ -121,7 +165,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         public void OnPointerUp(PointerEventData eventData){
             // * Check if the MaxPlaceble is 0 , Means no More Conveyor of this type can be placed
-            if(MaxPlaceble == 0) 
+            if(MaxPlaceble == 0 || is1stConveyorPlaced == false) 
                 return;
 
             Debug.Log("Pointer Up on the Button");
@@ -272,7 +316,11 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
 
        
-
+  public void SetConveyorOffset(Vector3 offset)
+        {
+            Offset = offset;
+            Debug.Log($"Conveyor Offset set to: {Offset}");
+        }
 
 
 

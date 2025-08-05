@@ -195,12 +195,13 @@ public class My_UIManager : MonoBehaviour
 /// </summary>
 /// <param name="conveyorType"></param>
 /// <param name="quantity"></param>
-    public void CreateGridPlacementButton(ConveyorType conveyorType , int quantity)
+    public void CreateGridPlacementButton(ConveyorType conveyorType , int quantity, Vector3 offset)
     {
         // Create a new button for the specified conveyor type
         GameObject button = Instantiate(ButtonGridPlacementPrefab, ConveyorButtonsContainer.transform);
         Conveyor_Button_GridObjectSelectionOption ConveyorButton =  button.GetComponent<Conveyor_Button_GridObjectSelectionOption>();
         ConveyorButton.SetConveyorTypeAndQuantity(conveyorType , quantity);
+        ConveyorButton.SetConveyorOffset(offset);
     }
 
 

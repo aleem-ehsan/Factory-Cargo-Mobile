@@ -71,11 +71,14 @@ public class LevelManager : MonoBehaviour
             // ! wrap it in an if else  ( if All Levels not completed then Load Last Uncompleted Level -- ELSE play a Random Level )
 
             // TODO: check if all Levels are completed    
-           if(CheckAllLevelsCompleted()){
-             PlayRandomeLevel();
-           }else{
-             LoadLastUncompletedLevel();
-           }
+            #if !UNITY_EDITOR 
+                //  LoadLastUncompletedLevel();
+                if(CheckAllLevelsCompleted()){
+                    PlayRandomeLevel();
+                }else{
+                    LoadLastUncompletedLevel();
+                }
+            #endif
             // // TODO: Only to Play a specific level 
             // // #if !UNITY_EDITOR 
             //  LoadLastUncompletedLevel();
@@ -84,6 +87,8 @@ public class LevelManager : MonoBehaviour
 
             // *Hide the loading panel after enabling the active level
             LoadingPanelController.Instance.HideLoadingPanelDelay(1f); 
+
+                
 
         }
 

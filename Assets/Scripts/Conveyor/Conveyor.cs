@@ -38,6 +38,12 @@ public class Conveyor : MonoBehaviour
     [SerializeField] private ConveyorConnector thisConnector;
 
 
+    [Header("Next Conveyor Grid Cell Position")]
+    [Tooltip("This is the position of the next Conveyor's Grid Cell")]
+    [SerializeField] public Transform nextConveyorGridCellPosition;
+
+    [Header("This Conveyor's Entry Controller")]
+    public ConveyorEntryController thisEntryController;
         private void Awake()
         {
             _customValidator = GetComponent<CustomValidator>();
@@ -68,10 +74,15 @@ public class Conveyor : MonoBehaviour
             {
                 thisConnector = GetComponentInChildren<ConveyorConnector>();
             }
+
         }
 
         private void Start()
         {
+            
+            // Increase the Total Placed Conveyors Count
+            ConveyorManager.Instance.IncreaseTotalPlacedConveyorsCount();
+            
             // Subscribe to the placement mode event in Start instead of Awake
         }
 /// <summary>
@@ -100,6 +111,8 @@ public class Conveyor : MonoBehaviour
 
 
             ResetConnectors();
+
+
         }
         
         /// <summary>
@@ -117,7 +130,36 @@ public class Conveyor : MonoBehaviour
 
                 thisConnector.gameObject.SetActive(true);
 
+            // * Set the Next Conveyor Grid Cell Position
+            ConveyorManager.Instance.UpdateNextGridCellIndex(this);
+
+        
+        //     // * Check if Conveyor's Entry is Connected with a CONNECTOR, 
+        //    Invoke(nameof(CheckIfConnectionBuilt) , 0.3f) ;
         }
+
+        public void CheckIfConnectionBuilt(){
+            // Check if Conveyor's Entry is Connected with a CONNECTOR, 
+            if(thisEntryController.connectedConnector == null){
+                Debug.Log("NO Connection Built. ");
+                // ConveyorManager.Instance.DecreaseConveyor_CurrentCount(conveyorType);
+                // _customValidator.SetValidation(false); // Set validation to false if no connection is built
+                
+            }else{
+                Debug.Log("Connection Built");
+                // _customValidator.SetValidation(true); // Set validation to false if no connection is built
+
+            }
+        }
+
+
+        void FixedUpdate(){
+                // CheckIfConnectionBuilt();
+
+        }
+
+
+
 
 
         /// <summary>

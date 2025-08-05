@@ -29,6 +29,10 @@ public class ConveyorConnector : MonoBehaviour
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         rb.useGravity = false;
     }
+
+    void Start(){
+        
+    }
     
     private void OnTriggerEnter(Collider other)
     {

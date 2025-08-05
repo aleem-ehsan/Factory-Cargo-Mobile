@@ -714,7 +714,7 @@ namespace Hypertonic.GridPlacement
         /// <param name="gridCellIndex">The cell index where the grid object should be placed. </param>
         /// <param name="objectAlignment">The alignment of the object. By default it is Upper Left</param>
         /// <returns> If the grid was successfully populated with the grid data </returns>
-        public async Task<bool> AddObjectToGrid(GameObject gridObject, Vector2Int gridCellIndex, ObjectAlignment objectAlignment = ObjectAlignment.UPPER_LEFT)
+        public async Task<bool> AddObjectToGrid(GameObject gridObject, Vector2Int gridCellIndex, ObjectAlignment objectAlignment = ObjectAlignment.BOTTOM_LEFT)
         {
             bool success = await AddObjectToGridByCellAsync(gridObject, gridCellIndex, objectAlignment);
 

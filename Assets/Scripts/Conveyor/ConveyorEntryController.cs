@@ -47,5 +47,19 @@ public class ConveyorEntryController : MonoBehaviour
     }
 
 
+    void OnTriggerEnter( Collider other)
+    {
+        // Check if we're connecting to a conveyor connector
+        if (other.CompareTag("Conveyor"))
+        {
+            if (other.TryGetComponent<ConveyorConnector>(out var connector))
+            {
+                    // Connect to the entry controller
+                    ConnectorAttached(connector);
+                    connector.isConnected = true;
+            }
+        }
+
+    }
 
 }

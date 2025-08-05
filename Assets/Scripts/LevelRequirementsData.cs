@@ -73,7 +73,7 @@ public class LevelRequirementsData : MonoBehaviour
             {
                 new(ResourceType.MetalBar, 8),
             },
-            AvailableTimeInSeconds = 50,
+            AvailableTimeInSeconds = 950,
 
             // * Amount of Conveyors allowed 
             AllowedConveyors = new ConveyorStats[]
