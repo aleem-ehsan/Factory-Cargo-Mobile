@@ -97,30 +97,29 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         }
 
-        private void ConveyorDeleted()
+        public void ConveyorDeleted()
         {
             Debug.Log("Conveyor Deleted Called");
             if (selectedConveyor != null)
             {
-                DecreaseConveyor_CurrentCount(selectedConveyor.conveyorType);
-                selectedConveyor = null;
-                OnConveyorCanceledOrDeleted?.Invoke(lastCreatedConveyorType); // to update the Count-Text of the Button
-
                 
+                    // * Conveyor Deletion Logic
+                    DecreaseConveyor_CurrentCount(selectedConveyor.conveyorType);
+                    OnConveyorCanceledOrDeleted?.Invoke(lastCreatedConveyorType);
+                    selectedConveyor = null;
+
             }
             else
             {
                 Debug.LogError("No conveyor is currently selected to delete.");
             }
-
-            // Decrease the Total Placed Conveyors Count
-            ConveyorManager.Instance.DecreaseTotalPlacedConveyorsCount();
         }
 
-        private void HandleCancelPlacement()
+        public void HandleCancelPlacement()
         {
-            DecreaseConveyor_CurrentCount(lastCreatedConveyorType);
-            OnConveyorCanceledOrDeleted?.Invoke(lastCreatedConveyorType); // to update the Count-Text of the Button
+            Debug.Log("ConveyorManager: HandleCancelPlacement called");
+            DecreaseConveyor_CurrentCount(selectedConveyor.conveyorType);
+            OnConveyorCanceledOrDeleted?.Invoke(selectedConveyor.conveyorType); // * to update the Count-Text of the Button
         }
 
         // ----------------- Sample Functions ------------------------
@@ -173,11 +172,11 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         public void DecreaseConveyor_CurrentCount(ConveyorType conveyorType){
             // decrement the current count of the lastCreatedConveyorType Conveyor from the conveyorCounts list
-            var conveyorCount = AllConveyorTypeCounts.Find(c => c.conveyorType == conveyorType);
-            if (conveyorCount != null && conveyorCount.currentCount > 0)
+            var Placed_ConveyorCount = AllConveyorTypeCounts.Find(c => c.conveyorType == conveyorType);
+            if (Placed_ConveyorCount != null && Placed_ConveyorCount.currentCount > 0)
             {
-                conveyorCount.currentCount--;
-                Debug.Log($"Decreased count for {lastCreatedConveyorType}. Current count: {conveyorCount.currentCount}");
+                Placed_ConveyorCount.currentCount--;
+                Debug.Log($"Decreased count for {lastCreatedConveyorType}. Current count: {Placed_ConveyorCount.currentCount}");
             }
             else
             {

@@ -85,9 +85,14 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             Conveyor_Button_GridObjectSelectionOption.SetAnyButtonPressable(true);
                 */
                 Debug.Log("ExampleGridObject: Placement is Invalid, restoring to last valid position.");
-                // GridManagerAccessor.GridManager.CancelPlacement();
-                GridManagerAccessor.GridManager.DeleteObject(gameObject);
-                OnConveyorDeleted?.Invoke();
+
+
+
+                // GridManagerAccessor.GridManager.DeleteObject(this.gameObject);
+                // GridManagerAccessor.GridManager.DeleteObject(gameObject);
+                // OnConveyorDeleted?.Invoke();
+                HandleConveyorDeleted(); // Call the static method to handle deletion logic
+
 
             }
         }
@@ -108,9 +113,12 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         public static void HandleConveyorDeleted()
         {
             Debug.Log("ExampleGridObject: HandleConveyorDeleted called");
+            // * Subscribed by the ConveyorManager 
             OnConveyorDeleted?.Invoke();
             // Here you can add any additional logic needed when a conveyor is deleted
             // For example, you might want to update the UI or notify other components
+            // !: instead of Adding Code here, Use the Static Events to subscribe to the events in the ConveyorManager
+
         }
     }
 }

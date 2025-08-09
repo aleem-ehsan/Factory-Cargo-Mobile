@@ -181,9 +181,10 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
                         TutorialManager.Instance.ConveyorCreated(ConveyorType); // Notify the TutorialManager that a conveyor has been created
                     }
 
-            }else{
+            }else{// ! Conveyor is Not placed || Canceled the Placement
+                Debug.Log("Placement is Invalid, deleting the conveyor object.");
                 GridManagerAccessor.GridManager.DeleteObject(ConveyorManager.Instance.GetLastCraetedConveyor());
-                ExampleGridObject.HandleConveyorDeleted();
+                ConveyorManager.Instance.HandleCancelPlacement(); // Notify the ConveyorManager that the placement was canceled
             }
         }
 

@@ -3,6 +3,7 @@ using Hypertonic.GridPlacement.GridObjectComponents;
 using System.Collections.Generic;
 using Hypertonic.GridPlacement.Example.BasicDemo;
 using System;
+using Hypertonic.GridPlacement;
 
 
 
@@ -44,6 +45,7 @@ public class Conveyor : MonoBehaviour
 
     [Header("This Conveyor's Entry Controller")]
     public ConveyorEntryController thisEntryController;
+   
         private void Awake()
         {
             _customValidator = GetComponent<CustomValidator>();
@@ -57,6 +59,8 @@ public class Conveyor : MonoBehaviour
                 if(isManuallyPlaced == false)
                 {
                     ConveyorManager.Instance.IncreaseConveyor_CurrentCount(conveyorType);
+
+                    
                 }
             }
             else
@@ -80,10 +84,12 @@ public class Conveyor : MonoBehaviour
         private void Start()
         {
             
-            // Increase the Total Placed Conveyors Count
+            // * Increase the Total Placed Conveyors Count
             ConveyorManager.Instance.IncreaseTotalPlacedConveyorsCount();
+
+            // // * Add the Conveyor in the ChainController
+            // ConveyorChainController.Instance.AddConveyorToChain(this);
             
-            // Subscribe to the placement mode event in Start instead of Awake
         }
 /// <summary>
 /// When Conveyor is in Placement Mode, it will not accept any resources moving on it
@@ -93,14 +99,14 @@ public class Conveyor : MonoBehaviour
             isPlaced = false;
             Debug.Log("Conveyor In Placement Mode");
 
-            // * Entry/Exit Colliders
+           // * Entry/Exit Colliders
             foreach (var trigger in TriggerColliders)
             {
                 // trigger.gameObject.SetActive(false); // Disabling gameobjects enables having Trigger Events
                 trigger.enabled = false;
             }
 
-            //* Disable the Connector
+            // * Disable the Connector
                 thisConnector.gameObject.SetActive(false);
             
             // Add any visual feedback or behavior changes when not placed
@@ -135,28 +141,49 @@ public class Conveyor : MonoBehaviour
 
         
         //     // * Check if Conveyor's Entry is Connected with a CONNECTOR, 
-        //    Invoke(nameof(CheckIfConnectionBuilt) , 0.3f) ;
+           Invoke(nameof(CheckIfConnectionBuilt) , 0.3f) ;
         }
 
         public void CheckIfConnectionBuilt(){
+
+            if(conveyorType == ConveyorType.Bumper){   // * Bumper Conveyor does not need to check for connection
+                return;
+            }
+
             // Check if Conveyor's Entry is Connected with a CONNECTOR, 
             if(thisEntryController.connectedConnector == null){
+
+                SetMovingResourceToFall(); // Set the resources moving on me to fall
+
                 Debug.Log("NO Connection Built. ");
-                // ConveyorManager.Instance.DecreaseConveyor_CurrentCount(conveyorType);
-                // _customValidator.SetValidation(false); // Set validation to false if no connection is built
+                // ConveyorManager.Instance.IncreaseConveyor_CurrentCount(conveyorType);
+                ConveyorManager.Instance.HandleCancelPlacement(); // Handle the cancel placement logic in ConveyorManager
+
+
+                _customValidator.SetValidation(false); // Set validation to false if no connection is built
+
+
+                // * Further Deleting the Connected Conveyors
+                // if(thisConnector.isConnected){
+                //     // Delete the Conveyor connected with it's CONNECTOR
+                //         ConveyorEntryController NextConveyors_EntryController =  thisConnector.ConnectedConveyorEntryController;
+                //         NextConveyors_EntryController._conveyor.CheckIfConnectionBuilt(); // Disconnect the entry controller from the connector
+                // }else{
+                //     Debug.Log("No Connected Conveyor to delete.");
+                // }
+
+
+                GridManagerAccessor.GridManager.DeleteObject(this.gameObject); // Delete the conveyor if no connection is built
+                // Selected
                 
             }else{
                 Debug.Log("Connection Built");
-                // _customValidator.SetValidation(true); // Set validation to false if no connection is built
+                _customValidator.SetValidation(true); // Set validation to false if no connection is built
 
             }
         }
 
 
-        void FixedUpdate(){
-                // CheckIfConnectionBuilt();
-
-        }
 
 
 

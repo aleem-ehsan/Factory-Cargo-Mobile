@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using Hypertonic.GridPlacement.Example.BasicDemo;
 public class ConveyorExitController : MonoBehaviour
 {
     public Conveyor ParentConveyor;
@@ -48,9 +48,9 @@ public class ConveyorExitController : MonoBehaviour
         metalBar.LeaveCurrentConveyor();
 
         // Check if we have a connection
-        if (connector.IsConnected)
+        if (connector.IsConnected )
         {
-            Debug.Log($"Conveyor Exit has a Connection {gameObject.name} to {connector.ConnectedConveyorEntryController.name}");
+            // Debug.Log($"Conveyor Exit has a Connection {gameObject.name} to {connector.ConnectedConveyorEntryController.name}");
             // Pass to connected conveyor
             ConveyorEntryController connectedEntry = connector.ConveyorEntryController;
             if (connectedEntry != null)
