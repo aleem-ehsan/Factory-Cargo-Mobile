@@ -81,7 +81,8 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         void OnEnable()
         {
-            Button_CancelPlacement.OnCancelPlacementPressed += HandleCancelPlacement;
+            // * To ENABLE CANCEL BUTTON pressed Events 
+            // Button_CancelPlacement.OnCancelPlacementPressed += HandleCancelPlacement;
             ExampleGridObject.OnObjectSelected += ConveyorIsBeingSelected;
 
             Button_Delete.OnDeletePressed += ConveyorDeleted;
@@ -89,7 +90,8 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         }
         void OnDisable()
         {
-            Button_CancelPlacement.OnCancelPlacementPressed -= HandleCancelPlacement;
+            // * To ENABLE CANCEL BUTTON pressed Events 
+            // Button_CancelPlacement.OnCancelPlacementPressed -= HandleCancelPlacement;
             ExampleGridObject.OnObjectSelected -= ConveyorIsBeingSelected;
 
             Button_Delete.OnDeletePressed -= ConveyorDeleted;
@@ -97,6 +99,9 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
 
         }
 
+/// <summary>
+/// Called from ExampleGridObject when a conveyor is deleted. by being Placed in Invalid Placement
+/// </summary>
         public void ConveyorDeleted()
         {
             Debug.Log("Conveyor Deleted Called");
@@ -105,9 +110,11 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
                 
                     // * Conveyor Deletion Logic
                     DecreaseConveyor_CurrentCount(selectedConveyor.conveyorType);
-                    OnConveyorCanceledOrDeleted?.Invoke(lastCreatedConveyorType);
+                    // * Delete the Chain of the Conveyor
+                    // ConveyorChainController.Instance.OnConveyorDeleted();
+                    ConveyorChainController.Instance.RemoveConveyorFromChain(selectedConveyor);
                     selectedConveyor = null;
-
+                    
             }
             else
             {
@@ -115,11 +122,14 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             }
         }
 
-        public void HandleCancelPlacement()
+/// <summary>
+/// Decreases Current Placed Count and invokes event to update UI
+/// </summary>
+        public void HandleCancelPlacement(ConveyorType conveyorType)
         {
             Debug.Log("ConveyorManager: HandleCancelPlacement called");
-            DecreaseConveyor_CurrentCount(selectedConveyor.conveyorType);
-            OnConveyorCanceledOrDeleted?.Invoke(selectedConveyor.conveyorType); // * to update the Count-Text of the Button
+            DecreaseConveyor_CurrentCount(conveyorType);
+            
         }
 
         // ----------------- Sample Functions ------------------------
@@ -176,11 +186,12 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             if (Placed_ConveyorCount != null && Placed_ConveyorCount.currentCount > 0)
             {
                 Placed_ConveyorCount.currentCount--;
-                Debug.Log($"Decreased count for {lastCreatedConveyorType}. Current count: {Placed_ConveyorCount.currentCount}");
+                Debug.Log($"Decreased count for {conveyorType}. Current count: {Placed_ConveyorCount.currentCount}");
+                OnConveyorCanceledOrDeleted?.Invoke(selectedConveyor.conveyorType); // * to update the Count-Text of the Button
             }
             else
             {
-                Debug.Log($"Cannot decrease count for {lastCreatedConveyorType}. It may not exist or is already at zero.");
+                Debug.Log($"Cannot decrease count for {conveyorType}. It may not exist or is already at zero.");
             }
         }
         public int GetRemainingCount(ConveyorType conveyorType)

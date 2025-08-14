@@ -41,7 +41,7 @@ public class LevelProgressManager : MonoBehaviour
 
         #if UNITY_EDITOR
             // ResetProgress();// TODO: Testing purposes
-            // ResetTutorialProgress();// TODO: Testing purposesx
+            // ResetTutorialProgress();// TODO: Testing purposes
         #endif
     }
 
@@ -110,6 +110,7 @@ public class LevelProgressManager : MonoBehaviour
     /// </summary>
     public void ResetProgress()
     {
+        Debug.Log("Resetting all levels progress");
         PlayerPrefs.DeleteKey(LEVEL_PROGRESS_KEY);
         ResetStars();
         PlayerPrefs.Save();

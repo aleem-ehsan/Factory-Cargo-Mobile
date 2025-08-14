@@ -141,6 +141,7 @@ MonoBehaviour:
   thisConnector: {fileID: 162084630040456285}
   nextConveyorGridCellPosition: {fileID: 1905125114504788412}
   thisEntryController: {fileID: 3826050863924055540}
+  thisExitController: {fileID: 7738965879694870310}
 --- !u!1 &1661125139524217490
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +239,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &2351540027534383112
 GameObject:
   m_ObjectHideFlags: 0
@@ -252,7 +253,7 @@ GameObject:
   - component: {fileID: 3826050863924055540}
   - component: {fileID: 2552707093479365133}
   m_Layer: 10
-  m_Name: Coneyor Entry
+  m_Name: Straight Coneyor Entry
   m_TagString: Conveyor
   m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -267,7 +268,7 @@ Transform:
   m_GameObject: {fileID: 2351540027534383112}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.0000035166736, z: -0, w: -1}
-  m_LocalPosition: {x: -0.0050054966, y: 1.144001, z: -2.807}
+  m_LocalPosition: {x: -0.005, y: 1.144001, z: -2.736}
   m_LocalScale: {x: 0.89136827, y: 1.2558873, z: 1.255887}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -292,8 +293,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.3239088, y: 0.9523125, z: 0.7327484}
-  m_Center: {x: -0.0000003081157, y: 0.08403565, z: 0.31435585}
+  m_Size: {x: 1.3239088, y: 0.9523125, z: 0.30087173}
+  m_Center: {x: 0.00000041560605, y: 0.08403565, z: 0.06273486}
 --- !u!114 &3826050863924055540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,7 +338,7 @@ Rigidbody:
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &2808518024447602724
 GameObject:
   m_ObjectHideFlags: 0
@@ -391,8 +392,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.28393131, y: 0.270039, z: 0.8228614}
-  m_Center: {x: 0, y: 0.10514587, z: -0.0832248}
+  m_Size: {x: 0.28393131, y: 0.270039, z: 1.1483294}
+  m_Center: {x: 0, y: 0.10514587, z: 0.079508275}
 --- !u!54 &5959789190602234150
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -551,7 +552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3783141156085650008, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
       propertyPath: m_Name
-      value: Conveyor Spline
+      value: Straight Conveyor Spline
       objectReference: {fileID: 0}
     - target: {fileID: 3783141156085650008, guid: 6b169976f74f441438aa4875af8cc32f, type: 3}
       propertyPath: m_Layer

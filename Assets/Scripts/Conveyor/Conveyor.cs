@@ -45,6 +45,8 @@ public class Conveyor : MonoBehaviour
 
     [Header("This Conveyor's Entry Controller")]
     public ConveyorEntryController thisEntryController;
+    [Header("This Conveyor's EXIT Controller")]
+    public ConveyorExitController thisExitController;
    
         private void Awake()
         {
@@ -87,8 +89,8 @@ public class Conveyor : MonoBehaviour
             // * Increase the Total Placed Conveyors Count
             ConveyorManager.Instance.IncreaseTotalPlacedConveyorsCount();
 
-            // // * Add the Conveyor in the ChainController
-            // ConveyorChainController.Instance.AddConveyorToChain(this);
+            // * Add the Conveyor in the ChainController
+            ConveyorChainController.Instance.AddConveyorToChain(this);
             
         }
 /// <summary>
@@ -153,24 +155,16 @@ public class Conveyor : MonoBehaviour
             // Check if Conveyor's Entry is Connected with a CONNECTOR, 
             if(thisEntryController.connectedConnector == null){
 
+                Debug.Log("NO Connection Built. ");
+
                 SetMovingResourceToFall(); // Set the resources moving on me to fall
 
-                Debug.Log("NO Connection Built. ");
+                // * Deleting this and Further Connected Conveyors using ChainController
+                ConveyorChainController.Instance.RemoveConveyorFromChain(this); // Remove this conveyor from the chain
+
+
                 // ConveyorManager.Instance.IncreaseConveyor_CurrentCount(conveyorType);
-                ConveyorManager.Instance.HandleCancelPlacement(); // Handle the cancel placement logic in ConveyorManager
-
-
-                _customValidator.SetValidation(false); // Set validation to false if no connection is built
-
-
-                // * Further Deleting the Connected Conveyors
-                // if(thisConnector.isConnected){
-                //     // Delete the Conveyor connected with it's CONNECTOR
-                //         ConveyorEntryController NextConveyors_EntryController =  thisConnector.ConnectedConveyorEntryController;
-                //         NextConveyors_EntryController._conveyor.CheckIfConnectionBuilt(); // Disconnect the entry controller from the connector
-                // }else{
-                //     Debug.Log("No Connected Conveyor to delete.");
-                // }
+                ConveyorManager.Instance.HandleCancelPlacement(conveyorType); // Handle the cancel placement logic in ConveyorManager
 
 
                 GridManagerAccessor.GridManager.DeleteObject(this.gameObject); // Delete the conveyor if no connection is built

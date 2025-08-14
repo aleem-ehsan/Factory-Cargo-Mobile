@@ -35,6 +35,13 @@ public class MetalBar : MonoBehaviour
 
     public MovementController movementController; // Reference to the movement controller script
 
+
+    [Tooltip("Exit Collider of the Last Conveyor On which it was moving")]
+    [SerializeField] private ConveyorExitController LastCollided_ExitController;
+
+
+
+
     private void Awake()
     {
        
@@ -119,6 +126,12 @@ public class MetalBar : MonoBehaviour
                 DOTween.Kill(gameObject); // Kill any running animations on this GameObject
                 Debug.Log("Metal Bar Triggered with Conveyor Entry");
 
+                // Prevent re-attaching to the same conveyor
+                if (!conveyorEntryController.isMachine && currentConveyor != null && conveyorEntryController._conveyor == currentConveyor)
+                {
+                    Debug.Log("Ignoring entry: same conveyor as current");
+                    return;
+                }
 
             //     // if(movementController.isMovingOnConveyor) //! If already on a conveyor, do nothing 
             //     //     return; 
@@ -133,20 +146,35 @@ public class MetalBar : MonoBehaviour
             // *EXIT CONTROLLER
             if (other.TryGetComponent<ConveyorExitController>(out var conveyorExitController)){
                 
-                // if(!movementController.isMovingOnConveyor) return; // ? If not moving on a conveyor, do nothing otherwise Repel the Metal Bar
-                // LeaveCurrentConveyor();
+                if(!movementController.isMovingOnConveyor) return; // ? If not moving on a conveyor, do nothing otherwise Repel the Metal Bar
+
+                // ! When collided with an Exit which is Not the EXIT of the CUrrent COnveyor on which METALBAR is moving
+                if(currentConveyor != null && currentConveyor.thisExitController != conveyorExitController )
+                    return;
+                else{
+                    Debug.Log("Collided with Exit of the Current Conveyor");
+                }
 
                 // ! Remove the resource from the conveyor only for the Conveyors , not the Machines because they dont keep Moving Resources in Cache
-                // conveyorExitController._conveyor.RemoveMovingResource(this);
                     Debug.Log("Metal Bar Triggered with Conveyor Exit");
                 
+
+
+                // // * Same ExitCollider Prevention
+                // if(LastCollided_ExitController !=null && LastCollided_ExitController == conveyorExitController){
+                //     Debug.LogError("Same Exit triggered again");
+                //     return;
+                // }
+
+                // // Record this exit so we don't process it multiple times in quick succession
+                // LastCollided_ExitController = conveyorExitController;
+
                 // * Use the new CONNECTOR System
                 conveyorExitController.HandleMetalBarExit(this);
 
 
                 // * Jump a little bit forward in the direction of the machine exit
-                // transform.DOJump(transform.position + conveyorExitController.transform.forward * conveyorExitController.OutForce, 0.1f, 1, 0.5f).SetEase(Ease.Linear); // Jump forward in the direction of the machine exit
-                transform.DOMove(transform.position + conveyorExitController.transform.forward * conveyorExitController.OutForce, 0.5f).SetEase(Ease.Linear); // Move forward in the direction of the machine exit
+                transform.DOMove(transform.position + conveyorExitController.transform.forward * conveyorExitController.OutForce, 0.3f).SetEase(Ease.Linear); // Move forward in the direction of the machine exit
 
                 }
 
@@ -189,10 +217,10 @@ public class MetalBar : MonoBehaviour
     /// <param name="EntryController"></param>
         public void MoveOnConveyor(ConveyorEntryController conveyorEntryController)
         {
-        if (movementController.isMovingOnConveyor) {
-            Debug.Log("Metal Bar is already Moving with Conveyor, do nothing");
+        if (movementController.isMovingOnConveyor && currentConveyor != null && !conveyorEntryController.isMachine && currentConveyor == conveyorEntryController._conveyor) {
+            Debug.Log("Metal Bar is already on this conveyor, ignore move");
             return;
-            } // If already on a conveyor, do nothing
+            }
         Debug.Log("Moving with Conveyor");
 
 
@@ -208,7 +236,7 @@ public class MetalBar : MonoBehaviour
         if (currentConveyor != null)
         {
             currentConveyor.RemoveMovingResource(this);
-            }
+        }
 
         movementController.AttachToSpline(conveyorEntryController.spline);
         movementController.isMovingOnConveyor = true;
@@ -224,24 +252,22 @@ public class MetalBar : MonoBehaviour
         {
             currentConveyor = null; // Not on a conveyor
         }
+
+        // Reset the last exit after successfully moving
+        LastCollided_ExitController = null;
     }
     
 
     public void LeaveCurrentConveyor()
     {
-       
-        if (!movementController.isMovingOnConveyor) {
-            Debug.Log("Metal Bar is not Moving with Conveyor, do nothing");
-            return;
-            } // If already outside, do nothing
-        Debug.Log("Leaving the machine");
+        Debug.Log("Leaving current conveyor (if any)");
 
         // Remove from current conveyor if present
         if (currentConveyor != null)
         {
             currentConveyor.RemoveMovingResource(this);
-            currentConveyor = null;
         }
+        currentConveyor = null;
 
         movementController.DetachFromSpline();  // Detach from the spline if attached
         movementController.isMovingOnConveyor = false;

@@ -44,37 +44,35 @@ public class MovementController : MonoBehaviour
 
 
 
-    public void AttachToSpline(SplineComputer spline)
+    public void AttachToSpline(SplineComputer newSpline)
     {
-        // Attach this object to the provided spline
-        if (spline != null)
-        {
-            Debug.Log("Attaching to spline: " + spline.name);
-
-            splineFollower.spline = spline; // Set the spline for the SplineFollower
-            splineFollower.follow = false;
-
-            // Project the current position onto the spline to get the correct starting point
-            SplineSample sample = new SplineSample();
-            spline.Project(transform.position, ref sample);
-            
-            // Gradually move to the projected position and rotation over 1 second
-            // MoveToSplinePosition(sample.position, sample.rotation, 0.5f);
-
-
-
-            splineFollower.SetPercent(sample.percent); // Set the follower's position on the spline
-            splineFollower.follow = true;
-            
-            
-
-            // disable Physics
-            DisablePhsyics();
-        }
-        else
+        if (newSpline == null)
         {
             Debug.LogError("Provided spline is null. Cannot attach.");
+            return;
         }
+
+        // Check if already attached to the same spline
+        if (splineFollower.spline == newSpline)
+        {
+            Debug.LogError($"Already attached to spline: {newSpline.name}");
+            return;
+        }
+
+        Debug.Log($"Attaching to spline: {newSpline.name}");
+
+        // Set the spline and temporarily disable following
+        splineFollower.spline = newSpline;
+        splineFollower.follow = false;
+
+        // Project current position onto the spline
+        SplineSample sample = new SplineSample();
+        newSpline.Project(transform.position, ref sample);
+        splineFollower.SetPercent(sample.percent);
+
+        // Enable following and disable physics
+        splineFollower.follow = true;
+        DisablePhsyics();
     }
 
 
@@ -121,12 +119,22 @@ public class MovementController : MonoBehaviour
         // For now, we will just log a message
         Debug.Log("Jumping the resource!");
             rb.isKinematic = false; // Enable physics for the jump action
-            rb.AddForce(JumpDirection.normalized *moveSpeed * 6.5f , ForceMode.VelocityChange);
+            rb.AddForce(JumpDirection.normalized *moveSpeed * 6.2f , ForceMode.VelocityChange);
             rb.AddTorque(Vector3.up * 2f, ForceMode.VelocityChange);
 
         isJumping = true; // Set the jumping flag to true
 
         LastBumperCollided = Bumper; // Store the last bumper collided with
+        
+        StartCoroutine( ResetJumpingFlag(0.8f) );
+
     }
 
+    private IEnumerator ResetJumpingFlag(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        isJumping = false; // Reset the jumping flag after the delay
+        LastBumperCollided = null; // Reset the last bumper collided with
+        Debug.Log("Resetting jumping flag and last bumper collided.");
+    }
 }

@@ -46,8 +46,10 @@ public class LevelManager : MonoBehaviour
                 return;
             }
 
-             
-
+            // Force the game to run at 60 FPS
+            Application.targetFrameRate = 60;
+            QualitySettings.vSyncCount = 0; // Disable VSync to ensure we control the frame rate
+            Debug.Log("FPS limited to 60");
 
             InitializeLevels();
             
@@ -70,19 +72,16 @@ public class LevelManager : MonoBehaviour
 
             // ! wrap it in an if else  ( if All Levels not completed then Load Last Uncompleted Level -- ELSE play a Random Level )
 
+            
+            // *: Comment the #if block, it is only for testing a specific Level  
+            // #if !UNITY_EDITOR 
             // TODO: check if all Levels are completed    
-            #if !UNITY_EDITOR 
-                //  LoadLastUncompletedLevel();
                 if(CheckAllLevelsCompleted()){
                     PlayRandomeLevel();
                 }else{
                     LoadLastUncompletedLevel();
                 }
-            #endif
-            // // TODO: Only to Play a specific level 
-            // // #if !UNITY_EDITOR 
-            //  LoadLastUncompletedLevel();
-            // // #endif
+            // #endif
             EnableActiveLevel();
 
             // *Hide the loading panel after enabling the active level

@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System;
+using DG.Tweening;
 
 namespace Hypertonic.GridPlacement.Example.BasicDemo
 {
@@ -13,11 +15,8 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         public static ConveyorChainController Instance { get; private set; }
 
         [Header("Chain Management")]
-        [SerializeField] private Stack<Conveyor> conveyorChain = new Stack<Conveyor>();
+        [SerializeField] private List<Conveyor> conveyorChain = new List<Conveyor>();
         
-        [Header("Debug Info")]
-        [SerializeField] private List<Conveyor> conveyorChainList = new List<Conveyor>(); // For inspector viewing
-
         private void Awake()
         {
             if (Instance == null)
@@ -40,39 +39,89 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
             // Subscribe to events
             if (ConveyorManager.Instance != null)
             {
-                ExampleGridObject.OnConveyorConfirmed += OnConveyorConfirmed;
                 // Subscribe to conveyor deletion
-                ExampleGridObject.OnConveyorDeleted += OnConveyorDeleted;
                 // We'll subscribe to events in Start to ensure ConveyorManager is initialized
             }
         }
         void OnDisable()
         {
             // // Unsubscribe from events
-            // if (ExampleGridObject.OnConveyorConfirmed != null
-                ExampleGridObject.OnConveyorConfirmed -= OnConveyorConfirmed;
             // if (ExampleGridObject.OnConveyorDeleted != null)
-                ExampleGridObject.OnConveyorDeleted -= OnConveyorDeleted;
         }
 
-        /// <summary>
-        /// Called when a conveyor is successfully placed and confirmed
-        /// </summary>
-        private void OnConveyorConfirmed()
+        public void OnConveyorDeleted()
         {
-            if (ConveyorManager.Instance != null && ConveyorManager.Instance.selectedConveyor != null)
-            {
-                AddConveyorToChain(ConveyorManager.Instance.selectedConveyor);
-            }
+            // Handle conveyor deletion event
+            Debug.Log("ConveyorChainController: Conveyor deleted event received");
+            
+            // Get the last placed conveyor
+            Conveyor lastConveyor = GetLastPlacedConveyor();
+            RemoveConveyorFromChain(lastConveyor);
+            
+       
+        
         }
+
+
+
 
         /// <summary>
         /// Called when a conveyor is deleted
         /// </summary>
-        private void OnConveyorDeleted()
+        public void DeleteAConveyor( Conveyor conveyorToDelete)
         {
+             // Update conveyor count for each deleted conveyor
+                    if (ConveyorManager.Instance != null && conveyorToDelete != null)
+                    {
+                        // Vibrate the conveyor for 0.5 seconds before deleting
+                        VibrateAndDeleteConveyor(conveyorToDelete);
+                    }
+                    
+                    else
+                    {
+                        Debug.Log(" ConveyorToDelete is Null, so not deleting it from the grid");
+                        Destroy(conveyorToDelete.gameObject);
+                    }
             // This will be handled by the specific deletion logic
             Debug.Log("ConveyorChainController: Conveyor deleted event received");
+        }
+
+        /// <summary>
+        /// Vibrates the conveyor for 0.5 seconds using DOTween rotation, then deletes it
+        /// </summary>
+        /// <param name="conveyorToDelete">The conveyor to vibrate and delete</param>
+        private void VibrateAndDeleteConveyor(Conveyor conveyorToDelete)
+        {
+            if (conveyorToDelete == null || conveyorToDelete.gameObject == null) return;
+
+            // Store the original rotation
+            Vector3 originalRotation = conveyorToDelete.transform.eulerAngles;
+            
+            // Create a vibration sequence using DOTween
+            Sequence vibrationSequence = DOTween.Sequence();
+            
+            // Add rotation shake animation for 0.5 seconds
+            vibrationSequence.Append(conveyorToDelete.transform.DOShakeRotation(0.5f, 5f, 40, 20, false));
+            
+            // After vibration completes, delete the conveyor
+            vibrationSequence.OnComplete(() => {
+                // Set resources to fall
+                conveyorToDelete.SetMovingResourceToFall();
+                
+                // Delete the conveyor object from the GRID
+                if (GridManagerAccessor.GridManager != null)
+                {
+                    GridManagerAccessor.GridManager.DeleteObject(conveyorToDelete.gameObject);
+                }
+                else
+                {
+                    Destroy(conveyorToDelete.gameObject);
+                }
+                
+                Debug.Log($"Conveyor {conveyorToDelete.name} rotation vibrated and deleted successfully");
+            });
+            
+            Debug.Log($"Starting rotation vibration for conveyor {conveyorToDelete.name}");
         }
 
         /// <summary>
@@ -83,17 +132,16 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         {
             if (conveyor == null) return;
 
-            // Check if this conveyor is already in the chain
-            if (conveyorChain.Any(c => c == conveyor))
+            // Check if this conveyor is already in the chain   ||  or if it's a bumper conveyor
+            if (conveyorChain.Contains(conveyor)  || conveyor.conveyorType == ConveyorType.Bumper)
             {
                 Debug.LogWarning($"Conveyor {conveyor.name} is already in the chain!");
                 return;
             }
 
-            conveyorChain.Push(conveyor);
-            UpdateInspectorList();
+            conveyorChain.Add(conveyor);
             
-            Debug.Log($"Added conveyor {conveyor.name} to chain. Total conveyors in chain: {conveyorChain.Count}");
+            Debug.Log($"Added conveyor {conveyor.name} to chain at index {conveyorChain.Count - 1}. Total conveyors in chain: {conveyorChain.Count}");
         }
 
         /// <summary>
@@ -102,15 +150,16 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         /// <param name="conveyorToDelete">The conveyor to delete</param>
         public void RemoveConveyorFromChain(Conveyor conveyorToDelete)
         {
-            if (conveyorToDelete == null) return;
+            if (conveyorToDelete == null || conveyorToDelete.conveyorType == ConveyorType.Bumper){ 
+                return;
+            }
 
             Debug.Log($"Removing conveyor {conveyorToDelete.name} from chain and deleting downstream conveyors");
 
-            // Convert stack to list for easier manipulation
-            List<Conveyor> chainList = conveyorChain.ToList();
-            
+
             // Find the index of the conveyor to delete
-            int deleteIndex = chainList.FindIndex(c => c == conveyorToDelete);
+            int deleteIndex = conveyorChain.IndexOf(conveyorToDelete);
+            Debug.Log($"A conveyor is Deleted which is at index: {deleteIndex}");
             
             if (deleteIndex == -1)
             {
@@ -118,47 +167,23 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
                 return;
             }
 
-            // Delete all conveyors from the delete index onwards (downstream conveyors)
-            for (int i = deleteIndex; i < chainList.Count; i++)
+            // Delete all conveyors from the delete-index+1 onwards (downstream conveyors)
+            for (int i = deleteIndex+1; i < conveyorChain.Count; i++) // * +1 because deleteIndex is already deleted and Count is updated
             {
-                Conveyor conveyorToRemove = chainList[i];
+                Conveyor conveyorToRemove = conveyorChain[i];
+
                 if (conveyorToRemove != null && conveyorToRemove.gameObject != null)
                 {
                     Debug.Log($"Deleting downstream conveyor: {conveyorToRemove.name}");
                     
-                    // Update conveyor count for each deleted conveyor
-                    if (ConveyorManager.Instance != null)
-                    {
-                        ConveyorManager.Instance.DecreaseConveyor_CurrentCount(conveyorToRemove.conveyorType);
-                        ConveyorManager.Instance.DecreaseTotalPlacedConveyorsCount();
-                    }
-                    
-                    // Remove from the chain
-                    RemoveConveyorFromChainInternal(conveyorToRemove);
-                    
-                    // Delete from grid and destroy
-                    if (GridManagerAccessor.GridManager != null)
-                    {
-                        GridManagerAccessor.GridManager.DeleteObject(conveyorToRemove.gameObject);
-                    }
-                    else
-                    {
-                        Destroy(conveyorToRemove.gameObject);
-                    }
+                   DeleteAConveyor(conveyorToRemove);
+                   ConveyorManager.Instance.DecreaseConveyor_CurrentCount(conveyorToRemove.conveyorType); // Update conveyor count for each deleted conveyor
                 }
             }
 
-            // Clear the chain and rebuild it with remaining conveyors
-            conveyorChain.Clear();
-            for (int i = 0; i < deleteIndex; i++)
-            {
-                if (chainList[i] != null && chainList[i].gameObject != null)
-                {
-                    conveyorChain.Push(chainList[i]);
-                }
-            }
+            // Remove all conveyors from the delete index onwards from the list
+            conveyorChain.RemoveRange(deleteIndex, conveyorChain.Count - deleteIndex);
 
-            UpdateInspectorList();
             Debug.Log($"Chain updated. Remaining conveyors: {conveyorChain.Count}");
         }
 
@@ -170,15 +195,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         {
             if (conveyor == null) return;
 
-            // Convert stack to list, remove the conveyor, and rebuild the stack
-            List<Conveyor> tempList = conveyorChain.ToList();
-            tempList.Remove(conveyor);
-            
-            conveyorChain.Clear();
-            foreach (var c in tempList)
-            {
-                conveyorChain.Push(c);
-            }
+            conveyorChain.Remove(conveyor);
         }
 
         /// <summary>
@@ -187,7 +204,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         /// <returns>List of conveyors in the chain</returns>
         public List<Conveyor> GetConveyorChain()
         {
-            return conveyorChain.ToList();
+            return new List<Conveyor>(conveyorChain);
         }
 
         /// <summary>
@@ -205,17 +222,9 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         /// <returns>The last placed conveyor or null if chain is empty</returns>
         public Conveyor GetLastPlacedConveyor()
         {
-            return conveyorChain.Count > 0 ? conveyorChain.Peek() : null;
+            return conveyorChain.Count > 0 ? conveyorChain[^1] : null;
         }
 
-        /// <summary>
-        /// Updates the inspector list for debugging purposes
-        /// </summary>
-        private void UpdateInspectorList()
-        {
-            conveyorChainList = conveyorChain.ToList();
-            conveyorChainList.Reverse(); // Reverse to show in chronological order
-        }
 
         /// <summary>
         /// Clears the entire chain (useful for level reset)
@@ -223,7 +232,6 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         public void ClearChain()
         {
             conveyorChain.Clear();
-            UpdateInspectorList();
             Debug.Log("Conveyor chain cleared");
         }
 
@@ -234,7 +242,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         /// <returns>True if the conveyor is in the chain</returns>
         public bool IsConveyorInChain(Conveyor conveyor)
         {
-            return conveyor != null && conveyorChain.Any(c => c == conveyor);
+            return conveyor != null && conveyorChain.Contains(conveyor);
         }
 
         /// <summary>
@@ -246,8 +254,7 @@ namespace Hypertonic.GridPlacement.Example.BasicDemo
         {
             if (conveyor == null) return -1;
             
-            List<Conveyor> chainList = conveyorChain.ToList();
-            return chainList.FindIndex(c => c == conveyor);
+            return conveyorChain.IndexOf(conveyor);
         }
     }
 }

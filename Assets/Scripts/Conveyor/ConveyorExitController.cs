@@ -36,37 +36,40 @@ public class ConveyorExitController : MonoBehaviour
             return; 
 
 
+        // Determine if there is a valid next conveyor connection that is DIFFERENT from the current/parent conveyor
+        bool hasValidConnection = connector.IsConnected && connector.ConveyorEntryController != null;
+        ConveyorEntryController connectedEntry = hasValidConnection ? connector.ConveyorEntryController : null;
+
+        if (hasValidConnection)
+        {
+            // Guard against looping back to the same conveyor
+            if (!connectedEntry.isMachine && connectedEntry._conveyor == ParentConveyor)
+            {
+                hasValidConnection = false; // Treat as no connection to avoid re-attaching to the same conveyor
+            }
+        }
+
+        // Leave the current conveyor first
         previousMetalBar = metalBar; // Store the last exited metal bar
-
-        // ! This Removal is now Performed in the MetalBar itself when the MoveOnConveyor is called
-        // if(isMachine == false){ // ! if not Machine then remove resources from the Conveyor
-        //     ParentConveyor.RemoveMovingResource(metalBar);
-        // }
-
-        // Remove from current conveyor
-        // *Leave the current conveyor initially
         metalBar.LeaveCurrentConveyor();
 
-        // Check if we have a connection
-        if (connector.IsConnected )
+        if (hasValidConnection)
         {
-            // Debug.Log($"Conveyor Exit has a Connection {gameObject.name} to {connector.ConnectedConveyorEntryController.name}");
-            // Pass to connected conveyor
-            ConveyorEntryController connectedEntry = connector.ConveyorEntryController;
-            if (connectedEntry != null)
+            // Additional safeguard: avoid reattaching to same conveyor if metal bar believes it is still on it
+            if (!connectedEntry.isMachine && metalBar.currentConveyor != null && connectedEntry._conveyor == metalBar.currentConveyor)
             {
-                // leave the current conveyor with no Force
-                metalBar.MoveOnConveyor(connectedEntry);
-                Debug.Log($"ConveyorExitController: Metal bar {metalBar.name} moved to connected conveyor entry {connectedEntry.name}.");
-                // Note: MoveOnConveyor now handles adding the metal bar to the conveyor's resources list when appropriate
+                metalBar.movementController.EnablePhyscis();
+                Debug.Log("Connection points to the current conveyor; enabling physics instead to avoid loop.");
+                return;
             }
+            metalBar.MoveOnConveyor(connectedEntry);
+            Debug.Log($"ConveyorExitController: Metal bar {metalBar.name} moved to connected conveyor entry {connectedEntry.name}.");
         }
         else
         {
-             metalBar.movementController.EnablePhyscis();
-            Debug.Log($"MetalBar exited with no connection");
-
-            // No connection - make it fall
+            // No valid connection or would loop back to the same conveyor -> enable physics (fall)
+            metalBar.movementController.EnablePhyscis();
+            Debug.Log("MetalBar exited with no valid connection. Physics enabled.");
         }
     }
 }
